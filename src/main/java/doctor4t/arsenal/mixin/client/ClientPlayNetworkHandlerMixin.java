@@ -1,6 +1,6 @@
 package doctor4t.arsenal.mixin.client;
 
-import doctor4t.arsenal.common.util.WeaponSlot;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
@@ -17,8 +17,8 @@ public class ClientPlayNetworkHandlerMixin {
 
 	@Inject(method = "onHeldItemChange", at = @At(value = "TAIL"))
 	private void arsenal$syncWeaponSlot(UpdateSelectedSlotS2CPacket packet, CallbackInfo ci) {
-		if (packet instanceof WeaponSlot selectPacket && this.client.player.getInventory() instanceof WeaponSlot selection) {
-			selection.arsenal$setWeaponSlot(selectPacket.arsenal$getWeaponSlot());
+		if (packet instanceof WeaponSlotToggle selectPacket && this.client.player.getInventory() instanceof WeaponSlotToggle selection) {
+			selection.arsenal$setWeaponSlot(selectPacket.arsenal$shouldWeaponSlot());
 		}
 	}
 }

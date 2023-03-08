@@ -1,6 +1,6 @@
 package doctor4t.arsenal.mixin.client;
 
-import doctor4t.arsenal.common.util.WeaponSlot;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import org.jetbrains.annotations.Nullable;
@@ -16,14 +16,14 @@ public class MinecraftClientMixin {
 
 	@Inject(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getInventory()Lnet/minecraft/entity/player/PlayerInventory;"))
 	private void arsenal$inputSlot(CallbackInfo ci) {
-		if (this.player != null && this.player.getInventory() instanceof WeaponSlot selection) {
+		if (this.player != null && this.player.getInventory() instanceof WeaponSlotToggle selection) {
 			selection.arsenal$setWeaponSlot(false);
 		}
 	}
 
 	@Inject(method = "doItemPick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;isValidHotbarIndex(I)Z"))
 	private void arsenal$pickSlot(CallbackInfo ci) {
-		if (this.player != null && this.player.getInventory() instanceof WeaponSlot selection) {
+		if (this.player != null && this.player.getInventory() instanceof WeaponSlotToggle selection) {
 			selection.arsenal$setWeaponSlot(false);
 		}
 	}

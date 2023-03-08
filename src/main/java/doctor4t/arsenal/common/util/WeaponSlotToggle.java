@@ -1,6 +1,6 @@
 package doctor4t.arsenal.common.util;
 
-public interface WeaponSlot {
+public interface WeaponSlotToggle {
 	void arsenal$setWeaponSlot(boolean weaponSlot);
-	boolean arsenal$getWeaponSlot();
+	boolean arsenal$shouldWeaponSlot();
 }

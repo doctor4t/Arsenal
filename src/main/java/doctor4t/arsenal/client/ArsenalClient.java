@@ -1,13 +1,13 @@
 package doctor4t.arsenal.client;
 
-import doctor4t.anchorblade.common.init.ModEntities;
 import doctor4t.arsenal.client.particle.SweepAttackParticle;
 import doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
 import doctor4t.arsenal.client.render.entity.ModEntityModelLayers;
 import doctor4t.arsenal.client.render.item.AnchorbladeItemRenderer;
+import doctor4t.arsenal.common.init.ModEntities;
 import doctor4t.arsenal.common.init.ModItems;
 import doctor4t.arsenal.common.init.ModParticles;
-import doctor4t.arsenal.common.util.WeaponSlot;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -59,13 +59,13 @@ public class ArsenalClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (weaponKeybind.wasPressed()) {
 				PlayerEntity player = client.player;
-				if (player != null && player.getInventory() instanceof WeaponSlot selection) {
-					selection.arsenal$setWeaponSlot(!selection.arsenal$getWeaponSlot());
+				if (player != null && player.getInventory() instanceof WeaponSlotToggle selection) {
+					selection.arsenal$setWeaponSlot(!selection.arsenal$shouldWeaponSlot());
 					if (client.getNetworkHandler() != null) {
 						UpdateSelectedSlotC2SPacket packet = new UpdateSelectedSlotC2SPacket(player.getInventory().selectedSlot);
 						//noinspection ConstantValue
-						if (packet instanceof WeaponSlot selectPacket) {
-							selectPacket.arsenal$setWeaponSlot(selection.arsenal$getWeaponSlot());
+						if (packet instanceof WeaponSlotToggle selectPacket) {
+							selectPacket.arsenal$setWeaponSlot(selection.arsenal$shouldWeaponSlot());
 						} else {
 							System.out.println("Packet is not an instance of AnchorSelection");
 						}

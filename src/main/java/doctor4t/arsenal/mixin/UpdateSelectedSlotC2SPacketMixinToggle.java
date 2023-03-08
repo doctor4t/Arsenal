@@ -1,12 +1,12 @@
 package doctor4t.arsenal.mixin;
 
-import doctor4t.arsenal.common.util.WeaponSlot;
-import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
+import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(UpdateSelectedSlotC2SPacket.class)
-public class UpdateSelectedSlotS2CPacketMixin implements WeaponSlot {
+@Mixin(UpdateSelectedSlotS2CPacket.class)
+public class UpdateSelectedSlotC2SPacketMixinToggle implements WeaponSlotToggle {
 	@Unique private boolean selectedWeapon = false;
 
 	@Override
@@ -15,7 +15,7 @@ public class UpdateSelectedSlotS2CPacketMixin implements WeaponSlot {
 	}
 
 	@Override
-	public boolean arsenal$getWeaponSlot() {
+	public boolean arsenal$shouldWeaponSlot() {
 		return this.selectedWeapon;
 	}
 }

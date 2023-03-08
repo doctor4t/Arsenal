@@ -1,10 +1,9 @@
 package doctor4t.arsenal.client.render.entity;
 
-import doctor4t.anchorblade.common.Anchorblade;
+import doctor4t.arsenal.common.Arsenal;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.TexturedModelDataProvider;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,7 +24,7 @@ public interface ModEntityModelLayers {
 	}
 
 	private static EntityModelLayer create(String id, String layer) {
-		return new EntityModelLayer(new Identifier(Anchorblade.MOD_ID, id), layer);
+		return new EntityModelLayer(Arsenal.id(id), layer);
 	}
 
 	static void initialize() {

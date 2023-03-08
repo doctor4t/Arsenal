@@ -1,8 +1,8 @@
 package doctor4t.arsenal.common.item;
 
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
-import doctor4t.anchorblade.common.init.ModSoundEvents;
 import doctor4t.arsenal.common.init.ModParticles;
+import doctor4t.arsenal.common.init.ModSoundEvents;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;

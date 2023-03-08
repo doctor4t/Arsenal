@@ -7,9 +7,10 @@
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
     "PlayerManagerMixin",
+    "PlayerScreenHandlerMixin",
     "ServerPlayNetworkHandlerMixin",
-    "UpdateSelectedSlotC2SPacketMixin",
-    "UpdateSelectedSlotS2CPacketMixin"
+    "UpdateSelectedSlotC2SPacketMixinToggle",
+    "UpdateSelectedSlotS2CPacketMixinToggle"
   ],
   "client": [
     "client.ClientPlayerInteractionManagerMixin",

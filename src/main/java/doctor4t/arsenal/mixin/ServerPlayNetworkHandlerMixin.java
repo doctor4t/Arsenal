@@ -1,14 +1,10 @@
 package doctor4t.arsenal.mixin;
 
-import doctor4t.arsenal.common.util.WeaponSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.NetworkThreadUtils;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,16 +17,16 @@ public class ServerPlayNetworkHandlerMixin {
 
 	@Inject(method = "onUpdateSelectedSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getInventory()Lnet/minecraft/entity/player/PlayerInventory;", ordinal = 1))
 	private void arsenal$updateSlot(UpdateSelectedSlotC2SPacket packet, CallbackInfo ci) {
-		if (packet instanceof WeaponSlot selectPacket && this.player.getInventory() instanceof WeaponSlot selection) {
-			selection.arsenal$setWeaponSlot(selectPacket.arsenal$getWeaponSlot());
+		if (packet instanceof WeaponSlotToggle selectPacket && this.player.getInventory() instanceof WeaponSlotToggle selection) {
+			selection.arsenal$setWeaponSlot(selectPacket.arsenal$shouldWeaponSlot());
 		}
 	}
 
 	@Inject(method = "onPlayerAction", at = @At(value = "HEAD"))
 	private void arsenal$swapHands(PlayerActionC2SPacket packet, CallbackInfo ci) {
 		if (packet.getAction() == PlayerActionC2SPacket.Action.SWAP_ITEM_WITH_OFFHAND) {
-			if (this.player instanceof WeaponSlot weaponSlot) {
-				weaponSlot.arsenal$setWeaponSlot(false);
+			if (this.player instanceof WeaponSlotToggle weaponSlotToggle) {
+				weaponSlotToggle.arsenal$setWeaponSlot(false);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package doctor4t.arsenal.client.render.entity;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import doctor4t.anchorblade.common.Anchorblade;
+import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -20,8 +20,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 
 public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity> {
-	private static final Identifier ANCHOR_TEXTURE = new Identifier(Anchorblade.MOD_ID, "textures/item/lux_anchorblade.png");
-	private static final Identifier CHAIN_TEXTURE = new Identifier(Anchorblade.MOD_ID, "textures/entity/lux_chain.png");
+	private static final Identifier ANCHOR_TEXTURE = Arsenal.id("textures/item/lux_anchorblade.png");
+	private static final Identifier CHAIN_TEXTURE = Arsenal.id("textures/entity/lux_chain.png");
 	private static final RenderLayer CHAIN_LAYER = RenderLayer.getEntitySmoothCutout(CHAIN_TEXTURE);
 	private final AnchorBladeEntityModel model;
 

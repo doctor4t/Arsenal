@@ -1,8 +1,8 @@
 package doctor4t.arsenal.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import doctor4t.arsenal.common.item.AnchorbladeItem;
-import doctor4t.arsenal.common.util.WeaponSlot;
+import doctor4t.arsenal.common.util.WeaponSlotHolder;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -26,22 +26,24 @@ public abstract class InGameHudMixin extends DrawableHelper {
 	@Inject(method = "renderHotbar", at = @At("TAIL"))
 	private void arsenal$renderWeaponSlot(float tickDelta, MatrixStack matrices, CallbackInfo ci) {
 		PlayerEntity player = this.getCameraPlayer();
-		ItemStack anchorStack = AnchorbladeItem.getWornAnchor(player);
-		if (!anchorStack.isEmpty() && player != null && player.getInventory() instanceof WeaponSlot selection && selection.arsenal$getWeaponSlot()) {
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShader(GameRenderer::getPositionTexShader);
-			RenderSystem.setShaderTexture(0, ClickableWidget.WIDGETS_TEXTURE);
-			int i = this.scaledWidth / 2;
-			int j = this.getZOffset();
-			this.setZOffset(-90);
-			this.drawTexture(matrices, i - 12, this.scaledHeight - 23 - 70, 0, 22, 24, 24);
-			this.setZOffset(j);
-			RenderSystem.enableBlend();
-			RenderSystem.defaultBlendFunc();
-			int o = i - 90 + 4 * 20 + 2;
-			int p = this.scaledHeight - 19 - 70;
-			this.renderHotbarItem(o, p, tickDelta, player, anchorStack, 1);
-			RenderSystem.disableBlend();
+		if (player == null) return;
+		if (player.getInventory() instanceof WeaponSlotHolder holder && !holder.arsenal$getWeapon().isEmpty()) {
+			if (player.getInventory() instanceof WeaponSlotToggle selection && selection.arsenal$shouldWeaponSlot()) {
+				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+				RenderSystem.setShader(GameRenderer::getPositionTexShader);
+				RenderSystem.setShaderTexture(0, ClickableWidget.WIDGETS_TEXTURE);
+				int i = this.scaledWidth / 2;
+				int j = this.getZOffset();
+				this.setZOffset(-90);
+				this.drawTexture(matrices, i - 12, this.scaledHeight - 23 - 70, 0, 22, 24, 24);
+				this.setZOffset(j);
+				RenderSystem.enableBlend();
+				RenderSystem.defaultBlendFunc();
+				int o = i - 90 + 4 * 20 + 2;
+				int p = this.scaledHeight - 19 - 70;
+				this.renderHotbarItem(o, p, tickDelta, player, holder.arsenal$getWeapon(), 1);
+				RenderSystem.disableBlend();
+			}
 		}
 	}
 }
