@@ -1,6 +1,10 @@
 package doctor4t.anchorblade.common.item;
 
 import com.google.common.collect.Multimap;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
+import doctor4t.anchorblade.common.init.ModItems;
 import doctor4t.anchorblade.common.init.ModParticles;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
@@ -14,6 +18,7 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Pair;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -22,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import xyz.amymialee.mialeemisc.util.MialeeText;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AnchorbladeItem extends PickaxeItem {
 	public static final DefaultParticleType[] LUX_ANCHORBLADE_SWEEP_PARTICLES = {ModParticles.LUX_ANCHORLADE_SWEEP_1, ModParticles.LUX_ANCHORLADE_SWEEP_2, ModParticles.LUX_ANCHORLADE_SWEEP_3};
@@ -51,5 +57,17 @@ public class AnchorbladeItem extends PickaxeItem {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		super.appendTooltip(stack, world, tooltip, context);
+	}
+
+	public static ItemStack getWornAnchor(LivingEntity livingEntity) {
+		Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(livingEntity);
+		if (component.isPresent()) {
+			for (Pair<SlotReference, ItemStack> pair : component.get().getAllEquipped()) {
+				if (pair.getRight().isOf(ModItems.ANCHORBLADE)) {
+					return pair.getRight();
+				}
+			}
+		}
+		return ItemStack.EMPTY;
 	}
 }

@@ -4,10 +4,19 @@
   "package": "doctor4t.anchorblade.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "PlayerInventoryMixin",
+    "PlayerManagerMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "UpdateSelectedSlotC2SPacketMixin",
+    "UpdateSelectedSlotS2CPacketMixin"
   ],
   "client": [
+    "client.ClientPlayerInteractionManagerMixin",
+    "client.ClientPlayNetworkHandlerMixin",
+    "client.InGameHudMixin",
     "client.ItemRendererMixin",
+    "client.MinecraftClientMixin",
     "client.PlayerEntityRendererMixin"
   ],
   "injectors": {

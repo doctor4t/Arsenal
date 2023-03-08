@@ -4,6 +4,8 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
 import doctor4t.anchorblade.common.init.ModItems;
+import doctor4t.anchorblade.common.item.AnchorbladeItem;
+import doctor4t.anchorblade.common.util.AnchorSelection;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -27,8 +29,11 @@ public class AnchorbladeFeatureRenderer<T extends PlayerEntity, M extends Entity
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        ItemStack anchor = getWornAnchor(entity);
+        ItemStack anchor = AnchorbladeItem.getWornAnchor(entity);
 		if (anchor != ItemStack.EMPTY) {
+			if (entity.getInventory() instanceof AnchorSelection selection) {
+				if (selection.anchorblade$hasSelectedAnchor()) return;
+			}
 			matrices.push();
 			matrices.translate(-0.1, 0.25, 0.275);
 			matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(135));
@@ -37,16 +42,4 @@ public class AnchorbladeFeatureRenderer<T extends PlayerEntity, M extends Entity
 			matrices.pop();
 		}
     }
-
-	private static ItemStack getWornAnchor(LivingEntity livingEntity) {
-		Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(livingEntity);
-		if (component.isPresent()) {
-			for (Pair<SlotReference, ItemStack> pair : component.get().getAllEquipped()) {
-				if (pair.getRight().isOf(ModItems.ANCHORBLADE)) {
-					return pair.getRight();
-				}
-			}
-		}
-		return ItemStack.EMPTY;
-	}
 }
