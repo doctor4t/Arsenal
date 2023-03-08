@@ -1,9 +1,5 @@
 package doctor4t.anchorblade.client.render;
 
-import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
-import doctor4t.anchorblade.common.init.ModItems;
 import doctor4t.anchorblade.common.item.AnchorbladeItem;
 import doctor4t.anchorblade.common.util.AnchorSelection;
 import net.minecraft.client.MinecraftClient;
@@ -14,13 +10,9 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.Vec3f;
-
-import java.util.Optional;
 
 public class AnchorbladeFeatureRenderer<T extends PlayerEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
     public AnchorbladeFeatureRenderer(FeatureRendererContext<T, M> context) {

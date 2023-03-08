@@ -1,7 +1,6 @@
 package doctor4t.anchorblade.mixin;
 
 import doctor4t.anchorblade.common.util.AnchorSelection;
-import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

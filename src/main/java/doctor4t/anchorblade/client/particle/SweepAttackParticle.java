@@ -2,7 +2,11 @@ package doctor4t.anchorblade.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteBillboardParticle;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
@@ -22,6 +26,7 @@ public class SweepAttackParticle extends SpriteBillboardParticle {
 		return 15728880;
 	}
 
+	@Override
 	public void tick() {
 		this.prevPosX = this.x;
 		this.prevPosY = this.y;
@@ -33,13 +38,13 @@ public class SweepAttackParticle extends SpriteBillboardParticle {
 		}
 	}
 
+	@Override
 	public ParticleTextureSheet getType() {
 		return ParticleTextureSheet.PARTICLE_SHEET_LIT;
 	}
 
 	@Environment(EnvType.CLIENT)
 	public record Factory(SpriteProvider spriteSet) implements ParticleFactory<DefaultParticleType> {
-
 		@Override
 		public Particle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new SweepAttackParticle(world, x, y, z, velocityX, this.spriteSet);

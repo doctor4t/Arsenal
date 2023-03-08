@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.option.KeyBind;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -22,7 +21,6 @@ import net.minecraft.util.registry.Registry;
 import org.lwjgl.glfw.GLFW;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
-import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 public class AnchorbladeClient implements ClientModInitializer {
 	private static KeyBind anchorKeybind;

@@ -1,6 +1,9 @@
 package doctor4t.anchorblade.common;
 
-import doctor4t.anchorblade.common.init.*;
+import doctor4t.anchorblade.common.init.ModEntities;
+import doctor4t.anchorblade.common.init.ModItems;
+import doctor4t.anchorblade.common.init.ModParticles;
+import doctor4t.anchorblade.common.init.ModSoundEvents;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
