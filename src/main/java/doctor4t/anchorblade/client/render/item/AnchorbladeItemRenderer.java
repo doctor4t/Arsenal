@@ -16,8 +16,10 @@ import net.minecraft.util.Identifier;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 public class AnchorbladeItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer, SimpleSynchronousResourceReloadListener {
+	private static final Set<ModelTransformation.Mode> inventoryModes = Set.of(ModelTransformation.Mode.GUI, ModelTransformation.Mode.GROUND);
 	private final Identifier id;
 	private final Identifier scytheId;
 	private ItemRenderer itemRenderer;
@@ -43,23 +45,23 @@ public class AnchorbladeItemRenderer implements BuiltinItemRendererRegistry.Dyna
 	public void reload(ResourceManager manager) {
 		final MinecraftClient client = MinecraftClient.getInstance();
 		this.itemRenderer = client.getItemRenderer();
-		this.inventoryScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(scytheId.getNamespace(), scytheId.getPath() + "_gui", "inventory"));
-		this.worldScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(scytheId.getNamespace(), scytheId.getPath() + "_handheld", "inventory"));
+		this.inventoryScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId.getNamespace(), this.scytheId.getPath() + "_gui", "inventory"));
+		this.worldScytheModel = client.getBakedModelManager().getModel(new ModelIdentifier(this.scytheId.getNamespace(), this.scytheId.getPath() + "_handheld", "inventory"));
 	}
 
 	@Override
 	public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 		matrices.pop();
 		matrices.push();
-		if (mode != ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND && mode != ModelTransformation.Mode.FIRST_PERSON_RIGHT_HAND && mode != ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND && mode != ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND) {
-			itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryScytheModel);
+		if (inventoryModes.contains(mode)) {
+			this.itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryScytheModel);
 		} else {
 			boolean leftHanded;
 			switch (mode) {
 				case FIRST_PERSON_LEFT_HAND, THIRD_PERSON_LEFT_HAND -> leftHanded = true;
 				default -> leftHanded = false;
 			}
-			itemRenderer.renderItem(stack, mode, leftHanded, matrices, vertexConsumers, light, overlay, this.worldScytheModel);
+			this.itemRenderer.renderItem(stack, mode, leftHanded, matrices, vertexConsumers, light, overlay, this.worldScytheModel);
 		}
 	}
 }
