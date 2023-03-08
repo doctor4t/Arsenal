@@ -38,8 +38,6 @@ repositories {
 
 	maven { url 'https://masa.dy.fi/maven' }
 
-	maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
-
 	// mialee misc
 	maven { url "https://maven.willbl.dev/releases" }
 
@@ -57,8 +55,6 @@ repositories {
 		}
 	}
 
-	// ears
-	maven { url "https://repo.unascribed.com" }
 }
 
 // All the dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"
@@ -66,8 +62,6 @@ repositories {
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
-
-	modImplementation 'software.bernie.geckolib:geckolib-quilt-1.19:3.1.39'
 
 	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
 	modImplementation "org.quiltmc:qsl:${qsl_version}+${minecraft_version}"
@@ -85,6 +79,9 @@ dependencies {
 
 	// trinkets
 	modImplementation ("dev.emi:trinkets:${project.trinkets_version}")
+
+	// mialee misc
+	modImplementation include ("xyz.amymialee:mialeemisc:${project.mialeemisc_version}")
 }
 
 processResources {

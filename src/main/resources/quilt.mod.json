@@ -16,22 +16,9 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "doctor4t.anchorblade.common.Anchorblade"
-		},
-		"depends": [
-			{
-				"id": "quilt_loader",
-				"versions": ">=0.17.6-"
-			},
-			{
-				"id": "quilted_fabric_api",
-				"versions": ">=5.0.0-"
-			},
-			{
-				"id": "minecraft",
-				"versions": ">=1.19.3"
-			}
-		]
+			"init": "doctor4t.anchorblade.common.Anchorblade",
+			"client_init": "doctor4t.anchorblade.client.AnchorbladeClient"
+		}
 	},
 	"mixin": "anchorblade.mixins.json"
 }

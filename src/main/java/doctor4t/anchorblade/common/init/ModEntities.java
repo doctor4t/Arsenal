@@ -1,11 +1,10 @@
 package doctor4t.anchorblade.common.init;
 
-import doctor4t.anchorblade.Anchorblade;
+import doctor4t.anchorblade.common.Anchorblade;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,6 +20,6 @@ public interface ModEntities {
 	}
 
 	static void initialize() {
-		ENTITIES.keySet().forEach(entityType -> Registry.register(Registries.ENTITY_TYPE, ENTITIES.get(entityType), entityType));
+		ENTITIES.keySet().forEach(entityType -> Registry.register(Registry.ENTITY_TYPE, ENTITIES.get(entityType), entityType));
 	}
 }
