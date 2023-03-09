@@ -3,6 +3,8 @@ package doctor4t.arsenal.common.entity;
 import doctor4t.arsenal.common.init.ModDamageSources;
 import doctor4t.arsenal.common.init.ModEntities;
 import doctor4t.arsenal.common.init.ModSoundEvents;
+import doctor4t.arsenal.common.util.ProjectileSlotHolder;
+import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -76,7 +78,6 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 				if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
 					this.dropStack(this.asItemStack(), 0.1F);
 				}
-
 				this.discard();
 			} else {
 				this.setNoClip(true);
@@ -85,18 +86,13 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 				if (this.world.isClient) {
 					this.lastRenderY = this.getY();
 				}
-
 				this.setVelocity(this.getVelocity().multiply(0.95).add(vec3d.normalize().multiply(d)));
-
 				++this.returnTimer;
 			}
 		}
-
 		if (this.getOwner() != null && this.isOwnerAlive() && this.getPos().distanceTo(this.getOwner().getPos()) > 10) {
 			this.dealtDamage = true;
-
 		}
-
 		super.tick();
 	}
 
@@ -157,6 +153,17 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 
 	@Override
 	protected boolean tryPickup(PlayerEntity player) {
+		if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+			if (this instanceof ProjectileSlotHolder projectile) {
+				if (projectile.arsenal$getOwnedSlot() != -1) {
+					if (player.getInventory() instanceof WeaponSlotHolder holder) {
+						if (holder.arsenal$tryInsertIntoSlot(projectile.arsenal$getOwnedSlot(), this.asItemStack())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 		return super.tryPickup(player) || this.isNoClip() && this.isOwner(player) && player.getInventory().insertStack(this.asItemStack());
 	}
 

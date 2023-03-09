@@ -1,6 +1,6 @@
 package doctor4t.arsenal.client.render.feature;
 
-import doctor4t.arsenal.common.init.ModItems;
+import doctor4t.arsenal.common.util.WeaponSlotCallback;
 import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.client.MinecraftClient;
@@ -13,10 +13,10 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.ActionResult;
 
-public class AnchorbladeFeatureRenderer<T extends PlayerEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
-	public AnchorbladeFeatureRenderer(FeatureRendererContext<T, M> context) {
+public class BackWeaponFeatureRenderer<T extends PlayerEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
+	public BackWeaponFeatureRenderer(FeatureRendererContext<T, M> context) {
 		super(context);
 	}
 
@@ -28,13 +28,10 @@ public class AnchorbladeFeatureRenderer<T extends PlayerEntity, M extends Entity
 		if (entity.getInventory() instanceof WeaponSlotHolder holder) {
 			ItemStack anchor = holder.arsenal$getWeapon();
 			if (anchor.isEmpty()) return;
-			if (anchor.getItem() != ModItems.ANCHORBLADE) {
-				return;
-			}
+			ActionResult result = WeaponSlotCallback.EVENT.invoker().interact(entity, holder, anchor);
+			if (result == ActionResult.FAIL) return;
 			matrices.push();
-			matrices.translate(-0.1, 0.25, 0.275);
-			matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(135));
-			matrices.scale(1.4f, 1.4f, 1.4f);
+			matrices.translate(0, 0.35, 0.25);
 			MinecraftClient.getInstance().getItemRenderer().renderItem(anchor, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 			matrices.pop();
 		}

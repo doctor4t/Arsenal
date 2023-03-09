@@ -1,7 +1,7 @@
 package doctor4t.arsenal.common.init;
 
-import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import doctor4t.arsenal.common.Arsenal;
+import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;

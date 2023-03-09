@@ -3,6 +3,9 @@ package doctor4t.arsenal.common.item;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
+import doctor4t.arsenal.common.util.ProjectileSlotHolder;
+import doctor4t.arsenal.common.util.WeaponSlotHolder;
+import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,6 +49,13 @@ public class AnchorbladeItem extends PickaxeItem {
 					anchorbladeEntity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F + (float) riptide * 0.5F, 1.0F);
 					if (user.getAbilities().creativeMode) {
 						anchorbladeEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+					}
+					//noinspection ConstantValue
+					if (user.getInventory() instanceof WeaponSlotHolder holder && anchorbladeEntity instanceof ProjectileSlotHolder slotHolder) {
+						int index = holder.arsenal$getSlotHolding(stack);
+						if (index != -1) {
+							slotHolder.arsenal$setOwnedSlot(index);
+						}
 					}
 					world.spawnEntity(anchorbladeEntity);
 					world.playSoundFromEntity(null, anchorbladeEntity, ModSoundEvents.ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);

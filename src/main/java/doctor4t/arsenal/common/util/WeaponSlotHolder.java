@@ -7,4 +7,6 @@ public interface WeaponSlotHolder {
 	void arsenal$setWeapon(ItemStack weapon);
 	ItemStack arsenal$getWeapon();
 	SimpleInventory arsenal$getWeaponSlot();
+	int arsenal$getSlotHolding(ItemStack stack);
+	boolean arsenal$tryInsertIntoSlot(int slot, ItemStack stack);
 }

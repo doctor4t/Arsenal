@@ -1,5 +1,6 @@
 package doctor4t.arsenal.mixin;
 
+import com.google.common.collect.ImmutableList;
 import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.block.BlockState;
@@ -7,8 +8,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.collection.DefaultedList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,12 +19,23 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
+
 @Mixin(PlayerInventory.class)
 public class PlayerInventoryMixin implements WeaponSlotToggle, WeaponSlotHolder {
 	@Shadow @Final public PlayerEntity player;
+	@Shadow @Final @Mutable private List<DefaultedList<ItemStack>> combinedInventory;
 
-	@Unique private boolean selectedWeapon = false;
 	@Unique private final SimpleInventory weapon = new SimpleInventory(1);
+	@Unique private boolean selectedWeapon = false;
+
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void arsenal$init(CallbackInfo ci) {
+		this.combinedInventory = ImmutableList.<DefaultedList<ItemStack>>builder()
+				.addAll(this.combinedInventory)
+				.add(this.weapon.stacks)
+				.build();
+	}
 
 	@Inject(method = "getMainHandStack", at = @At("HEAD"), cancellable = true)
 	private void arsenal$mainHandSlot(CallbackInfoReturnable<ItemStack> cir) {
@@ -92,6 +106,39 @@ public class PlayerInventoryMixin implements WeaponSlotToggle, WeaponSlotHolder 
 	@Override
 	public SimpleInventory arsenal$getWeaponSlot() {
 		return this.weapon;
+	}
+
+	@Override
+	public int arsenal$getSlotHolding(ItemStack stack) {
+		int index = 0;
+		for (DefaultedList<ItemStack> list : this.combinedInventory) {
+			for (ItemStack itemStack : list) {
+				if (itemStack == stack) {
+					return index;
+				}
+				index++;
+			}
+		}
+		return -1;
+	}
+
+	@Override
+	public boolean arsenal$tryInsertIntoSlot(int slot, ItemStack stack) {
+		int index = 0;
+		for (DefaultedList<ItemStack> list : this.combinedInventory) {
+			int innerIndex = 0;
+			for (ItemStack itemStack : list) {
+				if (slot == index) {
+					if (itemStack.isEmpty()) {
+						list.set(innerIndex, stack);
+						return true;
+					}
+				}
+				innerIndex++;
+				index++;
+			}
+		}
+		return false;
 	}
 
 	@Override

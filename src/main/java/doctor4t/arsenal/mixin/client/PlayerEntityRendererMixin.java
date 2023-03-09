@@ -1,6 +1,7 @@
 package doctor4t.arsenal.mixin.client;
 
 import doctor4t.arsenal.client.render.feature.AnchorbladeFeatureRenderer;
+import doctor4t.arsenal.client.render.feature.BackWeaponFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -19,6 +20,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
 	@Inject(method = "<init>", at = @At("TAIL"))
 	public void arsenal$backBlade(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
+		this.addFeature(new BackWeaponFeatureRenderer<>(this));
 		this.addFeature(new AnchorbladeFeatureRenderer<>(this));
 	}
 }

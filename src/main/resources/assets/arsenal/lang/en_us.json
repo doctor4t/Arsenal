@@ -9,5 +9,9 @@
   "arsenal.subtitles.item.anchorblade.throw": "Anchorblade throw",
   "arsenal.subtitles.entity.anchorblade.land": "Anchorblade lands",
 
+  "category.arsenal" : "Arsenal",
+  "key.arsenal.select_weapon" : "Select Weapon Slot",
+  "key.arsenal.swap_weapon" : "Swap with Weapon Slot",
+
   "trinkets.slot.chest.arsenalweapon" : "Back Weapon"
 }

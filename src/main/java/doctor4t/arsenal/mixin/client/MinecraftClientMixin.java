@@ -21,6 +21,13 @@ public class MinecraftClientMixin {
 		}
 	}
 
+	@Inject(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isSpectator()Z", ordinal = 1))
+	private void arsenal$swapStop(CallbackInfo ci) {
+		if (this.player != null && this.player.getInventory() instanceof WeaponSlotToggle selection) {
+			selection.arsenal$setWeaponSlot(false);
+		}
+	}
+
 	@Inject(method = "doItemPick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;isValidHotbarIndex(I)Z"))
 	private void arsenal$pickSlot(CallbackInfo ci) {
 		if (this.player != null && this.player.getInventory() instanceof WeaponSlotToggle selection) {
