@@ -64,21 +64,12 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 			//get back to absolute world coordinates
 			matrices.translate(-entityPos.getX(), -entityPos.getY(), -entityPos.getZ());
 
-
-
 			// render chain
 			VertexConsumer vertices = vertexConsumers.getBuffer(CHAIN_LAYER);
-//			VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getLines());
 			int chainLight = LightmapTextureManager.pack(getBlockLight(entity, owner.getBlockPos()), getSkyLight(entity, owner.getBlockPos()));
-
 			Vec3d leashPosWorld = owner.getLeashHoldPosition(tickDelta);
 			Vector4f leashPosRendering = new Vector4f((float) leashPosWorld.getX(), (float) leashPosWorld.getY(), (float) leashPosWorld.getZ(), 1.0F);
 			leashPosRendering.transform(matrices.peek().getModel());
-
-			//TODO debug
-//			var lines = vertexConsumers.getBuffer(RenderLayer.getLines());
-//			lines.vertex(attachmentPos.getX(), attachmentPos.getY(), attachmentPos.getZ()).color(1.0F, 0.0F, 0.0F, 1.0F).normal(matrices.peek().getNormal(), 0, 0, 1).next();
-//			lines.vertex(leashPosRendering.getX(), leashPosRendering.getY(), leashPosRendering.getZ()).color(1.0F, 0.0F, 0.0F, 1.0F).normal(matrices.peek().getNormal(), 0, 0, 1).next();
 
 			renderChain(new Vec3f(leashPosRendering.getX(), leashPosRendering.getY(), leashPosRendering.getZ()), new Vec3f(attachmentPos.getX(), attachmentPos.getY(), attachmentPos.getZ()), matrices, vertices, OverlayTexture.DEFAULT_UV, chainLight, 1.0F, 1.0F, 1.0F, 1.0F);
 			matrices.pop();
@@ -90,34 +81,6 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 	public static void renderChain(Vec3f start, Vec3f end, MatrixStack matrices, VertexConsumer vertexConsumer, int overlay, int light, float red, float green, float blue, float alpha) {
 		Vec3f diff = end.copy();
 		diff.subtract(start);
-
-//		matrices.push();
-//		matrices.translate(start.getX(), start.getY(), start.getZ());
-//		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion((float) (-Math.atan2(diff.getZ(), diff.getX())) - 1.5707964F));
-//		matrices.multiply(Vec3f.POSITIVE_X.getRadialQuaternion((float) -Math.atan2(MathHelper.sqrt(diff.getX() * diff.getX() + diff.getZ() * diff.getZ()), diff.getY())));
-//		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(MathHelper.HALF_PI));
-//
-//		float vertX1 = 0.0F;
-//		float vertY1 = 0.25F;
-//		float vertX2 = 0.0F;
-//		float vertY2 = 0.125F;
-//
-//		float length = MathHelper.sqrt(diff.getX() * diff.getX() + diff.getY() * diff.getY() + diff.getZ() * diff.getZ());
-//		float minU = 0.0F;
-//		float maxU = 1.0F;
-//		float minV = 0.0F;
-//		float maxV = length / 8F;
-//
-//		Matrix4f model = matrices.peek().getModel();
-//		Matrix3f normal = matrices.peek().getNormal();
-//
-//		vertexConsumer.vertex(model, vertX1, vertY1, 0F).color(255, 255, 255, 255).uv(minU, minV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0.0F, 1.0F, 0.0F).next();
-//		vertexConsumer.vertex(model, vertX1, vertY1, length).color(255, 255, 255, 255).uv(minU, maxV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0.0F, 1.0F, 0.0F).next();
-//		vertexConsumer.vertex(model, vertX2, vertY2, length).color(255, 255, 255, 255).uv(maxU, maxV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0.0F, 1.0F, 0.0F).next();
-//		vertexConsumer.vertex(model, vertX2, vertY2, 0F).color(255, 255, 255, 255).uv(maxU, minV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0.0F, 1.0F, 0.0F).next();
-//
-//
-//		matrices.pop();
 
 		Vec3f up = Vec3f.POSITIVE_Z.copy();
 		Vec3f offsetStart = diff.copy();
@@ -147,15 +110,6 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 
 		Vec3f v4 = end.copy();
 		v4.subtract(offsetEnd);
-
-//		vertexConsumer.vertex(v1.getX(), v1.getY(), v1.getZ()).color(1.0F, 0.0F, 0.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v2.getX(), v2.getY(), v2.getZ()).color(1.0F, 1.0F, 0.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v2.getX(), v2.getY(), v2.getZ()).color(1.0F, 1.0F, 0.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v3.getX(), v3.getY(), v3.getZ()).color(0.0F, 1.0F, 0.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v3.getX(), v3.getY(), v3.getZ()).color(0.0F, 1.0F, 0.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v4.getX(), v4.getY(), v4.getZ()).color(0.0F, 0.0F, 1.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v4.getX(), v4.getY(), v4.getZ()).color(0.0F, 0.0F, 1.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-//		vertexConsumer.vertex(v1.getX(), v1.getY(), v1.getZ()).color(1.0F, 0.0F, 0.0F, 1.0F).normal(normal, up.getX(), up.getY(), up.getZ()).next();
 
 		vertexConsumer.vertex(v1.getX(), v1.getY(), v1.getZ()).color(red, green, blue, alpha).uv(maxU, maxV).overlay(overlay).light(light).normal(normal, up.getX(), up.getY(), up.getZ()).next();
 		vertexConsumer.vertex(v2.getX(), v2.getY(), v2.getZ()).color(red, green, blue, alpha).uv(minU, maxV).overlay(overlay).light(light).normal(normal, up.getX(), up.getY(), up.getZ()).next();
