@@ -1,6 +1,7 @@
 package doctor4t.arsenal.client;
 
 import doctor4t.arsenal.client.particle.SweepAttackParticle;
+import doctor4t.arsenal.client.render.entity.AltAnchorbladeEntityRenderer;
 import doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
 import doctor4t.arsenal.client.render.entity.ModEntityModelLayers;
 import doctor4t.arsenal.client.render.item.AnchorbladeItemRenderer;
@@ -45,7 +46,7 @@ public class ArsenalClient implements ClientModInitializer {
 
 		ModEntityModelLayers.initialize();
 
-		EntityRendererRegistry.register(ModEntities.ANCHORBLADE, AnchorbladeEntityRenderer::new);
+		EntityRendererRegistry.register(ModEntities.ANCHORBLADE, AltAnchorbladeEntityRenderer::new);
 
 		ParticleFactoryRegistry.getInstance().register(ModParticles.LUX_ANCHORBLADE_SWEEP_1, SweepAttackParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticles.LUX_ANCHORBLADE_SWEEP_2, SweepAttackParticle.Factory::new);
