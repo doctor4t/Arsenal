@@ -1,10 +1,13 @@
 package doctor4t.arsenal.common;
 
-import doctor4t.arsenal.common.init.*;
+import doctor4t.arsenal.common.init.ModEnchantments;
+import doctor4t.arsenal.common.init.ModEntities;
+import doctor4t.arsenal.common.init.ModItems;
+import doctor4t.arsenal.common.init.ModParticles;
+import doctor4t.arsenal.common.init.ModSoundEvents;
 import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import org.quiltmc.loader.api.ModContainer;

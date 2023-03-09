@@ -1,14 +1,19 @@
 package doctor4t.arsenal.mixin;
 
+import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import doctor4t.arsenal.common.item.AnchorbladeItem;
-import doctor4t.arsenal.common.item.ScytheItem;
 import doctor4t.arsenal.common.item.CustomHitParticleItem;
 import doctor4t.arsenal.common.item.CustomHitSoundItem;
+import doctor4t.arsenal.common.item.ScytheItem;
+import doctor4t.arsenal.common.util.AnchorOwner;
 import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -18,25 +23,31 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings("WrongEntityDataParameterClass")
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity {
+public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOwner {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
-	@Shadow
-	public abstract float getAttackCooldownProgress(float baseTime);
+	@Shadow public abstract float getAttackCooldownProgress(float baseTime);
+	@Shadow public abstract PlayerInventory getInventory();
+	@Shadow public abstract void disableShield(boolean sprinting);
 
-	@Shadow
-	public abstract PlayerInventory getInventory();
+	@Unique private static final TrackedData<Integer> BASIC_ANCHOR = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	@Unique private static final TrackedData<Integer> REELING_ANCHOR = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
-	@Shadow
-	public abstract void disableShield(boolean sprinting);
+	@Inject(method = "initDataTracker", at = @At("TAIL"))
+	private void arsenal$initDataTracker(CallbackInfo ci) {
+		this.dataTracker.startTracking(BASIC_ANCHOR, -1);
+		this.dataTracker.startTracking(REELING_ANCHOR, -1);
+	}
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F"))
 	private void arsenal$spawnCustomHitParticlesAndPlayCustomHitSound(Entity target, CallbackInfo ci) {
@@ -47,7 +58,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			if (this.getMainHandStack().getItem() instanceof CustomHitSoundItem customHitSoundItem) {
 				customHitSoundItem.playHitSound((PlayerEntity) (Object) this);
 			}
-
 		}
 	}
 
@@ -90,5 +100,22 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		if (attacker.getMainHandStack().getItem() instanceof ScytheItem) {
 			this.disableShield(true);
 		}
+	}
+
+	@Override
+	public void arsenal$setAnchor(AnchorbladeEntity anchor) {
+		boolean reeling = anchor.hasReeling();
+		this.dataTracker.set(reeling ? REELING_ANCHOR : BASIC_ANCHOR, anchor.getId());
+	}
+
+	@Override
+	public AnchorbladeEntity arsenal$getAnchor(boolean reeling) {
+		return this.world.getEntityById(reeling ? this.dataTracker.get(REELING_ANCHOR) : this.dataTracker.get(BASIC_ANCHOR)) instanceof AnchorbladeEntity anchor ? anchor : null;
+	}
+
+	@Override
+	public boolean arsenal$isAnchorActive(boolean reeling) {
+		AnchorbladeEntity anchor = this.arsenal$getAnchor(reeling);
+		return anchor != null && anchor.isAlive();
 	}
 }

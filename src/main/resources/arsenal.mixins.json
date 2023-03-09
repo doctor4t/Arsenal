@@ -20,6 +20,8 @@
   "client": [
     "client.ClientPlayerInteractionManagerMixin",
     "client.ClientPlayNetworkHandlerMixin",
+    "client.HeldItemFeatureRendererMixin",
+    "client.HeldItemRendererMixin",
     "client.InGameHudMixin",
     "client.InventoryScreenMixin",
     "client.ItemRendererMixin",

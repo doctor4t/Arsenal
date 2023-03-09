@@ -1,9 +1,9 @@
 package doctor4t.arsenal.mixin;
 
-import doctor4t.arsenal.common.enchantment.SpewingEnchantment;
 import doctor4t.arsenal.common.enchantment.UniqueEnchantment;
-import doctor4t.arsenal.common.item.ScytheItem;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

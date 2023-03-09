@@ -1,8 +1,11 @@
 package doctor4t.arsenal.common.entity;
 
-import doctor4t.arsenal.common.init.*;
-import doctor4t.arsenal.common.util.ProjectileSlotHolder;
-import doctor4t.arsenal.common.util.WeaponSlotHolder;
+import doctor4t.arsenal.common.init.ModDamageSources;
+import doctor4t.arsenal.common.init.ModEnchantments;
+import doctor4t.arsenal.common.init.ModEntities;
+import doctor4t.arsenal.common.init.ModItems;
+import doctor4t.arsenal.common.init.ModParticles;
+import doctor4t.arsenal.common.init.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,10 +18,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
@@ -26,11 +25,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class AnchorbladeEntity extends PersistentProjectileEntity {
-	private static final TrackedData<Boolean> REELING = DataTracker.registerData(AnchorbladeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	private static final TrackedData<Byte> ANCHOR_FLAGS = DataTracker.registerData(AnchorbladeEntity.class, TrackedDataHandlerRegistry.BYTE);
 	private ItemStack anchorbladeStack = new ItemStack(ModItems.ANCHORBLADE);
-	private boolean dealtDamage;
 	public int returnTimer;
-	private int slot = 0;
 
 	public AnchorbladeEntity(EntityType<? extends AnchorbladeEntity> entityType, World world) {
 		super(entityType, world);
@@ -39,95 +36,51 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 	public AnchorbladeEntity(World world, LivingEntity owner, ItemStack stack) {
 		super(ModEntities.ANCHORBLADE, owner, world);
 		this.anchorbladeStack = stack.copy();
-		this.dataTracker.set(REELING, (byte) EnchantmentHelper.getLevel(ModEnchantments.REELING, stack) > 0);
+		this.setNoGravity(true);
+		this.setReeling(EnchantmentHelper.getLevel(ModEnchantments.REELING, stack) > 0);
 	}
 
 	@Override
 	protected void initDataTracker() {
 		super.initDataTracker();
-		this.dataTracker.startTracking(REELING, false);
-	}
-
-	public boolean hasReeling() {
-		return this.dataTracker.get(REELING);
-	}
-
-	@Override
-	public void readCustomDataFromNbt(NbtCompound nbt) {
-		super.readCustomDataFromNbt(nbt);
-		if (nbt.contains("Anchorblade", NbtElement.COMPOUND_TYPE)) {
-			this.anchorbladeStack = ItemStack.fromNbt(nbt.getCompound("Anchorblade"));
-		}
-		if (nbt.contains("Slot", NbtElement.INT_TYPE)) {
-			this.slot = nbt.getInt("Slot");
-		}
-		this.dataTracker.set(REELING, (byte) EnchantmentHelper.getLevel(ModEnchantments.REELING, this.anchorbladeStack) > 0);
-	}
-
-	@Override
-	public void writeCustomDataToNbt(NbtCompound nbt) {
-		super.writeCustomDataToNbt(nbt);
-		nbt.put("Anchorblade", this.anchorbladeStack.writeNbt(new NbtCompound()));
-		nbt.putInt("Slot", this.slot);
-	}
-
-	@Override
-	protected ItemStack asItemStack() {
-		return this.anchorbladeStack.copy();
-	}
-
-	public int getSlot() {
-		return this.slot;
-	}
-
-	public void setSlot(int slot) {
-		this.slot = slot;
+		this.dataTracker.startTracking(ANCHOR_FLAGS, (byte) 0);
 	}
 
 	@Override
 	public void tick() {
-		Entity entity = this.getOwner();
+		Entity owner = this.getOwner();
+		if (owner == null || !owner.isAlive()) {
+			this.discard();
+			return;
+		}
 		double d = 2;
-		if ((this.dealtDamage || this.isNoClip()) && entity != null) {
-			if (!this.isOwnerAlive()) {
-				if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
-					this.dropStack(this.asItemStack(), 0.1F);
-				}
-				this.discard();
-			} else {
-				this.setNoClip(true);
-				Vec3d vec3d = entity.getEyePos().subtract(this.getPos());
-//				this.setPos(this.getX(), this.getY() + vec3d.y * 0.015 * d, this.getZ());
-				if (this.world.isClient) {
-					this.lastRenderY = this.getY();
-				}
-				this.setVelocity(vec3d.normalize().multiply(d));
+		if (this.hasDealtDamage() || this.isNoClip()) {
+			this.setNoClip(true);
+			Vec3d vec3d = owner.getEyePos().subtract(this.getPos());
+//			this.setPos(this.getX(), this.getY() + vec3d.y * 0.015 * d, this.getZ());
+			if (this.world.isClient) {
+				this.lastRenderY = this.getY();
 			}
+			this.setVelocity(vec3d.normalize().multiply(d));
 		}
-
-		if (this.getOwner() != null && this.isOwnerAlive() && this.getPos().distanceTo(this.getOwner().getPos()) > 30) {
-			this.dealtDamage = true;
+		if (this.getPos().distanceTo(owner.getPos()) > 30) {
+			this.setDealtDamage(true);
 		}
-
-		if (this.inGround && !this.dealtDamage && this.getOwner() != null && this.isOwnerAlive()) {
-			// reel in user
+		if (this.inGround && !this.hasDealtDamage()) {
 			if (this.hasReeling()) {
-				if (returnTimer++ > 100) {
-					this.dealtDamage = true;
+				if (this.returnTimer++ > 100) {
+					this.setDealtDamage(true);
 				}
 				float e = (float) (d / 5f);
-				Vec3d vec3d = this.getPos().subtract(entity.getEyePos());
-				entity.setVelocity(entity.getVelocity().multiply(0.95).add(vec3d.normalize().multiply(e)));
-				entity.fallDistance = 0;
+				Vec3d vec3d = this.getPos().subtract(owner.getEyePos());
+				owner.setVelocity(owner.getVelocity().multiply(0.95).add(vec3d.normalize().multiply(e)));
+				owner.fallDistance = 0;
 			} else {
 				float radius = 5f;
-
 				// impact
 				this.world.addParticle(ModParticles.SHOCKWAVE, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-
-				for (LivingEntity hitEntity : this.world.getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(radius), livingEntity -> livingEntity.isAlive())) {
+				for (LivingEntity hitEntity : this.world.getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(radius), LivingEntity::isAlive)) {
 					float strength = (float) (2f * (1.0 - hitEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
-
 					if (!(strength <= 0.0)) {
 						this.velocityDirty = true;
 						Vec3d dist = hitEntity.getPos().subtract(this.getPos());
@@ -137,54 +90,38 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 						hitEntity.fallDistance = 0;
 					}
 				}
-
-				this.dealtDamage = true;
+				this.setDealtDamage(true);
 			}
 		}
-
 		super.tick();
 	}
 
 	@Override
 	public void setPitch(float pitch) {
-		if (!this.dealtDamage) {
+		if (!this.hasDealtDamage()) {
 			super.setPitch(pitch);
 		}
 	}
 
 	@Override
 	public void setYaw(float yaw) {
-		if (!this.dealtDamage) {
+		if (!this.hasDealtDamage()) {
 			super.setYaw(yaw);
-		}
-	}
-
-	@Override
-	public boolean hasNoGravity() {
-		return true;
-	}
-
-	private boolean isOwnerAlive() {
-		Entity entity = this.getOwner();
-		if (entity == null || !entity.isAlive()) {
-			return false;
-		} else {
-			return !(entity instanceof ServerPlayerEntity) || !entity.isSpectator();
 		}
 	}
 
 	@Override
 	protected void onEntityHit(EntityHitResult entityHitResult) {
 		Entity hitEntity = entityHitResult.getEntity();
-		float f = 2.0F; // damage (2 hearts)
+		float damage = 2.0F;
 		if (hitEntity instanceof LivingEntity livingEntity) {
-			f += EnchantmentHelper.getAttackDamage(this.anchorbladeStack, livingEntity.getGroup());
+			damage += EnchantmentHelper.getAttackDamage(this.anchorbladeStack, livingEntity.getGroup());
 		}
 		Entity owner = this.getOwner();
 		DamageSource damageSource = ModDamageSources.anchor(this, owner == null ? this : owner);
-		this.dealtDamage = true;
+		this.setDealtDamage(true);
 		SoundEvent soundEvent = this.getHitSound();
-		if (hitEntity.damage(damageSource, f)) {
+		if (hitEntity.damage(damageSource, damage)) {
 			if (hitEntity.getType() == EntityType.ENDERMAN) {
 				return;
 			}
@@ -192,10 +129,8 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 				if (owner instanceof LivingEntity) {
 					EnchantmentHelper.onUserDamaged(hitLivingEntity, owner);
 					EnchantmentHelper.onTargetDamaged((LivingEntity) owner, hitLivingEntity);
-
 					// knockback or reel in
 					float strength = (float) (3f * (1.0 - hitLivingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
-
 					if (!(strength <= 0.0)) {
 						this.velocityDirty = true;
 						Vec3d dir = hitLivingEntity.getPos().subtract(owner.getPos()).normalize().multiply(strength);
@@ -214,30 +149,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 
 	@Override
 	protected boolean tryPickup(PlayerEntity player) {
-		if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
-			if (this instanceof ProjectileSlotHolder projectile) {
-				if (projectile.arsenal$getOwnedSlot() != -1) {
-					if (player.getInventory() instanceof WeaponSlotHolder holder) {
-						if (holder.arsenal$tryInsertIntoSlot(projectile.arsenal$getOwnedSlot(), this.asItemStack())) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return super.tryPickup(player) || this.isNoClip() && this.isOwner(player) && player.getInventory().insertStack(this.asItemStack());
-	}
-
-	@Override
-	protected SoundEvent getHitSound() {
-		return ModSoundEvents.ENTITY_ANCHORBLADE_LAND;
-	}
-
-	@Override
-	public void age() {
-		if (this.pickupType != PersistentProjectileEntity.PickupPermission.ALLOWED) {
-			super.age();
-		}
+		return this.isNoClip() && this.isOwner(player);
 	}
 
 	@Override
@@ -246,7 +158,51 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 	}
 
 	@Override
+	protected SoundEvent getHitSound() {
+		return ModSoundEvents.ENTITY_ANCHORBLADE_LAND;
+	}
+
+	@Override
+	protected ItemStack asItemStack() {
+		return ItemStack.EMPTY;
+	}
+
+	@Override
 	public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
 		return true;
+	}
+
+	public boolean hasDealtDamage() {
+		return this.getAnchorFlag(0);
+	}
+
+	public void setDealtDamage(boolean dealtDamage) {
+		this.setAnchorFlag(0, dealtDamage);
+	}
+
+	public boolean hasReeling() {
+		return this.getAnchorFlag(1);
+	}
+
+	public void setReeling(boolean reeling) {
+		this.setAnchorFlag(1, reeling);
+	}
+
+	private boolean getAnchorFlag(int flag) {
+		if (flag < 0 || flag > 8) {
+			return false;
+		}
+		return (this.dataTracker.get(ANCHOR_FLAGS) >> flag & 0x01) == 1;
+	}
+
+	private void setAnchorFlag(int flag, boolean value) {
+		if (flag < 0 || flag > 8) {
+			return;
+		}
+		if (value) {
+			this.dataTracker.set(ANCHOR_FLAGS, (byte) (this.dataTracker.get(ANCHOR_FLAGS) | 1 << flag));
+		} else {
+			this.dataTracker.set(ANCHOR_FLAGS, (byte) (this.dataTracker.get(ANCHOR_FLAGS) & ~(1 << flag)));
+		}
 	}
 }

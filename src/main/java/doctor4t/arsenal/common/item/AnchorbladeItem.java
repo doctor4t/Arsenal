@@ -1,14 +1,13 @@
 package doctor4t.arsenal.common.item;
 
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
+import doctor4t.arsenal.common.init.ModEnchantments;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
-import doctor4t.arsenal.common.util.ProjectileSlotHolder;
-import doctor4t.arsenal.common.util.WeaponSlotHolder;
+import doctor4t.arsenal.common.util.AnchorOwner;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
@@ -39,31 +38,26 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
-		int riptide = EnchantmentHelper.getRiptide(stack);
-		if (riptide <= 0 || user.isTouchingWaterOrRain()) {
-			if (!world.isClient) {
-				stack.damage(1, user, p -> p.sendToolBreakStatus(user.getActiveHand()));
-				if (riptide == 0) {
-					AnchorbladeEntity anchorbladeEntity = new AnchorbladeEntity(world, user, stack);
-					anchorbladeEntity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F + (float) riptide * 0.5F, 1.0F);
-					if (user.getAbilities().creativeMode) {
-						anchorbladeEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
-					}
-					//noinspection ConstantValue
-					if (user.getInventory() instanceof WeaponSlotHolder holder && anchorbladeEntity instanceof ProjectileSlotHolder slotHolder) {
-						int index = holder.arsenal$getSlotHolding(stack);
-						if (index != -1) {
-							slotHolder.arsenal$setOwnedSlot(index);
-						}
-					}
-					world.spawnEntity(anchorbladeEntity);
-					world.playSoundFromEntity(null, anchorbladeEntity, ModSoundEvents.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
-					if (!user.getAbilities().creativeMode) {
-						user.getInventory().removeOne(stack);
+		if (user instanceof AnchorOwner owner) {
+			boolean reeling = EnchantmentHelper.getLevel(ModEnchantments.REELING, stack) > 0;
+			if (owner.arsenal$isAnchorActive(reeling)) {
+				owner.arsenal$getAnchor(reeling).setDealtDamage(true);
+				return TypedActionResult.fail(stack);
+			}
+			int riptide = EnchantmentHelper.getRiptide(stack);
+			if (riptide <= 0 || user.isTouchingWaterOrRain()) {
+				if (!world.isClient) {
+					stack.damage(1, user, p -> p.sendToolBreakStatus(user.getActiveHand()));
+					if (riptide == 0) {
+						AnchorbladeEntity anchorbladeEntity = new AnchorbladeEntity(world, user, stack);
+						anchorbladeEntity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F + (float) riptide * 0.5F, 1.0F);
+						owner.arsenal$setAnchor(anchorbladeEntity);
+						world.spawnEntity(anchorbladeEntity);
+						world.playSoundFromEntity(null, anchorbladeEntity, ModSoundEvents.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
 					}
 				}
+				user.incrementStat(Stats.USED.getOrCreateStat(this));
 			}
-			user.incrementStat(Stats.USED.getOrCreateStat(this));
 		}
 		return TypedActionResult.pass(user.getStackInHand(hand));
 	}

@@ -1,8 +1,5 @@
 package doctor4t.arsenal.client;
 
-import doctor4t.arsenal.client.particle.BloodBubbleParticle;
-import doctor4t.arsenal.client.particle.BloodBubbleSplatterParticle;
-import doctor4t.arsenal.client.particle.SweepAttackParticle;
 import doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
 import doctor4t.arsenal.client.render.entity.BloodScytheEntityRenderer;
 import doctor4t.arsenal.client.render.entity.ModEntityModelLayers;
@@ -16,7 +13,6 @@ import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;

@@ -3,8 +3,6 @@ package doctor4t.arsenal.client.render.entity;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.entity.BloodScytheEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;

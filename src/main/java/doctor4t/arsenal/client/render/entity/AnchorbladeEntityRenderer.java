@@ -12,7 +12,11 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Matrix3f;
+import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 
 public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity> {
 	private static final Identifier ANCHOR_TEXTURE = Arsenal.id("textures/item/lux_anchorblade.png");
@@ -42,12 +46,12 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(pitchAngle - 90));
 		matrices.translate(0, -1.45,0);
 
-		model.setAngles(entity, tickDelta, 0, -0.1F, 0, 0);
-		model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getTexture(entity))), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+		this.model.setAngles(entity, tickDelta, 0, -0.1F, 0, 0);
+		this.model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getTexture(entity))), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
 
 		matrices.pop();
 
-		if(entity.getOwner() instanceof LivingEntity owner) {
+		if (entity.getOwner() instanceof LivingEntity owner) {
 
 			matrices.push();
 
@@ -77,12 +81,12 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 			Vec3d vert3 = ownerPos.subtract(offset);
 			Vec3d vert4 = ringPos.subtract(offset);
 
-			int chainLight = LightmapTextureManager.pack(getBlockLight(entity, owner.getBlockPos()), getSkyLight(entity, owner.getBlockPos()));
+			int chainLight = LightmapTextureManager.pack(this.getBlockLight(entity, owner.getBlockPos()), this.getSkyLight(entity, owner.getBlockPos()));
 
-			vertex(vert1, vertexConsumer, minU, minV, modelMatrix, normal, light);
-			vertex(vert2, vertexConsumer, minU, maxV, modelMatrix, normal, chainLight);
-			vertex(vert3, vertexConsumer, maxU, maxV, modelMatrix, normal, chainLight);
-			vertex(vert4, vertexConsumer, maxU, minV, modelMatrix, normal, light);
+			this.vertex(vert1, vertexConsumer, minU, minV, modelMatrix, normal, light);
+			this.vertex(vert2, vertexConsumer, minU, maxV, modelMatrix, normal, chainLight);
+			this.vertex(vert3, vertexConsumer, maxU, maxV, modelMatrix, normal, chainLight);
+			this.vertex(vert4, vertexConsumer, maxU, minV, modelMatrix, normal, light);
 
 			matrices.pop();
 		}
