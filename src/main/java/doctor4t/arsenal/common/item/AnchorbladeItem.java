@@ -5,7 +5,6 @@ import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
 import doctor4t.arsenal.common.util.ProjectileSlotHolder;
 import doctor4t.arsenal.common.util.WeaponSlotHolder;
-import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +29,7 @@ import xyz.amymialee.mialeemisc.util.MialeeText;
 
 import java.util.List;
 
-public class AnchorbladeItem extends PickaxeItem {
+public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem {
 	public static final DefaultParticleType[] LUX_ANCHORBLADE_SWEEP_PARTICLES = {ModParticles.LUX_ANCHORBLADE_SWEEP_1, ModParticles.LUX_ANCHORBLADE_SWEEP_2, ModParticles.LUX_ANCHORBLADE_SWEEP_3};
 
 	public AnchorbladeItem(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
@@ -58,7 +57,7 @@ public class AnchorbladeItem extends PickaxeItem {
 						}
 					}
 					world.spawnEntity(anchorbladeEntity);
-					world.playSoundFromEntity(null, anchorbladeEntity, ModSoundEvents.ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+					world.playSoundFromEntity(null, anchorbladeEntity, ModSoundEvents.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
 					if (!user.getAbilities().creativeMode) {
 						user.getInventory().removeOne(stack);
 					}
@@ -76,15 +75,21 @@ public class AnchorbladeItem extends PickaxeItem {
 
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
+		super.appendTooltip(stack, world, tooltip, context); // 0xC35913
 	}
 
-	public static void spawnSweepParticles(PlayerEntity player) {
+	@Override
+	public void spawnHitParticles(PlayerEntity player) {
 		double deltaX = -MathHelper.sin((float) (player.getYaw() * (Math.PI / 180F)));
 		double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
 		if (player.world instanceof ServerWorld serverWorld) {
 			serverWorld.spawnParticles(LUX_ANCHORBLADE_SWEEP_PARTICLES[player.getRandom().nextInt(AnchorbladeItem.LUX_ANCHORBLADE_SWEEP_PARTICLES.length)], player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
 		}
+	}
+
+	@Override
+	public void playHitSound(PlayerEntity player) {
+		player.playSound(ModSoundEvents.ITEM_ANCHORBLADE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
 	}
 
 	public static class AnchorBladeToolMaterial implements ToolMaterial {

@@ -11,14 +11,16 @@ import java.util.Map;
 public interface ModSoundEvents {
 	Map<SoundEvent, Identifier> SOUND_EVENTS = new LinkedHashMap<>();
 
-	SoundEvent ANCHORBLADE_HIT = createSoundEvent("item.anchorblade.hit");
-	SoundEvent ANCHORBLADE_THROW = createSoundEvent("item.anchorblade.throw");
-	SoundEvent ANCHORBLADE_LAND = createSoundEvent("entity.anchorblade.land");
+	SoundEvent ITEM_SCYTHE_HIT = createSoundEvent("item.scythe.hit");
+	SoundEvent ITEM_SCYTHE_SPEWING = createSoundEvent("item.clown_scythe.spewing");
+	SoundEvent ENTITY_BLOOD_SCYTHE_HIT = createSoundEvent("entity.blood_scythe.hit");
+	SoundEvent ITEM_ANCHORBLADE_HIT = createSoundEvent("item.anchorblade.hit");
+	SoundEvent ITEM_ANCHORBLADE_THROW = createSoundEvent("item.anchorblade.throw");
+	SoundEvent ENTITY_ANCHORBLADE_LAND = createSoundEvent("entity.anchorblade.land");
+
 
 	static void initialize() {
-		SOUND_EVENTS.keySet().forEach(soundEvent -> {
-			Registry.register(Registry.SOUND_EVENT, SOUND_EVENTS.get(soundEvent), soundEvent);
-		});
+		SOUND_EVENTS.keySet().forEach(soundEvent -> Registry.register(Registry.SOUND_EVENT, SOUND_EVENTS.get(soundEvent), soundEvent));
 	}
 
 	private static SoundEvent createSoundEvent(String path) {

@@ -4,6 +4,8 @@
   "package": "doctor4t.arsenal.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EnchantmentHelperMixin",
+    "EnchantmentMixin",
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",

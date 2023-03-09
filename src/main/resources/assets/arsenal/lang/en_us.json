@@ -1,10 +1,17 @@
 {
+  "item.arsenal.clown_scythe": "Clown Scythe",
   "item.arsenal.anchorblade": "Anchorblade",
 
-  "entity.anchorblade.anchorblade": "Anchorblade",
+  "enchantment.arsenal.reaping": "Reaping",
+
+  "entity.arsenal.blood_scythe": "Blood Scythe",
+  "entity.arsenal.anchorblade": "Anchorblade",
 
   "itemGroup.arsenal.arsenal": "Arsenal",
 
+  "arsenal.subtitles.item.scythe.hit": "Scythe hits",
+  "arsenal.subtitles.item.scythe.spewing": "Scythe spews",
+  "arsenal.subtitles.entity.blood_scythe.hit": "Blood Scythe lands",
   "arsenal.subtitles.item.anchorblade.hit": "Anchorblade hits",
   "arsenal.subtitles.item.anchorblade.throw": "Anchorblade throw",
   "arsenal.subtitles.entity.anchorblade.land": "Anchorblade lands",

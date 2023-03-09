@@ -3,7 +3,6 @@ package doctor4t.arsenal.client.render.entity;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -12,9 +11,6 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 
@@ -30,95 +26,72 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 	}
 
 	@Override
+	public Identifier getTexture(AnchorbladeEntity entity) {
+		return ANCHOR_TEXTURE;
+	}
+
+	@Override
 	public void render(AnchorbladeEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-		// entity
-		float yawAngle = MathHelper.lerp(tickDelta, entity.prevYaw, entity.getYaw()) - 90.0F;
-		float pitchAngle = MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch()) + 90f;
 
 		matrices.push();
-		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(yawAngle));
-		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(pitchAngle));
 
-		matrices.translate(0, 1.5, 0);
-		matrices.scale(-1.0F, -1.0F, 1.0F);
-		this.model.setAngles(entity, tickDelta, 0.0F, -0.1F, 0.0F, 0.0F);
-		this.model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getTexture(entity))), light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 0.3F);
+		float yawAngle = MathHelper.lerp(tickDelta, entity.prevYaw, entity.getYaw());
+		float pitchAngle = MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch());
+
+		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(yawAngle - 90));
+		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(pitchAngle - 90));
+		matrices.translate(0, -1.45,0);
+
+		model.setAngles(entity, tickDelta, 0, -0.1F, 0, 0);
+		model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getTexture(entity))), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+
 		matrices.pop();
 
-		if (entity.getOwner() instanceof LivingEntity owner) {
-			Vec3d entityPos = entity.getLerpedPos(tickDelta);
+		if(entity.getOwner() instanceof LivingEntity owner) {
 
-			// set up chain attachment point
 			matrices.push();
-			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(yawAngle));
-			matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(pitchAngle));
-			matrices.translate(0, 1.5, 0);
-			matrices.scale(-1.0F, -1.0F, 1.0F);
 
-			Vector4f attachmentPos = new Vector4f(this.model.getAttachmentPosition());
-			attachmentPos.transform(matrices.peek().getModel());
-			matrices.pop();
+			Vec3d pos = entity.getLerpedPos(tickDelta);
 
-			// do the actual rendering
-			matrices.push();
-			//get back to absolute world coordinates
-			matrices.translate(-entityPos.getX(), -entityPos.getY(), -entityPos.getZ());
+			Vec3d ringPos = new Vec3d(1.5, 0, 0)
+					.rotateZ(pitchAngle * MathHelper.RADIANS_PER_DEGREE)
+					.rotateY((yawAngle + 90) * MathHelper.RADIANS_PER_DEGREE);
+			Vec3d ownerPos = owner.getLeashHoldPosition(tickDelta).subtract(pos);
+			float length = (float) ringPos.distanceTo(ownerPos);
+			MatrixStack.Entry matrixEntry = matrices.peek();
+			Matrix4f modelMatrix = matrixEntry.getModel();
+			Matrix3f normal = matrixEntry.getNormal();
 
-			// render chain
-			VertexConsumer vertices = vertexConsumers.getBuffer(CHAIN_LAYER);
+			float minU = 0;
+			float maxU = 1;
+			float minV = 0;
+			float maxV = length / 8f;
+
+			VertexConsumer vertexConsumer = vertexConsumers.getBuffer(CHAIN_LAYER);
+
+
+			Vec3d offset = ownerPos.subtract(ringPos).normalize().multiply(0.25, 0, 0.25).rotateY((float) (Math.PI / 2));
+
+			Vec3d vert1 = ringPos.add(offset);
+			Vec3d vert2 = ownerPos.add(offset);
+			Vec3d vert3 = ownerPos.subtract(offset);
+			Vec3d vert4 = ringPos.subtract(offset);
+
 			int chainLight = LightmapTextureManager.pack(getBlockLight(entity, owner.getBlockPos()), getSkyLight(entity, owner.getBlockPos()));
-			Vec3d leashPosWorld = owner.getLeashHoldPosition(tickDelta);
-			Vector4f leashPosRendering = new Vector4f((float) leashPosWorld.getX(), (float) leashPosWorld.getY(), (float) leashPosWorld.getZ(), 1.0F);
-			leashPosRendering.transform(matrices.peek().getModel());
 
-			renderChain(new Vec3f(leashPosRendering.getX(), leashPosRendering.getY(), leashPosRendering.getZ()), new Vec3f(attachmentPos.getX(), attachmentPos.getY(), attachmentPos.getZ()), matrices, vertices, OverlayTexture.DEFAULT_UV, chainLight, 1.0F, 1.0F, 1.0F, 1.0F);
+			vertex(vert1, vertexConsumer, minU, minV, modelMatrix, normal, light);
+			vertex(vert2, vertexConsumer, minU, maxV, modelMatrix, normal, chainLight);
+			vertex(vert3, vertexConsumer, maxU, maxV, modelMatrix, normal, chainLight);
+			vertex(vert4, vertexConsumer, maxU, minV, modelMatrix, normal, light);
+
 			matrices.pop();
 		}
 
 		super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 	}
 
-	public static void renderChain(Vec3f start, Vec3f end, MatrixStack matrices, VertexConsumer vertexConsumer, int overlay, int light, float red, float green, float blue, float alpha) {
-		Vec3f diff = end.copy();
-		diff.subtract(start);
+	private void vertex(Vec3d vec, VertexConsumer vertexConsumer, float u, float v, Matrix4f modelMatrix, Matrix3f normal, int light) {
 
-		Vec3f up = Vec3f.POSITIVE_Z.copy();
-		Vec3f offsetStart = diff.copy();
-		offsetStart.normalize();
-		Vec3f offsetEnd = offsetStart.copy();
-
-		offsetStart.scale(0.1F);
-		offsetEnd.scale(0.07F);
-		offsetStart.cross(up);
-		offsetEnd.cross(up);
-
-		float length = MathHelper.sqrt(diff.getX() * diff.getX() + diff.getY() * diff.getY() + diff.getZ() * diff.getZ());
-		float minU = 0.0F;
-		float maxU = 1.0F;
-		float minV = 0.0F;
-		float maxV = Math.min(length / 8F, 1.0F);
-		Matrix3f normal = matrices.peek().getNormal();
-
-		Vec3f v1 = start.copy();
-		v1.subtract(offsetStart);
-
-		Vec3f v2 = start.copy();
-		v2.add(offsetStart);
-
-		Vec3f v3 = end.copy();
-		v3.add(offsetEnd);
-
-		Vec3f v4 = end.copy();
-		v4.subtract(offsetEnd);
-
-		vertexConsumer.vertex(v1.getX(), v1.getY(), v1.getZ()).color(red, green, blue, alpha).uv(maxU, maxV).overlay(overlay).light(light).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-		vertexConsumer.vertex(v2.getX(), v2.getY(), v2.getZ()).color(red, green, blue, alpha).uv(minU, maxV).overlay(overlay).light(light).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-		vertexConsumer.vertex(v3.getX(), v3.getY(), v3.getZ()).color(red, green, blue, alpha).uv(minU, minV).overlay(overlay).light(light).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-		vertexConsumer.vertex(v4.getX(), v4.getY(), v4.getZ()).color(red, green, blue, alpha).uv(maxU, minV).overlay(overlay).light(light).normal(normal, up.getX(), up.getY(), up.getZ()).next();
-	}
-
-	@Override
-	public Identifier getTexture(AnchorbladeEntity entity) {
-		return ANCHOR_TEXTURE;
+		vertexConsumer.vertex(modelMatrix, (float) vec.x, (float) vec.y, (float) vec.z).color(255, 255, 255, 255).uv(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0, 1, 0).next();
 	}
 }

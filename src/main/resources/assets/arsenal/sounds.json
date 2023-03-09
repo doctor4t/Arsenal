@@ -1,23 +1,42 @@
 {
+  "item.scythe.hit": {
+    "sounds": [
+      "arsenal:item/scythe_hit"
+    ],
+    "subtitle": "arsenal.subtitles.item.scythe.hit"
+  },
+  "item.scythe.spewing": {
+    "sounds": [
+      "arsenal:item/scythe_spewing_1",
+      "arsenal:item/scythe_spewing_2"
+    ],
+    "subtitle": "arsenal.subtitles.item.scythe.spewing"
+  },
+  "entity.blood_scythe.hit": {
+    "sounds": [
+      "arsenal:entity/blood_scythe_hit"
+    ],
+    "subtitle": "arsenal.subtitles.entity.blood_scythe.hit"
+  },
   "item.anchorblade.hit": {
     "sounds": [
-      "arsenal:anchorblade_hit_1",
-      "arsenal:anchorblade_hit_2",
-      "arsenal:anchorblade_hit_3"
+      "arsenal:item/anchorblade_hit_1",
+      "arsenal:item/anchorblade_hit_2",
+      "arsenal:item/anchorblade_hit_3"
     ],
     "subtitle": "arsenal.subtitles.item.anchorblade.hit"
   },
   "item.anchorblade.throw": {
     "sounds": [
-      "arsenal:anchorblade_throw"
+      "arsenal:item/anchorblade_throw"
     ],
     "subtitle": "arsenal.subtitles.item.anchorblade.throw"
   },
   "entity.anchorblade.land": {
     "sounds": [
-      "arsenal:anchorblade_land_1",
-      "arsenal:anchorblade_land_2",
-      "arsenal:anchorblade_land_3"
+      "arsenal:entity/anchorblade_land_1",
+      "arsenal:entity/anchorblade_land_2",
+      "arsenal:entity/anchorblade_land_3"
     ],
     "subtitle": "arsenal.subtitles.entity.anchorblade.land"
   }

@@ -2,6 +2,8 @@ package doctor4t.arsenal.common.init;
 
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
+import doctor4t.arsenal.common.entity.BloodScytheEntity;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -16,6 +18,7 @@ import java.util.Map;
 public interface ModEntities {
 	Map<EntityType<? extends Entity>, Identifier> ENTITIES = new LinkedHashMap<>();
 
+	EntityType<BloodScytheEntity> BLOOD_SCYTHE = createEntity("blood_scythe",FabricEntityTypeBuilder.<BloodScytheEntity>create(SpawnGroup.MISC, BloodScytheEntity::new).dimensions(EntityDimensions.changing(5.0f, 0.2f)).build());
 	EntityType<AnchorbladeEntity> ANCHORBLADE = createEntity("anchorblade", QuiltEntityTypeBuilder.<AnchorbladeEntity>create(SpawnGroup.MISC, AnchorbladeEntity::new).setDimensions(EntityDimensions.fixed(1.2f, 1.2f)).maxChunkTrackingRange(128).build());
 
 	private static <T extends EntityType<? extends Entity>> T createEntity(String name, T entity) {

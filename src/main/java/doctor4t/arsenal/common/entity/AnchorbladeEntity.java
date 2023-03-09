@@ -94,7 +94,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 			this.dealtDamage = true;
 		}
 
-		if (this.inGround && !this.dealtDamage) {
+		if (this.inGround && !this.dealtDamage && this.getOwner() != null && this.isOwnerAlive()) {
 			if (returnTimer++>100) {
 				this.dealtDamage =true;
 			}
@@ -189,7 +189,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 
 	@Override
 	protected SoundEvent getHitSound() {
-		return ModSoundEvents.ANCHORBLADE_LAND;
+		return ModSoundEvents.ENTITY_ANCHORBLADE_LAND;
 	}
 
 	@Override

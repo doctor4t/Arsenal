@@ -1,9 +1,6 @@
 package doctor4t.arsenal.common;
 
-import doctor4t.arsenal.common.init.ModEntities;
-import doctor4t.arsenal.common.init.ModItems;
-import doctor4t.arsenal.common.init.ModParticles;
-import doctor4t.arsenal.common.init.ModSoundEvents;
+import doctor4t.arsenal.common.init.*;
 import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import doctor4t.arsenal.common.util.WeaponSlotToggle;
 import net.minecraft.item.ItemStack;
@@ -23,6 +20,7 @@ public class Arsenal implements ModInitializer {
 	public void onInitialize(ModContainer mod) {
 		ModEntities.initialize();
 		ModItems.initialize();
+		ModEnchantments.initialize();
 		ModSoundEvents.initialize();
 		ModParticles.initialize();
 
