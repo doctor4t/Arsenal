@@ -21,7 +21,7 @@ public class AnchorbladeFeatureRenderer<T extends PlayerEntity, M extends Entity
 
 	@Override
 	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-		if (entity instanceof WeaponSlotHolder holder) {
+		if (entity.getInventory() instanceof WeaponSlotHolder holder) {
 			ItemStack anchor = holder.arsenal$getWeapon();
 			if (anchor.isEmpty()) return;
 			if (entity.getInventory() instanceof WeaponSlotToggle selection) {

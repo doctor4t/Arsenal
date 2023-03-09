@@ -36,9 +36,10 @@ public abstract class InGameHudMixin extends DrawableHelper {
 				int j = this.getZOffset();
 				this.setZOffset(-90);
 				this.drawTexture(matrices, i - 12, this.scaledHeight - 23 - 70, 0, 22, 24, 24);
-				this.setZOffset(j);
 				RenderSystem.enableBlend();
+				this.drawTexture(matrices, i - 12 + 4, this.scaledHeight - 23 - 70 + 4, 24 + 3, 22 + 4, 16, 16);
 				RenderSystem.defaultBlendFunc();
+				this.setZOffset(j);
 				int o = i - 90 + 4 * 20 + 2;
 				int p = this.scaledHeight - 19 - 70;
 				this.renderHotbarItem(o, p, tickDelta, player, holder.arsenal$getWeapon(), 1);

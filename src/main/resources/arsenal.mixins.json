@@ -16,6 +16,7 @@
     "client.ClientPlayerInteractionManagerMixin",
     "client.ClientPlayNetworkHandlerMixin",
     "client.InGameHudMixin",
+    "client.InventoryScreenMixin",
     "client.ItemRendererMixin",
     "client.MinecraftClientMixin",
     "client.PlayerEntityRendererMixin"
