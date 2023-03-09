@@ -17,6 +17,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -89,6 +90,11 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 
 				++this.returnTimer;
 			}
+		}
+
+		if (this.getOwner() != null && this.isOwnerAlive() && this.getPos().distanceTo(this.getOwner().getPos()) > 10) {
+			this.dealtDamage = true;
+
 		}
 
 		super.tick();

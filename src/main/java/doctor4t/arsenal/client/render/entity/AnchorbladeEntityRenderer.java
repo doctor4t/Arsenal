@@ -50,22 +50,13 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 
 		// chain
 		if (anchorbladeEntity.getOwner() instanceof PlayerEntity player) {
-			Arm mainArm = player.getMainArm();
-			Hand activeHand = player.getActiveHand();
-
 			matrices.push();
-			boolean rightHandIsActive = (mainArm == Arm.RIGHT && activeHand == Hand.MAIN_HAND) || (mainArm == Arm.LEFT && activeHand == Hand.OFF_HAND);
-			double bodyYawToRads = Math.toRadians(player.bodyYaw);
-			double radius = rightHandIsActive ? -0.4D : 0.4D;
-			double startX = player.getX() + radius * Math.cos(bodyYawToRads);
-			double startY = player.getY() + (player.getHeight() / 3D);
-			double startZ = player.getZ() + radius * Math.sin(bodyYawToRads);
-
 			Vec3d anchorbladePos = rotationVector.multiply(1.5f);
 
-			float distanceX = (float) (startX- anchorbladeEntity.getX());
-			float distanceY = (float) (startY - anchorbladeEntity.getY());
-			float distanceZ = (float) (startZ - anchorbladeEntity.getZ());
+			Vec3d playerPos = player.getLeashHoldPosition(tickDelta);
+			float distanceX = (float) (playerPos.getX() - anchorbladeEntity.getX());
+			float distanceY = (float) (playerPos.getY() - anchorbladeEntity.getY());
+			float distanceZ = (float) (playerPos.getZ() - anchorbladeEntity.getZ());
 
 			this.renderChain(distanceX, distanceY, distanceZ, tickDelta, anchorbladeEntity.age, matrices, vertexConsumers, light, anchorbladePos);
 			matrices.pop();
