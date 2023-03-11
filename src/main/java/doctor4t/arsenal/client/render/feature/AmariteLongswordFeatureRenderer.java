@@ -1,4 +1,4 @@
-package doctor4t.arsenal.compat.client;
+package doctor4t.arsenal.client.render.feature;
 
 import com.winsweep.amarite.registry.AmariteItems;
 import doctor4t.arsenal.common.components.BackWeaponComponent;

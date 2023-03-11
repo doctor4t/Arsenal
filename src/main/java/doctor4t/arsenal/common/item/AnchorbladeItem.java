@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
@@ -23,6 +24,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -95,6 +97,9 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
 	public void playHitSound(PlayerEntity player) {
 		player.playSound(ModSoundEvents.ITEM_ANCHORBLADE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
 	}
+
+	@Override
+	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {}
 
 	public static class AnchorBladeToolMaterial implements ToolMaterial {
 		public static final AnchorBladeToolMaterial INSTANCE = new AnchorBladeToolMaterial();
