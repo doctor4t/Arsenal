@@ -28,7 +28,7 @@ public class ClownScytheFeatureRenderer<T extends PlayerEntity, M extends Entity
 			return;
 		}
 		matrices.push();
-		matrices.translate(-0.1, 0.25, 0.275);
+		matrices.translate(0, 0, 0.275);
 		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180));
 		matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
 		matrices.scale(1.65f, 1.65f, 1.65f);
