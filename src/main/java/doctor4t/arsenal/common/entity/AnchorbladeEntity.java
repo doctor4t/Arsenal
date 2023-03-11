@@ -1,6 +1,11 @@
 package doctor4t.arsenal.common.entity;
 
-import doctor4t.arsenal.common.init.*;
+import doctor4t.arsenal.common.init.ModDamageSources;
+import doctor4t.arsenal.common.init.ModEnchantments;
+import doctor4t.arsenal.common.init.ModEntities;
+import doctor4t.arsenal.common.init.ModItems;
+import doctor4t.arsenal.common.init.ModParticles;
+import doctor4t.arsenal.common.init.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

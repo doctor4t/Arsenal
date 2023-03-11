@@ -5,7 +5,6 @@ import doctor4t.arsenal.common.item.CustomColorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Rarity;
 import org.spongepowered.asm.mixin.Mixin;

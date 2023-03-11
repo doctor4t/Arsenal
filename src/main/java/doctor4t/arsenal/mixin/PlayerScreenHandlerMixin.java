@@ -2,7 +2,6 @@ package doctor4t.arsenal.mixin;
 
 import doctor4t.arsenal.common.components.BackWeaponComponent;
 import doctor4t.arsenal.common.util.WeaponSlot;
-import doctor4t.arsenal.common.util.WeaponSlotHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
