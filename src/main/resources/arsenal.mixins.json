@@ -15,6 +15,7 @@
     "TridentItemMixin"
   ],
   "client": [
+    "HandledScreenMixin",
     "accessors.CreativeSlotAccessor",
     "client.CreativeInventoryScreenMixin",
     "client.HeldItemFeatureRendererMixin",

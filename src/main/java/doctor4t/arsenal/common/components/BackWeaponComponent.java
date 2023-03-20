@@ -41,13 +41,14 @@ public class BackWeaponComponent implements AutoSyncedComponent {
 		return ArsenalComponents.BACK_WEAPON_COMPONENT.get(player).getBackWeapon();
 	}
 
-	public void setBackWeapon(ItemStack backWeapon) {
+	public boolean setBackWeapon(ItemStack backWeapon) {
 		this.backWeapon.setStack(0, backWeapon);
 		ArsenalComponents.BACK_WEAPON_COMPONENT.sync(this.player);
+		return true;
 	}
 
-	public static void setBackWeapon(PlayerEntity player, ItemStack backWeapon) {
-		ArsenalComponents.BACK_WEAPON_COMPONENT.get(player).setBackWeapon(backWeapon);
+	public static boolean setBackWeapon(PlayerEntity player, ItemStack backWeapon) {
+		return ArsenalComponents.BACK_WEAPON_COMPONENT.get(player).setBackWeapon(backWeapon);
 	}
 
 	public SimpleInventory getBackWeaponInventory() {

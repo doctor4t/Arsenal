@@ -32,8 +32,8 @@ import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 @SuppressWarnings("unused")
 public class ArsenalClient implements ClientModInitializer {
-	private static KeyBind weaponKeybind;
-	private static KeyBind swapKeybind;
+	public static KeyBind weaponKeybind;
+	public static KeyBind swapKeybind;
 
 	public static void registerGUIHandheldVaryingWeapon(Item item) {
 		Identifier weaponId = Registry.ITEM.getId(item);
