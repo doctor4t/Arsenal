@@ -139,6 +139,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 		DamageSource damageSource = ModDamageSources.anchor(this, owner == null ? this : owner);
 		this.setDealtDamage(true);
 		SoundEvent soundEvent = this.getHitSound();
+		hitEntity.timeUntilRegen = 0;
 		if (hitEntity.damage(damageSource, damage)) {
 			if (hitEntity.getType() == EntityType.ENDERMAN) {
 				return;
