@@ -28,7 +28,7 @@ public class BackWeaponFeatureRenderer<T extends PlayerEntity, M extends EntityM
 		if (result == ActionResult.FAIL) return;
 		matrices.push();
 		matrices.translate(0, 0.35, 0.25);
-		MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+		MinecraftClient.getInstance().getItemRenderer().renderItem(entity, stack, ModelTransformation.Mode.FIXED, false, matrices, vertexConsumers, entity.world, light, OverlayTexture.DEFAULT_UV,0);
 		matrices.pop();
 	}
 }
