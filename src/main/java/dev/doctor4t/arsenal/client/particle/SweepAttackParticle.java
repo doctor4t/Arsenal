@@ -53,8 +53,9 @@ public class SweepAttackParticle extends SpriteBillboardParticle {
         public @Nullable SweepAttackParticle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             SweepAttackParticle instance = new SweepAttackParticle(world, x, y, z, this.spriteProvider);
             if (parameters instanceof SweepAttackParticleType sweepParameters && sweepParameters.initialData != null) {
-                Color color = new Color(sweepParameters.initialData.color);
+                Color color = new Color(sweepParameters.initialData.color, true);
                 instance.setColor(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
+                instance.setAlpha(color.getAlpha()/255f);
             }
             return instance;
         }

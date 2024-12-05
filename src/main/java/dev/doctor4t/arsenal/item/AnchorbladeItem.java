@@ -86,7 +86,7 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
         double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
 
         if (player.getWorld() instanceof ServerWorld serverWorld) {
-            ColoredParticleInitialData data = new ColoredParticleInitialData(0xFF0000);
+            ColoredParticleInitialData data = new ColoredParticleInitialData(0xFF2B2632);
             serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
         }
     }

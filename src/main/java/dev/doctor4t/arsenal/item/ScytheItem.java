@@ -3,6 +3,7 @@ package dev.doctor4t.arsenal.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import dev.doctor4t.arsenal.client.particle.contract.ColoredParticleInitialData;
 import dev.doctor4t.arsenal.entity.BloodScytheEntity;
 import dev.doctor4t.arsenal.index.ArsenalDamageTypes;
 import dev.doctor4t.arsenal.index.ArsenalEnchantments;
@@ -84,7 +85,12 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
                     double d = -MathHelper.sin(user.getYaw() * ((float) Math.PI / 180));
                     double e = MathHelper.cos(user.getYaw() * ((float) Math.PI / 180));
                     double pitch = user.getPitch() * -0.02;
-                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE, user.getX() + d, user.getBodyY(0.5) + pitch, user.getZ() + e, 0, d, 0.0, e, 0.0);
+
+                    double deltaX = -MathHelper.sin((float) (user.getYaw() * (Math.PI / 180F)));
+                    double deltaZ = MathHelper.cos((float) (user.getYaw() * (Math.PI / 180F)));
+
+                    ColoredParticleInitialData data = new ColoredParticleInitialData(0xFFAEB4B4);
+                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), user.getX() + deltaX, user.getBodyY(0.5D), user.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
                 }
             }
             world.playSound(null, user.getX(), user.getY(), user.getZ(), ArsenalSoundEvents.ITEM_SCYTHE_SPEWING, SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -103,7 +109,11 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
         double d0 = (-MathHelper.sin(player.getYaw() * ((float) Math.PI / 180F)));
         double d1 = MathHelper.cos(player.getYaw() * ((float) Math.PI / 180F));
         if (player.getWorld() instanceof ServerWorld serverWorld) {
-            serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE, player.getX() + d0, player.getBodyY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
+            double deltaX = -MathHelper.sin((float) (player.getYaw() * (Math.PI / 180F)));
+            double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
+
+            ColoredParticleInitialData data = new ColoredParticleInitialData(0xFFAEB4B4);
+            serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
         }
     }
 
