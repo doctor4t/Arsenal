@@ -24,14 +24,17 @@ public class AnchorbladeDynamicItemRenderer implements BuiltinItemRendererRegist
 
         BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(inHand ? WEAPON_IN_HAND : WEAPON);
 
-        // FIXME: Weird lighting for blocks in the inventory when held?
-        if (!inHand) {
-            DiffuseLighting.enableGuiDepthLighting();
-        }
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, model);
         if (!inHand) {
             DiffuseLighting.disableGuiDepthLighting();
         }
+
+        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, model);
+        ((VertexConsumerProvider.Immediate) vertexConsumers).draw();
+
+        if (!inHand) {
+            DiffuseLighting.enableGuiDepthLighting();
+        }
+
         matrices.pop();
     }
 }
