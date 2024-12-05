@@ -56,13 +56,9 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
                 if (this.getWorld().isClient) {
                     this.lastRenderY = this.getY();
                 }
-                if (this.isRecalled()) {
-                    double length = vec3d.length();
-                    this.setVelocity(vec3d.normalize().multiply(Math.min(length, d * 8)));
-                } else {
-                    double length = vec3d.length();
-                    this.setVelocity(vec3d.normalize().multiply(Math.min(length, d * 3)));
-                }
+
+                double length = vec3d.length();
+                this.setVelocity(vec3d.normalize().multiply(Math.min(length, d * 3)));
             }
             if (this.getPos().distanceTo(owner.getPos()) > 30) {
                 this.setDealtDamage(true);

@@ -3,7 +3,10 @@ package dev.doctor4t.arsenal.client.particle;
 import dev.doctor4t.arsenal.client.particle.type.SweepAttackParticleType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteBillboardParticle;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +20,7 @@ public class SweepAttackParticle extends SpriteBillboardParticle {
         super(world, x, y, z, 0.0D, 0.0D, 0.0D);
         this.spriteWithAge = spriteWithAge;
         this.maxAge = 4;
-        this.scale = 1.0F - (float) scale * 0.5F;
+        this.scale = 1.0F - scale * 0.5F;
         this.setSpriteForAge(spriteWithAge);
     }
 
@@ -51,7 +54,7 @@ public class SweepAttackParticle extends SpriteBillboardParticle {
             SweepAttackParticle instance = new SweepAttackParticle(world, x, y, z, this.spriteProvider);
             if (parameters instanceof SweepAttackParticleType sweepParameters && sweepParameters.initialData != null) {
                 Color color = new Color(sweepParameters.initialData.color);
-                instance.setColor(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
+                instance.setColor(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f);
             }
             return instance;
         }

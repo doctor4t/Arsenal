@@ -1,12 +1,20 @@
 package dev.doctor4t.arsenal.client.render.entity;
 
 import dev.doctor4t.arsenal.Arsenal;
+import dev.doctor4t.arsenal.client.ArsenalClient;
 import dev.doctor4t.arsenal.entity.AnchorbladeEntity;
+import dev.doctor4t.arsenal.index.ArsenalItems;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
@@ -15,36 +23,43 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity> {
-    private static final Identifier ANCHOR_TEXTURE = Arsenal.id("textures/item/lux_anchorblade.png");
-    private static final Identifier CHAIN_TEXTURE = Arsenal.id("textures/entity/lux_chain.png");
+    private static final ItemStack RENDER_STACK = new ItemStack(ArsenalItems.ANCHORBLADE);
+    private final ItemRenderer itemRenderer;
+    private final BakedModelManager bakedModelManager;
+
+    private static final Identifier CHAIN_TEXTURE = Arsenal.id("textures/entity/chain.png");
     private static final RenderLayer CHAIN_LAYER = RenderLayer.getEntitySmoothCutout(CHAIN_TEXTURE);
-    private final AnchorBladeEntityModel model;
 
     public AnchorbladeEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        this.model = new AnchorBladeEntityModel(ctx.getPart(ModEntityModelLayers.ANCHORBLADE));
-    }
-
-    @Override
-    public Identifier getTexture(AnchorbladeEntity entity) {
-        return ANCHOR_TEXTURE;
+        this.itemRenderer = ctx.getItemRenderer();
+        this.bakedModelManager = ctx.getModelManager();
     }
 
     @Override
     public void render(AnchorbladeEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        matrices.push();
         float yawAngle = MathHelper.lerp(tickDelta, entity.prevYaw, entity.getYaw());
         float pitchAngle = MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch());
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(yawAngle - 90));
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(pitchAngle - 90));
-        matrices.translate(0, -1.45, 0);
-        this.model.setAngles(entity, tickDelta, 0, -0.1F, 0, 0);
-        this.model.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(this.getTexture(entity))), light, OverlayTexture.DEFAULT_UV, 1, 1, 1, 1);
+
+        matrices.push();
+        matrices.translate(0, .6, 0);
+
+        float scale = 1.6f;
+        matrices.scale(scale,scale,scale);
+
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(yawAngle + 90));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-pitchAngle + 45));
+
+        BakedModel model = this.bakedModelManager.getModel(ArsenalClient.ANCHORBLADE_ENTITY_MODEL);
+        this.itemRenderer.renderItem(RENDER_STACK, ModelTransformationMode.FIXED, false, matrices, vertexConsumers, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, model);
+
         matrices.pop();
+
+        // FIXME: Chain does not link perfectly to the ring
         if (entity.getOwner() instanceof LivingEntity owner) {
             matrices.push();
             Vec3d pos = entity.getLerpedPos(tickDelta);
-            Vec3d ringPos = new Vec3d(1.5, 0, 0).rotateZ(pitchAngle * MathHelper.RADIANS_PER_DEGREE).rotateY((yawAngle + 90) * MathHelper.RADIANS_PER_DEGREE);
+            Vec3d ringPos = new Vec3d(1, 0, 0).rotateZ(pitchAngle * MathHelper.RADIANS_PER_DEGREE).rotateY((yawAngle + 90) * MathHelper.RADIANS_PER_DEGREE);
             Vec3d ownerPos = owner.getLeashPos(tickDelta).subtract(pos);
             float length = (float) ringPos.distanceTo(ownerPos);
             MatrixStack.Entry matrixEntry = matrices.peek();
@@ -67,10 +82,14 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
             this.vertex(vert4, vertexConsumer, maxU, minV, modelMatrix, normal, light);
             matrices.pop();
         }
-        super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
     }
 
     private void vertex(Vec3d vec, VertexConsumer vertexConsumer, float u, float v, Matrix4f modelMatrix, Matrix3f normal, int light) {
         vertexConsumer.vertex(modelMatrix, (float) vec.x, (float) vec.y, (float) vec.z).color(255, 255, 255, 255).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0, 1, 0).next();
+    }
+
+    @Override
+    public Identifier getTexture(AnchorbladeEntity entity) {
+        return null;
     }
 }

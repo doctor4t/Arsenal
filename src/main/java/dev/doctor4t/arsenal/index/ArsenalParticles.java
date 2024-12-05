@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public interface ArsenalParticles {
     Map<ParticleType<?>, Identifier> PARTICLES = new LinkedHashMap<>();
@@ -26,7 +25,7 @@ public interface ArsenalParticles {
     DefaultParticleType BLOOD_BUBBLE_SPLATTER = create("blood_bubble_splatter", FabricParticleTypes.simple(true));
     DefaultParticleType SHOCKWAVE = create("shockwave", FabricParticleTypes.simple(true));
 
-     static void initialize() {
+    static void initialize() {
         PARTICLES.keySet().forEach(particle -> Registry.register(Registries.PARTICLE_TYPE, PARTICLES.get(particle), particle));
     }
 
@@ -35,7 +34,7 @@ public interface ArsenalParticles {
         return particle;
     }
 
-     static void registerFactories() {
+    static void registerFactories() {
         ParticleFactoryRegistry.getInstance().register(SWEEP_ATTACK_PARTICLE, SweepAttackParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(BLOOD_BUBBLE, BloodBubbleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(BLOOD_BUBBLE_SPLATTER, BloodBubbleSplatterParticle.Factory::new);

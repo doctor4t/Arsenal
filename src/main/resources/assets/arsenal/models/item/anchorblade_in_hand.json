@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "arsenal:item/scythe"
+    "layer0": "arsenal:item/anchorblade"
   },
   "display": {
     "thirdperson_righthand": {
@@ -24,13 +24,13 @@
     "thirdperson_lefthand": {
       "rotation": [
         0,
-        90,
-        -55
+        -90,
+        55
       ],
       "translation": [
         0,
         5,
-        0.5
+        -0.5
       ],
       "scale": [
         1.6,
@@ -58,11 +58,11 @@
     "firstperson_lefthand": {
       "rotation": [
         0,
-        90,
-        -25
+        -90,
+        25
       ],
       "translation": [
-        1.13,
+        -1.13,
         4.2,
         1.13
       ],

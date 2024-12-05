@@ -15,10 +15,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public interface ArsenalItems {
     Map<Item, Identifier> ITEMS = new LinkedHashMap<>();

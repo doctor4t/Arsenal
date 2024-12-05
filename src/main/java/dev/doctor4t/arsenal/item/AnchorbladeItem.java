@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -55,6 +54,7 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
                         owner.arsenal$setAnchor(anchorbladeEntity);
                         world.spawnEntity(anchorbladeEntity);
                         world.playSoundFromEntity(null, anchorbladeEntity, ArsenalSoundEvents.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        return TypedActionResult.success(user.getStackInHand(hand));
                     }
                 }
                 user.incrementStat(Stats.USED.getOrCreateStat(this));

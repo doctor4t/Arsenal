@@ -8,14 +8,14 @@ import net.minecraft.particle.ParticleEffect;
 
 @Environment(EnvType.CLIENT)
 public class SweepAttackParticleType extends DefaultParticleType {
-	public ColoredParticleInitialData initialData;
+    public ColoredParticleInitialData initialData;
 
-	public SweepAttackParticleType(boolean alwaysShow) {
-		super(alwaysShow);
-	}
+    public SweepAttackParticleType(boolean alwaysShow) {
+        super(alwaysShow);
+    }
 
-	public ParticleEffect setData(ColoredParticleInitialData target) {
-		this.initialData = target;
-		return this;
-	}
+    public ParticleEffect setData(ColoredParticleInitialData target) {
+        this.initialData = target;
+        return this;
+    }
 }
