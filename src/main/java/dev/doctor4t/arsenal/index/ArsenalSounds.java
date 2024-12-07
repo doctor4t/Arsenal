@@ -3,46 +3,29 @@ package dev.doctor4t.arsenal.index;
 import dev.doctor4t.arsenal.Arsenal;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public interface ArsenalSounds {
+    Map<SoundEvent, Identifier> SOUND_EVENTS = new LinkedHashMap<>();
 
-    List<SoundEvent> SOUND_EVENTS = new LinkedList<>();
-
-    SoundEvent BLOCK_RAT_MAID_PLUSH_HONK = create("block.rat_maid_plush.honk");
-    SoundEvent BLOCK_FOLLY_PLUSH_HONK = create("block.folly_plush.honk");
-    SoundEvent BLOCK_MAUVE_PLUSH_HONK = create("block.mauve_plush.honk");
-
-    static SoundEvent create(String name) {
-        SoundEvent soundEvent = SoundEvent.of(Arsenal.id(name));
-        SOUND_EVENTS.add(soundEvent);
-        return soundEvent;
-    }
-
-    static BlockSoundGroup createBlockSoundGroup(String name, float volume, float pitch) {
-        return new BlockSoundGroup(volume, pitch,
-                create("block." + name + ".break"),
-                create("block." + name + ".step"),
-                create("block." + name + ".place"),
-                create("block." + name + ".hit"),
-                create("block." + name + ".fall"));
-    }
-
-    static BlockSoundGroup copyBlockSoundGroup(BlockSoundGroup blockSoundGroup, float volume, float pitch) {
-        return new BlockSoundGroup(volume, pitch,
-                blockSoundGroup.getBreakSound(),
-                blockSoundGroup.getStepSound(),
-                blockSoundGroup.getPlaceSound(),
-                blockSoundGroup.getHitSound(),
-                blockSoundGroup.getFallSound());
-    }
+    SoundEvent ITEM_SCYTHE_HIT = createSoundEvent("item.scythe.hit");
+    SoundEvent ITEM_SCYTHE_SPEWING = createSoundEvent("item.scythe.spewing");
+    SoundEvent ENTITY_BLOOD_SCYTHE_HIT = createSoundEvent("entity.blood_scythe.hit");
+    SoundEvent ITEM_ANCHORBLADE_HIT = createSoundEvent("item.anchorblade.hit");
+    SoundEvent ITEM_ANCHORBLADE_THROW = createSoundEvent("item.anchorblade.throw");
+    SoundEvent ENTITY_ANCHORBLADE_LAND = createSoundEvent("entity.anchorblade.land");
 
     static void initialize() {
-        SOUND_EVENTS.forEach(soundEvent -> Registry.register(Registries.SOUND_EVENT, soundEvent.getId(), soundEvent));
+        SOUND_EVENTS.keySet().forEach(soundEvent -> Registry.register(Registries.SOUND_EVENT, SOUND_EVENTS.get(soundEvent), soundEvent));
     }
 
+    private static SoundEvent createSoundEvent(String path) {
+        SoundEvent soundEvent = SoundEvent.of(new Identifier(Arsenal.MOD_ID, path));
+        SOUND_EVENTS.put(soundEvent, new Identifier(Arsenal.MOD_ID, path));
+        return soundEvent;
+    }
 }

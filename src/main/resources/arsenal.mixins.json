@@ -30,6 +30,6 @@
     "client.ItemEntityRendererMixin",
     "client.ItemRendererMixin",
     "client.MinecraftClientMixin",
-    "client.PlayerEntityRendererMixin",
+    "client.PlayerEntityRendererMixin"
   ]
 }

@@ -4,7 +4,6 @@ import dev.doctor4t.arsenal.Arsenal;
 import dev.doctor4t.arsenal.index.ArsenalItems;
 import dev.doctor4t.arsenal.item.AnchorbladeItem;
 import dev.doctor4t.arsenal.item.ScytheItem;
-import dev.doctor4t.ratatouille.index.RatatouilleBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -25,7 +24,6 @@ public class ArsenalModelGen extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
-        generator.registerSimpleState(RatatouilleBlocks.MAUVE_PLUSH);
     }
 
     @Override

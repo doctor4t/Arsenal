@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import dev.doctor4t.arsenal.index.ArsenalDamageTypes;
 import dev.doctor4t.arsenal.index.ArsenalEntities;
 import dev.doctor4t.arsenal.index.ArsenalParticles;
-import dev.doctor4t.arsenal.index.ArsenalSoundEvents;
+import dev.doctor4t.arsenal.index.ArsenalSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -68,7 +68,7 @@ public class BloodScytheEntity extends PersistentProjectileEntity {
 
     @Override
     protected SoundEvent getHitSound() {
-        return ArsenalSoundEvents.ENTITY_BLOOD_SCYTHE_HIT;
+        return ArsenalSounds.ENTITY_BLOOD_SCYTHE_HIT;
     }
 
     @Override

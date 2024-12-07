@@ -32,7 +32,7 @@ public class Arsenal implements ModInitializer {
         ArsenalEntities.initialize();
         ArsenalItems.initialize();
         ArsenalEnchantments.initialize();
-        ArsenalSoundEvents.initialize();
+        ArsenalSounds.initialize();
         ArsenalParticles.initialize();
 
         ServerPlayNetworking.registerGlobalReceiver(SERVERBOUND_HOLD_WEAPON_PACKET, (server, player, handler, buf, responseSender) -> {

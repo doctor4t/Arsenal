@@ -7,7 +7,7 @@ import dev.doctor4t.arsenal.client.particle.contract.ColoredParticleInitialData;
 import dev.doctor4t.arsenal.entity.AnchorbladeEntity;
 import dev.doctor4t.arsenal.index.ArsenalEnchantments;
 import dev.doctor4t.arsenal.index.ArsenalParticles;
-import dev.doctor4t.arsenal.index.ArsenalSoundEvents;
+import dev.doctor4t.arsenal.index.ArsenalSounds;
 import dev.doctor4t.arsenal.util.AnchorOwner;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.BlockState;
@@ -94,7 +94,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
                         anchorbladeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F + (float) riptide * 0.5F, 1.0F);
                         owner.arsenal$setAnchor(anchorbladeEntity);
                         world.spawnEntity(anchorbladeEntity);
-                        world.playSoundFromEntity(null, anchorbladeEntity, ArsenalSoundEvents.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        world.playSoundFromEntity(null, anchorbladeEntity, ArsenalSounds.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
                         // TODO: Make it so the counter only enables when hitting an entity with the anchorblade instead?
                         user.getItemCooldownManager().set(this, 20);
@@ -134,7 +134,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
 
     @Override
     public void playHitSound(PlayerEntity player) {
-        player.playSound(ArsenalSoundEvents.ITEM_ANCHORBLADE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
+        player.playSound(ArsenalSounds.ITEM_ANCHORBLADE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
     }
 
     public static class AnchorBladeToolMaterial implements ToolMaterial {

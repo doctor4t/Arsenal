@@ -14,43 +14,32 @@ public class ArsenalLangGen extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder builder) {
         builder.add(ArsenalItems.ANCHORBLADE, "Anchorblade");
-        builder.add(ArsenalItems.SCYTHE, "Scythe");
         builder.add(ArsenalEntities.ANCHORBLADE, "Anchorblade");
+        builder.add(ArsenalItems.SCYTHE, "Scythe");
         builder.add(ArsenalEntities.BLOOD_SCYTHE, "Blood Scythe");
+        builder.add(ArsenalItems.WEAPON_RACK, "Weapon Rack");
+        builder.add(ArsenalEntities.WEAPON_RACK, "Weapon Rack");
         builder.add("tooltip.supporter_only", "Cosmetics are reserved to Ko-Fi and YouTube members only.\nIf you want access to them (and other cool perks), consider supporting!");
-
-
-//        "item.arsenal.scythe": "Clown Scythe",
-//                "item.arsenal.anchorblade": "Anchorblade",
-//                "item.arsenal.anchorblade.tooltip_1": "Orginally designed by Diansu and forged by RAT to be gifted",
-//                "item.arsenal.anchorblade.tooltip_2": "to Lux in a distant universe, this weapon has seen many worlds.",
-//                "item.arsenal.anchorblade.tooltip_3": "After this Lux saw her own die, she travelled to another one",
-//                "item.arsenal.anchorblade.tooltip_4": "to hand it to this new world's Lux. Since then, it has been",
-//                "item.arsenal.anchorblade.tooltip_5": "passed on for generations, almost as a tradition,",
-//                "item.arsenal.anchorblade.tooltip_6": "one coral fan growing for every Lux who owned it.",
-//                "tooltip.arsenal.hidden": "Press [Sneak] to show lore",
-//                "enchantment.arsenal.spewing": "Spewing",
-//                "enchantment.arsenal.spewing.desc": "Using the Scythe will spew out a blood blade damaging you and transferring half the duration of your potion effects to any entity hit.",
-//                "enchantment.arsenal.reeling": "Reeling",
-//                "enchantment.arsenal.reeling.desc": "Using the Anchorblade will reel you in like a grapple or reel in the hit entity.",
-//                "entity.arsenal.blood_scythe": "Blood Scythe",
-//                "entity.arsenal.anchorblade": "Anchorblade",
-//                "itemGroup.arsenal.arsenal": "Arsenal",
-//                "arsenal.subtitles.item.scythe.hit": "Scythe hits",
-//                "arsenal.subtitles.item.scythe.spewing": "Scythe spews",
-//                "arsenal.subtitles.entity.blood_scythe.hit": "Blood Scythe lands",
-//                "arsenal.subtitles.item.anchorblade.hit": "Anchorblade hits",
-//                "arsenal.subtitles.item.anchorblade.throw": "Anchorblade throw",
-//                "arsenal.subtitles.entity.anchorblade.land": "Anchorblade lands",
-//                "category.arsenal": "Arsenal",
-//                "key.arsenal.select_weapon": "Select Weapon Slot",
-//                "key.arsenal.swap_weapon": "Swap with Weapon Slot",
-//                "trinkets.slot.chest.arsenalweapon": "Back Weapon",
-//                "death.attack.spewing": "%1$s bled out",
-//                "death.attack.spewing.player": "%1$s bled out whilst fighting %2$s",
-//                "death.attack.blood_scythe": "%1$s suffered bad blood",
-//                "death.attack.blood_scythe.player": "%1$s suffered bad blood whilst fighting %2$s",
-//                "death.attack.anchor": "%1$s got anchored",
-//                "death.attack.anchor.player": "%1$s got anchored by %2$s"
+        builder.add("tooltip.arsenal.anchorblade_lux", "Orginally designed by Diansu and forged by RAT to be gifted\nto Lux in a distant universe, this weapon has seen many worlds.\nAfter this Lux saw her own die, she travelled to another one\nto hand it to this new world's Lux. Since then, it has been\npassed on for generations, almost as a tradition,\none coral fan growing for every Lux who owned it.");
+        builder.add("tooltip.arsenal.hidden", "Press [Sneak] to show lore");
+        builder.add("enchantment.arsenal.spewing", "Spewing");
+        builder.add("enchantment.arsenal.spewing.desc", "Using the Scythe will spew out a blood blade damaging you and transferring half the duration of your potion effects to any entity hit.");
+        builder.add("enchantment.arsenal.reeling", "Reeling");
+        builder.add("enchantment.arsenal.reeling.desc", "Using the Anchorblade will reel you in like a grapple or reel in the hit entity.");
+        builder.add("arsenal.subtitles.item.scythe.hit", "Scythe hits");
+        builder.add("arsenal.subtitles.item.scythe.spewing", "Scythe spews");
+        builder.add("arsenal.subtitles.entity.blood_scythe.hit", "Blood Scythe lands");
+        builder.add("arsenal.subtitles.item.anchorblade.hit", "Anchorblade hits");
+        builder.add("arsenal.subtitles.item.anchorblade.throw", "Anchorblade throw");
+        builder.add("arsenal.subtitles.entity.anchorblade.land", "Anchorblade lands");
+        builder.add("category.arsenal", "Arsenal");
+        builder.add("key.arsenal.select_weapon", "Select Weapon Slot");
+        builder.add("key.arsenal.swap_weapon", "Swap with Weapon Slot");
+        builder.add("death.attack.spewing", "%1$s bled out");
+        builder.add("death.attack.spewing.player", "%1$s bled out whilst fighting %2$s");
+        builder.add("death.attack.blood_scythe", "%1$s suffered bad blood");
+        builder.add("death.attack.blood_scythe.player", "%1$s suffered bad blood whilst fighting %2$s");
+        builder.add("death.attack.anchor", "%1$s got anchored");
+        builder.add("death.attack.anchor.player", "%1$s got anchored by %2$s");
     }
 }

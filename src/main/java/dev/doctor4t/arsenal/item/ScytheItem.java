@@ -11,7 +11,7 @@ import dev.doctor4t.arsenal.entity.BloodScytheEntity;
 import dev.doctor4t.arsenal.index.ArsenalDamageTypes;
 import dev.doctor4t.arsenal.index.ArsenalEnchantments;
 import dev.doctor4t.arsenal.index.ArsenalParticles;
-import dev.doctor4t.arsenal.index.ArsenalSoundEvents;
+import dev.doctor4t.arsenal.index.ArsenalSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
@@ -140,7 +140,7 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
                     serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), user.getX() + deltaX, user.getBodyY(0.5D), user.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
                 }
             }
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), ArsenalSoundEvents.ITEM_SCYTHE_SPEWING, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), ArsenalSounds.ITEM_SCYTHE_SPEWING, SoundCategory.PLAYERS, 1.0f, 1.0f);
             return TypedActionResult.success(user.getStackInHand(hand));
         }
         return super.use(world, user, hand);
@@ -164,7 +164,7 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
 
     @Override
     public void playHitSound(PlayerEntity player) {
-        player.playSound(ArsenalSoundEvents.ITEM_SCYTHE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
+        player.playSound(ArsenalSounds.ITEM_SCYTHE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
     }
 
     @Override

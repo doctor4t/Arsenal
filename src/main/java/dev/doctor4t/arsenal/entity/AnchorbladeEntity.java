@@ -185,7 +185,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
 
     @Override
     protected SoundEvent getHitSound() {
-        return ArsenalSoundEvents.ENTITY_ANCHORBLADE_LAND;
+        return ArsenalSounds.ENTITY_ANCHORBLADE_LAND;
     }
 
     @Override
