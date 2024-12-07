@@ -5,6 +5,7 @@ import dev.doctor4t.arsenal.cca.BackWeaponComponent;
 import dev.doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
 import dev.doctor4t.arsenal.client.render.entity.BloodScytheEntityRenderer;
 import dev.doctor4t.arsenal.client.render.entity.ModEntityModelLayers;
+import dev.doctor4t.arsenal.client.render.entity.WeaponRackEntityRenderer;
 import dev.doctor4t.arsenal.client.render.item.AnchorbladeDynamicItemRenderer;
 import dev.doctor4t.arsenal.client.render.item.ScytheDynamicItemRenderer;
 import dev.doctor4t.arsenal.index.ArsenalEntities;
@@ -30,6 +31,7 @@ import org.lwjgl.glfw.GLFW;
 public class ArsenalClient implements ClientModInitializer {
     public static ModelTransformationMode currentMode = ModelTransformationMode.NONE;
 
+
     static {
         for (var mode : ModelTransformationMode.values()) {
             ModelPredicateProviderRegistry.register(Arsenal.id(mode.name().toLowerCase()), (stack, world, entity, seed) -> mode == currentMode ? 1.0F : 0.0F);
@@ -48,6 +50,7 @@ public class ArsenalClient implements ClientModInitializer {
         // Force load the weapon models (otherwise since they're never called they wouldn't be loaded by default)
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(ScytheDynamicItemRenderer.MODELS_TO_REGISTER));
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(AnchorbladeDynamicItemRenderer.MODELS_TO_REGISTER));
+        ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(WeaponRackEntityRenderer.MODEL));
 
         // model layers initialization
         ModEntityModelLayers.initialize();
@@ -55,6 +58,7 @@ public class ArsenalClient implements ClientModInitializer {
         // entity renderers registration
         EntityRendererRegistry.register(ArsenalEntities.BLOOD_SCYTHE, BloodScytheEntityRenderer::new);
         EntityRendererRegistry.register(ArsenalEntities.ANCHORBLADE, AnchorbladeEntityRenderer::new);
+        EntityRendererRegistry.register(ArsenalEntities.WEAPON_RACK, WeaponRackEntityRenderer::new);
 
         // particle renderers registration
         ArsenalParticles.registerFactories();

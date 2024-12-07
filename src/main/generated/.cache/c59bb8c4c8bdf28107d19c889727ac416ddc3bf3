@@ -1,10 +1,11 @@
-// 1.20.1	2024-12-06T17:58:32.9453959	Arsenal/Model Definitions
+// 1.20.1	2024-12-07T13:21:00.6728351	Arsenal/Model Definitions
 d66b24be3cb6102c879744d3d779ab91ae47ed9a assets\arsenal\models\item\scythe_inventory.json
 e0f7b66a84e6588f01abbbce75b1803ffe5d46e2 assets\arsenal\models\item\anchorblade.json
 624cf371ed34d991f6efb295d4e7da9c7fcf9e35 assets\arsenal\models\item\scythe_clown_in_hand.json
 d3a57d217b023245f68377bd2a22fa859ff07e42 assets\arsenal\models\item\anchorblade_lux_inventory.json
 a81bf3ef0681df721936c605e97a72f2bdc3ab0e assets\arsenal\models\item\anchorblade_carrion_inventory.json
 39f35f525c94da62ff468f7bdeb0088eb50b45de assets\arsenal\models\item\anchorblade_gilded_inventory.json
+fd4ee6d97f3a8996854c33bba2e734ba045dff6f assets\arsenal\models\item\weapon_rack.json
 3ef644aef2ecc5f2173d43af05647a4f99d5044d assets\arsenal\models\item\anchorblade_carrion_in_hand.json
 6a50501c37a619fd251efbf8c8b41aa45dec2d56 assets\arsenal\models\item\scythe_gilded_in_hand.json
 0e685ce4055582937939a076028417ef28fc9b4e assets\arsenal\models\item\anchorblade_lux_in_hand.json
