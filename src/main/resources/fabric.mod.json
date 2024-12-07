@@ -1,48 +1,47 @@
 {
-  "schemaVersion": 1,
-  "id": "arsenal",
-  "version": "${version}",
-  "name": "Arsenal",
-  "description": "",
-  "authors": [
-    "doctor4t"
-  ],
-  "contact": {
-    "homepage": "https://modrinth.com/mod/arsenal",
-    "sources": "https://github.com/doctor4t/Arsenal"
-  },
-  "license": "ARR",
-  "icon": "assets/arsenal/icon.png",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "dev.doctor4t.arsenal.Arsenal"
-    ],
-    "client": [
-      "dev.doctor4t.arsenal.client.ArsenalClient"
-    ],
-    "fabric-datagen": [
-      "dev.doctor4t.arsenal.datagen.ArsenalDatagen"
-    ],
-    "cardinal-components": [
-      "dev.doctor4t.arsenal.cca.ArsenalComponents"
-    ]
-  },
-  "mixins": [
-    "arsenal.mixins.json"
-  ],
-  "accessWidener": "arsenal.accesswidener",
-  "custom": {
-    "cardinal-components": [
-      "arsenal:back_weapon",
-      "arsenal:weapon_skin"
-    ]
-  },
-  "depends": {
-    "fabricloader": ">=0.16.9",
-    "minecraft": "~1.20.1",
-    "java": ">=17",
-    "fabric-api": "*",
-    "ratatouille": ">=1.0.7-1.20.1"
-  }
+	"schemaVersion": 1,
+	"id": "arsenal",
+	"version": "${version}",
+	"name": "Arsenal",
+	"description": "",
+	"authors": [
+		"doctor4t"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/arsenal",
+		"sources": "https://github.com/doctor4t/Arsenal"
+	},
+	"license": "ARR",
+	"icon": "assets/arsenal/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.doctor4t.arsenal.Arsenal"
+		],
+		"client": [
+			"dev.doctor4t.arsenal.client.ArsenalClient"
+		],
+		"fabric-datagen": [
+			"dev.doctor4t.arsenal.datagen.ArsenalDatagen"
+		],
+		"cardinal-components": [
+			"dev.doctor4t.arsenal.cca.ArsenalComponents"
+		]
+	},
+	"mixins": [
+		"arsenal.mixins.json"
+	],
+	"accessWidener" : "arsenal.accesswidener",
+	"custom": {
+		"cardinal-components": [
+			"arsenal:back_weapon",
+			"arsenal:weapon_skin"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
 }
