@@ -110,6 +110,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        // TODO: Display skin name and color
         // TODO: Only apply that tooltip for the custom lux skin
 //        if (Screen.hasShiftDown()) {
 //            for (int i = 1; i <= 6; i++) {
@@ -123,6 +124,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
 
     @Override
     public void spawnHitParticles(PlayerEntity player) {
+        // TODO: Custom colors for each skin
         double deltaX = -MathHelper.sin((float) (player.getYaw() * (Math.PI / 180F)));
         double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
 

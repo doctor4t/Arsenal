@@ -30,6 +30,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -90,6 +91,8 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
 
                 Skin nextSkin = Skin.getNext(currentSkin);
                 weaponSkinComponent.setSkin(nextSkin.getName());
+
+                context.getPlayer().playSound(SoundEvents.BLOCK_ANVIL_USE, 0.5f, 1.5f);
 
                 return ActionResult.SUCCESS;
             }
