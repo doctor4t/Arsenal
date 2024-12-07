@@ -10,6 +10,7 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -29,10 +30,18 @@ public class BackWeaponFeatureRenderer<T extends PlayerEntity, M extends EntityM
 
         matrices.push();
 
-        if (entity.isSneaking()) {
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(32.5f));
-            matrices.translate(0, 0.25, -0.15);
-        } else if (entity.isSprinting()) {
+        ActionResult result = WeaponSlotCallback.EVENT.invoker().interact(entity, stack);
+        if (result == ActionResult.FAIL) {
+            matrices.translate(0.0, 0.25, 0.05);
+            matrices.scale(1.5f, 1.5f, 1.5f);
+        } else {
+            matrices.translate(0, 0.25, 0.10);
+        }
+
+//        if (entity.isSneaking()) {
+//            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(32.5f));
+//            matrices.translate(0, 0.25, -0.15);
+//        } else if (entity.isSprinting()) {
             // TODO: Slight tilt when sprinting to not clip with legs, need to make a component to store sprinting ticks and lerp
             matrices.translate(0.0F, 0.0F, 0.125F);
             double d = MathHelper.lerp(tickDelta, entity.prevCapeX, entity.capeX)
@@ -46,9 +55,9 @@ public class BackWeaponFeatureRenderer<T extends PlayerEntity, M extends EntityM
             double p = (-MathHelper.cos(n * (float) (Math.PI / 180.0)));
             float q = (float)e * 10.0F;
             q = MathHelper.clamp(q, -6.0F, 32.0F);
-            float r = (float)(d * o + m * p) * 100.0F;
+            float r = (float)(d * o + m * p) * 50.0F;
             r = MathHelper.clamp(r, 0.0F, 150.0F);
-            float s = (float)(d * p - m * o) * 100.0F;
+            float s = (float)(d * p - m * o) * 50.0F;
             s = MathHelper.clamp(s, -20.0F, 20.0F);
             if (r < 0.0F) {
                 r = 0.0F;
@@ -66,17 +75,7 @@ public class BackWeaponFeatureRenderer<T extends PlayerEntity, M extends EntityM
 
 //            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(32.5f));
 //            matrices.translate(0, 0.0, -0.15);
-        }
-
-        ActionResult result = WeaponSlotCallback.EVENT.invoker().interact(entity, stack);
-        if (result == ActionResult.FAIL) {
-            matrices.translate(0.0, 0.25, 0.275);
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
-            matrices.scale(1.5f, 1.5f, 1.5f);
-        } else {
-            matrices.translate(0, 0.35, 0.25);
-        }
+//        }
 
         MinecraftClient.getInstance().getItemRenderer().renderItem(entity, stack, ModelTransformationMode.FIXED, false, matrices, vertexConsumers, entity.getWorld(), light, OverlayTexture.DEFAULT_UV, 0);
         matrices.pop();
