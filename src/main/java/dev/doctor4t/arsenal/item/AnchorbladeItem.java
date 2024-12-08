@@ -24,6 +24,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -129,7 +130,10 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
                 tooltip.add(Text.literal(TextUtils.formatValueString(weaponSkinComponent.getSkinName())).styled(style -> style.withColor(skin.getFirstColor())));
                 if (skin.lore != null) {
                     if (Screen.hasShiftDown()) {
-                        tooltip.add(Text.translatable(skin.lore).styled(style -> style.withColor(Formatting.DARK_GRAY)));
+                        MutableText translatable = Text.translatable(skin.lore);
+                        for (String line : translatable.getString().split("\n")) {
+                            tooltip.add(Text.literal(line).styled(style -> style.withColor(Formatting.DARK_GRAY)));
+                        }
                     } else {
                         tooltip.add(Text.translatable("tooltip.arsenal.hidden").styled(style -> style.withColor(Formatting.DARK_GRAY)));
                     }
