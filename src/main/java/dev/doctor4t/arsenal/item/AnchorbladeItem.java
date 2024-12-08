@@ -109,9 +109,6 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
                         world.spawnEntity(anchorbladeEntity);
                         world.playSoundFromEntity(null, anchorbladeEntity, ArsenalSounds.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
-                        // TODO: Make it so the counter only enables when hitting an entity with the anchorblade instead?
-                        user.getItemCooldownManager().set(this, 20);
-
                         return TypedActionResult.success(user.getStackInHand(hand));
                     }
                 }

@@ -151,6 +151,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
             if (hitEntity.getType() == EntityType.ENDERMAN) {
                 return;
             }
+
             if (hitEntity instanceof LivingEntity hitLivingEntity) {
                 if (owner instanceof LivingEntity) {
                     EnchantmentHelper.onUserDamaged(hitLivingEntity, owner);
@@ -167,6 +168,10 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
                     }
                 }
                 this.onHit(hitLivingEntity);
+            }
+
+            if (this.getOwner() instanceof PlayerEntity player) {
+                player.getItemCooldownManager().set(ArsenalItems.ANCHORBLADE, 40);
             }
         }
         this.setVelocity(this.getVelocity().multiply(-0.01, -0.1, -0.01));
