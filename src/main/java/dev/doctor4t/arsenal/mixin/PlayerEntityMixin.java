@@ -77,9 +77,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
     private void arsenal$scytheReelTargetOnCrit(Entity target, CallbackInfo ci) {
         if (this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
             float strength = 1f;
-            if (target instanceof MobEntity mob) {
-                strength = (float) (.25f * (1.0 - mob.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
-                mob.addStatusEffect(new StatusEffectInstance(ArsenalStatusEffects.STUN, 10, 0, false, false, false));
+            if (target instanceof LivingEntity livingEntity) {
+                strength = (float) (.25f * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
+                livingEntity.addStatusEffect(new StatusEffectInstance(ArsenalStatusEffects.STUN, 10, 0, false, false, false));
             }
             target.setVelocity(this.getPos().subtract(target.getPos()).multiply(strength));
             target.velocityModified = true;
