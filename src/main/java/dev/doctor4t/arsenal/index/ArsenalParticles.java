@@ -5,7 +5,7 @@ import dev.doctor4t.arsenal.client.particle.BloodBubbleParticle;
 import dev.doctor4t.arsenal.client.particle.BloodBubbleSplatterParticle;
 import dev.doctor4t.arsenal.client.particle.ShockwaveParticle;
 import dev.doctor4t.arsenal.client.particle.SweepAttackParticle;
-import dev.doctor4t.arsenal.client.particle.type.SweepAttackParticleType;
+import dev.doctor4t.arsenal.client.particle.type.SweepParticleType;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
@@ -20,7 +20,8 @@ import java.util.Map;
 public interface ArsenalParticles {
     Map<ParticleType<?>, Identifier> PARTICLES = new LinkedHashMap<>();
 
-    SweepAttackParticleType SWEEP_ATTACK_PARTICLE = create("sweep_attack", new SweepAttackParticleType(true));
+    SweepParticleType SWEEP_PARTICLE = create("sweep", new SweepParticleType(true));
+    SweepParticleType SWEEP_SHADOW_PARTICLE = create("sweep_shadow", new SweepParticleType(true));
     DefaultParticleType BLOOD_BUBBLE = create("blood_bubble", FabricParticleTypes.simple(true));
     DefaultParticleType BLOOD_BUBBLE_SPLATTER = create("blood_bubble_splatter", FabricParticleTypes.simple(true));
     DefaultParticleType SHOCKWAVE = create("shockwave", FabricParticleTypes.simple(true));
@@ -35,7 +36,8 @@ public interface ArsenalParticles {
     }
 
     static void registerFactories() {
-        ParticleFactoryRegistry.getInstance().register(SWEEP_ATTACK_PARTICLE, SweepAttackParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(SWEEP_PARTICLE, SweepAttackParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(SWEEP_SHADOW_PARTICLE, SweepAttackParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(BLOOD_BUBBLE, BloodBubbleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(BLOOD_BUBBLE_SPLATTER, BloodBubbleSplatterParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SHOCKWAVE, ShockwaveParticle.Factory::new);

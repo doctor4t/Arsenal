@@ -153,7 +153,7 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
                     double deltaZ = MathHelper.cos((float) (user.getYaw() * (Math.PI / 180F)));
 
                     ColoredParticleInitialData data = new ColoredParticleInitialData(0xFFAEB4B4);
-                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), user.getX() + deltaX, user.getBodyY(0.5D), user.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
+                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_PARTICLE.setData(data), user.getX() + deltaX, user.getBodyY(0.5D), user.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
                 }
             }
             world.playSound(null, user.getX(), user.getY(), user.getZ(), ArsenalSounds.ITEM_SCYTHE_SPEWING, SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -195,7 +195,7 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
                     double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
 
                     ColoredParticleInitialData data = new ColoredParticleInitialData(skin.color);
-                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
+                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_PARTICLE.setData(data), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
                 }
             }
         }

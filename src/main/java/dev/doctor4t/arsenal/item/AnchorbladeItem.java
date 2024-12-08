@@ -140,7 +140,6 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
 
     @Override
     public void spawnHitParticles(PlayerEntity player) {
-        // TODO: Make the particle take two colors, for more control over the sprite and make the swings look better
         if (player.getWorld() instanceof ServerWorld serverWorld) {
             WeaponSkinComponent weaponSkinComponent = ArsenalComponents.WEAPON_SKIN_COMPONENT.getNullable(player.getMainHandStack());
             if (weaponSkinComponent != null) {
@@ -150,8 +149,8 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
                     double deltaX = -MathHelper.sin((float) (player.getYaw() * (Math.PI / 180F)));
                     double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
 
-                    ColoredParticleInitialData data = new ColoredParticleInitialData(skin.color);
-                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_ATTACK_PARTICLE.setData(data), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
+                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_PARTICLE.setData(new ColoredParticleInitialData(skin.color)), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
+                    serverWorld.spawnParticles(ArsenalParticles.SWEEP_SHADOW_PARTICLE.setData(new ColoredParticleInitialData(skin.shadowColor)), player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
                 }
             }
         }
@@ -203,20 +202,22 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
 
 
     public enum Skin {
-        DEFAULT(0xFF2B2632, null),
-        LUX(0xFFD37619, "tooltip.arsenal.anchorblade_lux"),
-        CARRION(0xFFB03E45, null),
-        GILDED(0xFFF1BC5A, null);
+        DEFAULT(0xFF2B2632, 0xFF2B2632, null),
+        LUX(0xFFD37619, 0xFFD37619, "tooltip.arsenal.anchorblade_lux"),
+        CARRION(0xFFB03E45, 0xFFB03E45, null),
+        GILDED(0xFFF1BC5A, 0xFFF1BC5A, null);
 
         public final Identifier chainTexture;
         public final Identifier anchorbladeEntityModel;
         public final int color;
+        public final int shadowColor;
         public final @Nullable String lore;
 
-        Skin(int color, @Nullable String lore) {
+        Skin(int color, int shadowColor, @Nullable String lore) {
             this.chainTexture = Arsenal.id(this.getName().equals("default") ? "textures/entity/chain.png" : "textures/entity/chain_" + this.getName() + ".png");
             this.anchorbladeEntityModel = Arsenal.id(this.getName().equals("default") ? "item/anchorblade_in_hand" : "item/anchorblade_" + this.getName() + "_in_hand");
             this.color = color;
+            this.shadowColor = shadowColor;
             this.lore = lore;
         }
 
