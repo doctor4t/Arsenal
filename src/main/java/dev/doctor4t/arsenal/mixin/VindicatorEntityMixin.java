@@ -26,6 +26,7 @@ public abstract class VindicatorEntityMixin extends IllagerEntity {
             int i = random.nextInt(16);
             if (i < 10) {
                 this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ArsenalItems.SCYTHE));
+                this.updateDropChances(EquipmentSlot.MAINHAND);
             }
         }
     }
