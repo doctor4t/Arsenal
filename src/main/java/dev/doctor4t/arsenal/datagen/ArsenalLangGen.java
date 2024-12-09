@@ -40,7 +40,7 @@ public class ArsenalLangGen extends FabricLanguageProvider {
         builder.add("key.arsenal.swap_weapon", "Swap with Weapon Slot");
         builder.add("death.attack.spewing", "%1$s bled out");
         builder.add("death.attack.spewing.player", "%1$s bled out whilst fighting %2$s");
-        builder.add("death.attack.blood_scythe.item", "%1$s suffered bad blood");
+        builder.add("death.attack.blood_scythe", "%1$s suffered bad blood");
         builder.add("death.attack.blood_scythe.player", "%1$s suffered bad blood whilst fighting %2$s");
         builder.add("death.attack.anchor", "%1$s got anchored");
         builder.add("death.attack.anchor.player", "%1$s got anchored by %2$s");

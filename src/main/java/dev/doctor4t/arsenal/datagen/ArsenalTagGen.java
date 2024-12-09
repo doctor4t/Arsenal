@@ -19,7 +19,8 @@ public class ArsenalTagGen {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
             this.getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE)
-                    .addOptional(ArsenalDamageTypes.ANCHOR);
+                    .addOptional(ArsenalDamageTypes.ANCHOR)
+                    .addOptional(ArsenalDamageTypes.BLOOD_SCYTHE);
 
             this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
                     .addOptional(ArsenalDamageTypes.SPEWING);
