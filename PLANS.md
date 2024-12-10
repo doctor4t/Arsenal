@@ -1,7 +1,7 @@
 - Merge impaled's sincere loyalty and maybe hellfork
 - Add rocket hammer
   - Right click allows a boost forward 
-  - Enchantment that allows for end crystals to be used as explosive balls (crystal crasher, grace hammer from explosive ideas)
+  - Enchantment that allows for end crystals to be used as explosive balls (crystal crasher, clown hammer from explosive ideas)
 - Add steel balls
   - Need to be spun before being thrown, the more it's spun the faster and more damage it'll do 
   - Scan: homing enchantment similar to the elder trident

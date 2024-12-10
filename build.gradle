@@ -71,6 +71,7 @@ dependencies {
 
 	// Runtime mods
 	modLocalImplementation "com.terraformersmc:modmenu:${mod_menu_version}"
+	modLocalImplementation "dev.emi:trinkets:${trinkets_version}"
 }
 
 processResources {

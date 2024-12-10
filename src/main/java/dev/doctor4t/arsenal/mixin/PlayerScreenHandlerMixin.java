@@ -19,7 +19,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
         super(screenHandlerType, i);
     }
 
-    @Inject(method = "<init>", at = @At("TAIL"))
+    @Inject(method = "<init>", at = @At("RETURN"))
     private void arsenal$init(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo ci) {
         this.addSlot(new WeaponSlot(BackWeaponComponent.getBackWeaponInventory(inventory.player), 0, 77, 44));
     }

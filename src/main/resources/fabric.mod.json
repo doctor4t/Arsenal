@@ -3,7 +3,7 @@
 	"id": "arsenal",
 	"version": "${version}",
 	"name": "Arsenal",
-	"description": "",
+	"description": "A weapons mod focused on adding few but qualitative weapons",
 	"authors": [
 		"doctor4t"
 	],

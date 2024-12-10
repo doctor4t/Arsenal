@@ -28,7 +28,7 @@ public class ArsenalLangGen extends FabricLanguageProvider {
         builder.add("enchantment.arsenal.spewing", "Spewing");
         builder.add("enchantment.arsenal.spewing.desc", "Using the Scythe will spew out a blood blade damaging you and transferring half the duration of your potion effects to any entity hit.");
         builder.add("enchantment.arsenal.reeling", "Reeling");
-        builder.add("enchantment.arsenal.reeling.desc", "Using the Anchorblade will reel you in like a grapple or reel in the hit entity.");
+        builder.add("enchantment.arsenal.reeling.desc", "Using the Anchorblade will no longer knock back entities but instead reel you or the hit entity in like a grapple.");
         builder.add("arsenal.subtitles.item.scythe.hit", "Scythe hits");
         builder.add("arsenal.subtitles.item.scythe.spewing", "Scythe spews");
         builder.add("arsenal.subtitles.entity.blood_scythe.hit", "Blood Scythe lands");

@@ -17,8 +17,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 public class WeaponRackItem extends Item {
-    private static final Text RANDOM_TEXT = Text.translatable("painting.random").formatted(Formatting.GRAY);
-
     public WeaponRackItem(Item.Settings settings) {
         super(settings);
     }
