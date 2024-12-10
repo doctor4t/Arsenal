@@ -171,7 +171,7 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
             Skin skin = Skin.fromString(weaponSkinComponent.getSkinName());
 
             if (skin != null) {
-                tooltip.add(Text.literal(TextUtils.formatValueString(skin.tooltipName != null ? skin.tooltipName : skin.getName())).styled(style -> style.withColor(skin.color)));
+                tooltip.add(Text.literal(skin.tooltipName != null ? skin.tooltipName : TextUtils.formatValueString(skin.getName())).styled(style -> style.withColor(skin.color)));
                 if (skin.lore != null) {
                     if (Screen.hasShiftDown()) {
                         MutableText translatable = Text.translatable(skin.lore);
@@ -221,7 +221,8 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
         GRACE(0xFFD90420, 0xFF8C0420, null, "tooltip.arsenal.scythe_grace"),
         CARRION(0xFFE9DFB8, 0xFF9D806E, null, null),
         GILDED(0xFFF1BC5A, 0xFFE28634, null, null),
-        ROZE(0xFFB70066, 0xFF710949, null, null);
+        ROZE(0xFFB70066, 0xFF710949, null, null),
+        FOLLY(0xFFFF005A, 0xFFBC0045, "Folly Tree Branch", null);
 
         public final int color;
         public final int shadowColor;

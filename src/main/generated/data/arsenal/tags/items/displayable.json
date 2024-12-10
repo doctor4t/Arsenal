@@ -6,8 +6,8 @@
       "required": false
     },
     "#arsenal:big_weapons",
+    "#arsenal:tridents",
     "#arsenal:shields",
-    "#arsenal:ranged_weapons",
-    "#arsenal:tridents"
+    "#arsenal:ranged_weapons"
   ]
 }

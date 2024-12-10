@@ -1,11 +1,13 @@
-// 1.20.1	2024-12-10T15:46:16.238019	Arsenal/Model Definitions
+// 1.20.1	2024-12-10T16:25:30.0300639	Arsenal/Model Definitions
 d66b24be3cb6102c879744d3d779ab91ae47ed9a assets\arsenal\models\item\scythe_inventory.json
 297a7eab4482593309fa4781e538a40d2c654508 assets\arsenal\models\item\scythe_grace_in_hand.json
 e0f7b66a84e6588f01abbbce75b1803ffe5d46e2 assets\arsenal\models\item\anchorblade.json
+28121a7e413a91a88bd1befb4801a2c4ed695f16 assets\arsenal\models\item\scythe_folly_inventory.json
 a81bf3ef0681df721936c605e97a72f2bdc3ab0e assets\arsenal\models\item\anchorblade_carrion_inventory.json
-57632c06217fef19c4c261b358e66fe8fe7f8540 assets\arsenal\models\item\anchorblade_lancre_inventory.json
 8ef1fa0697acda6eb51b314e82cf077bc2c51895 assets\arsenal\models\item\scythe_grace_inventory.json
+57632c06217fef19c4c261b358e66fe8fe7f8540 assets\arsenal\models\item\anchorblade_lancre_inventory.json
 39f35f525c94da62ff468f7bdeb0088eb50b45de assets\arsenal\models\item\anchorblade_gilded_inventory.json
+7a61bf4082b0a4f26695900fb25f92e57c881bb1 assets\arsenal\models\item\scythe_folly_in_hand.json
 cfff8324815c3d80f8ea94428799fa8f7a6406af assets\arsenal\models\item\scythe_roze_in_hand.json
 fd4ee6d97f3a8996854c33bba2e734ba045dff6f assets\arsenal\models\item\weapon_rack.json
 3ef644aef2ecc5f2173d43af05647a4f99d5044d assets\arsenal\models\item\anchorblade_carrion_in_hand.json
