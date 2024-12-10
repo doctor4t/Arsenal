@@ -129,7 +129,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
         if (weaponSkinComponent != null && !weaponSkinComponent.getSkinName().equals(Skin.DEFAULT.getName())) {
             Skin skin = Skin.fromString(weaponSkinComponent.getSkinName());
             if (skin != null) {
-                tooltip.add(Text.literal(TextUtils.formatValueString(skin.tooltipName != null ? skin.tooltipName : skin.getName())).styled(style -> style.withColor(skin.getFirstColor())));
+                tooltip.add(Text.literal(skin.tooltipName != null ? skin.tooltipName : TextUtils.formatValueString(skin.getName())).styled(style -> style.withColor(skin.getFirstColor())));
                 if (skin.lore != null) {
                     if (Screen.hasShiftDown()) {
                         MutableText translatable = Text.translatable(skin.lore);
@@ -176,7 +176,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
 
     public enum Skin {
         DEFAULT(new int[]{0xFF2B2632}, new int[]{0xFF1B1B1B}, null, null),
-        LANCRE(new int[]{0xFFFF5E00, 0xFF37965B, 0xFFA51BB7}, new int[]{0xFFC52400, 0xFF115642, 0xFF671081}, "L'Ancre", "tooltip.arsenal.anchorblade_lancre"),
+        LANCRE(new int[]{0xFFE7761F, 0xFF37965B, 0xFFA51BB7}, new int[]{0xFFA84701, 0xFF115642, 0xFF671081}, "L'Ancre", "tooltip.arsenal.anchorblade_lancre"),
         CARRION(new int[]{0xFFE9DFB8}, new int[]{0xFF9D806E}, null, null),
         GILDED(new int[]{0xFFF1BC5A}, new int[]{0xFFE28634}, null, null);
 
