@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.doctor4t.arsenal.client.ArsenalClient;
+import dev.doctor4t.arsenal.util.ArsenalConfig;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
@@ -26,14 +27,14 @@ public class ItemRendererMixin {
 
     @WrapOperation(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 0))
     public boolean arsenal$preventTridentModel1(ItemStack instance, Item item, Operation<Boolean> original) {
-        return false; // TODO: Probably have a config option to enable or disable custom trident rendering
+        return original.call(instance, item) && !ArsenalConfig.CUSTOM_TRIDENT_RENDERING;
     }
     @WrapOperation(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 2))
     public boolean arsenal$preventTridentModel2(ItemStack instance, Item item, Operation<Boolean> original) {
-        return false; // TODO: Probably have a config option to enable or disable custom trident rendering
+        return original.call(instance, item) && !ArsenalConfig.CUSTOM_TRIDENT_RENDERING;
     }
     @WrapOperation(method = "getModel", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 0))
     public boolean arsenal$preventTridentModel3(ItemStack instance, Item item, Operation<Boolean> original) {
-        return false; // TODO: Probably have a config option to enable or disable custom trident rendering
+        return original.call(instance, item) && !ArsenalConfig.CUSTOM_TRIDENT_RENDERING;
     }
 }

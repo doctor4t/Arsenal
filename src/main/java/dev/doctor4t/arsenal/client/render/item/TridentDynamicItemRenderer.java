@@ -1,22 +1,27 @@
 package dev.doctor4t.arsenal.client.render.item;
 
 import dev.doctor4t.arsenal.Arsenal;
-import dev.doctor4t.arsenal.index.ArsenalCosmetics;
-import dev.doctor4t.arsenal.item.ScytheItem;
+import dev.doctor4t.arsenal.cca.ArsenalComponents;
+import dev.doctor4t.arsenal.util.ArsenalConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
+import net.minecraft.util.math.RotationAxis;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TridentDynamicItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
     public static final List<ModelIdentifier> MODELS_TO_REGISTER = new ArrayList<>();
@@ -48,13 +53,14 @@ public class TridentDynamicItemRenderer implements BuiltinItemRendererRegistry.D
         matrices.translate(.5, .5, .5);
 
         Pair<ModelIdentifier, ModelIdentifier> modelIdentifierPair = getModelIdentifierModelIdentifierPair(stack);
-        BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(!inHand ? modelIdentifierPair.getLeft() : modelIdentifierPair.getRight());
+        BakedModel model = ArsenalConfig.CUSTOM_TRIDENT_RENDERING ? MinecraftClient.getInstance().getBakedModelManager().getModel(!inHand ? modelIdentifierPair.getLeft() : modelIdentifierPair.getRight()) : MinecraftClient.getInstance().getBakedModelManager().getModel(ItemRenderer.TRIDENT_IN_HAND);
 
         if (inInventory) {
             DiffuseLighting.disableGuiDepthLighting();
         }
 
         MinecraftClient.getInstance().getItemRenderer().renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, model);
+
         if (vertexConsumers instanceof VertexConsumerProvider.Immediate immediate) {
             immediate.draw();
         }

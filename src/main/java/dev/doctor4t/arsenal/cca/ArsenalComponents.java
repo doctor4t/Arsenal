@@ -10,6 +10,7 @@ import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import dev.onyxstudios.cca.api.v3.item.ItemComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.item.ItemComponentInitializer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.TridentItem;
 
 public class ArsenalComponents implements EntityComponentInitializer, ItemComponentInitializer {
     public static final ComponentKey<BackWeaponComponent> BACK_WEAPON_COMPONENT = ComponentRegistry.getOrCreate(Arsenal.id("back_weapon"), BackWeaponComponent.class);
@@ -22,6 +23,6 @@ public class ArsenalComponents implements EntityComponentInitializer, ItemCompon
 
     @Override
     public void registerItemComponentFactories(ItemComponentFactoryRegistry registry) {
-        registry.register(item -> item instanceof ArsenalWeaponItem, WEAPON_OWNER_COMPONENT, WeaponOwnerComponent::new);
+        registry.register(item -> item instanceof ArsenalWeaponItem || item instanceof TridentItem, WEAPON_OWNER_COMPONENT, WeaponOwnerComponent::new);
     }
 }

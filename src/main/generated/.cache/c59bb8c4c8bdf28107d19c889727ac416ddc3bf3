@@ -1,12 +1,12 @@
-// 1.20.1	2024-12-13T17:38:07.1732417	Arsenal/Model Definitions
+// 1.20.1	2024-12-13T18:19:02.1309451	Arsenal/Model Definitions
 e0f7b66a84e6588f01abbbce75b1803ffe5d46e2 assets\arsenal\models\item\anchorblade.json
 a81bf3ef0681df721936c605e97a72f2bdc3ab0e assets\arsenal\models\item\anchorblade_carrion_inventory.json
 c28529242677fca881866b436c08485c06ebefdf assets\arsenal\models\item\scythe_scissors_inventory.json
 7a61bf4082b0a4f26695900fb25f92e57c881bb1 assets\arsenal\models\item\scythe_folly_in_hand.json
 ceda8896b35ace4dab795e2ca1477014dd1813d4 assets\arsenal\models\item\anchorblade_winsweep_in_hand.json
 4d99426c2c231dac1f34cf950319124736d7c83a assets\arsenal\models\item\trident_in_hand.json
-fc017ed3f79cb1670ca187ba6b2bfc3fae9bf5d1 assets\arsenal\models\item\anchorblade_ambessa_inventory.json
 4da226c9a910c5b8b2d7d7e0969b9465f4910039 assets\arsenal\models\item\anchorblade_luxintrus_in_hand.json
+fc017ed3f79cb1670ca187ba6b2bfc3fae9bf5d1 assets\arsenal\models\item\anchorblade_ambessa_inventory.json
 e0f7b66a84e6588f01abbbce75b1803ffe5d46e2 assets\minecraft\models\item\trident.json
 487c16a44a35f8e531ef2d4f53227eb11150c116 assets\arsenal\models\item\anchorblade_in_hand.json
 53a9114ef125b6d84f6df587cc81ea0a3cce0516 assets\arsenal\models\item\scythe_roze_inventory.json
@@ -28,5 +28,5 @@ fd4ee6d97f3a8996854c33bba2e734ba045dff6f assets\arsenal\models\item\weapon_rack.
 78fdffa9a6eb7bbf196ec75074e56fdafd5beecf assets\arsenal\models\item\scythe_carrion_inventory.json
 d8352babae05e329fa8176d2a95e38a8d3230cb0 assets\arsenal\models\item\anchorblade_inventory.json
 6a4cf940b81338978a095b7216eb194399afe0ab assets\arsenal\models\item\anchorblade_gilded_in_hand.json
-baffa6b7a0711fc943240f694a482b40dee8ef00 assets\arsenal\models\item\scythe_in_hand.json
 b7562fcf2401ddfee8ccd6301ad088f53e208eec assets\arsenal\models\item\anchorblade_luxintrus_inventory.json
+baffa6b7a0711fc943240f694a482b40dee8ef00 assets\arsenal\models\item\scythe_in_hand.json

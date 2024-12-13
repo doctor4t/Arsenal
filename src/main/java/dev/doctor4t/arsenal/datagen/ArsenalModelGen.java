@@ -45,7 +45,6 @@ public class ArsenalModelGen extends FabricModelProvider {
             }
         }
 
-        registerBuiltinModel(Items.TRIDENT, generator);
         registerTemplateWeaponHandheld(TRIDENT_IN_HAND, null, Arsenal.id("trident"), generator);
         registerTemplateWeaponInventory(TRIDENT_IN_HAND, null, Arsenal.id("trident"), ModelIds.getItemModelId(Items.TRIDENT), generator);
 

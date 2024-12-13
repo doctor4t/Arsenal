@@ -2,6 +2,7 @@ package dev.doctor4t.arsenal.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import dev.doctor4t.arsenal.util.ArsenalConfig;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BuiltinModelItemRendererMixin {
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 1))
     public boolean render(ItemStack instance, Item item, Operation<Boolean> original) {
-        return false; // TODO: Probably have a config option to enable or disable custom trident rendering
+        return original.call(instance, item) && !ArsenalConfig.CUSTOM_TRIDENT_RENDERING;
     }
 }
