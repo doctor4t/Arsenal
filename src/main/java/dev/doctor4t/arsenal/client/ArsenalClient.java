@@ -3,10 +3,7 @@ package dev.doctor4t.arsenal.client;
 import dev.doctor4t.arsenal.Arsenal;
 import dev.doctor4t.arsenal.cca.BackWeaponComponent;
 import dev.doctor4t.arsenal.client.particle.contract.ColoredParticleInitialData;
-import dev.doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
-import dev.doctor4t.arsenal.client.render.entity.BloodScytheEntityRenderer;
-import dev.doctor4t.arsenal.client.render.entity.ModEntityModelLayers;
-import dev.doctor4t.arsenal.client.render.entity.WeaponRackEntityRenderer;
+import dev.doctor4t.arsenal.client.render.entity.*;
 import dev.doctor4t.arsenal.client.render.item.AnchorbladeDynamicItemRenderer;
 import dev.doctor4t.arsenal.client.render.item.ScytheDynamicItemRenderer;
 import dev.doctor4t.arsenal.client.render.item.TridentDynamicItemRenderer;
@@ -28,6 +25,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -72,6 +70,7 @@ public class ArsenalClient implements ClientModInitializer {
         // entity renderers registration
         EntityRendererRegistry.register(ArsenalEntities.BLOOD_SCYTHE, BloodScytheEntityRenderer::new);
         EntityRendererRegistry.register(ArsenalEntities.ANCHORBLADE, AnchorbladeEntityRenderer::new);
+        EntityRendererRegistry.register(EntityType.TRIDENT, ArsenalTridentEntityRenderer::new);
         EntityRendererRegistry.register(ArsenalEntities.WEAPON_RACK, WeaponRackEntityRenderer::new);
 
         // particle renderers registration

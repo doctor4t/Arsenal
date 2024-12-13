@@ -14,11 +14,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-import java.rmi.registry.Registry;
 import java.util.Optional;
 
 public class ArsenalModelGen extends FabricModelProvider {
     public static final Model BIG_WEAPON_IN_HAND = model("item/template_big_weapon_in_hand", "_in_hand", TextureKey.LAYER0);
+    public static final Model TRIDENT_IN_HAND = model("item/template_trident_in_hand", "_in_hand", TextureKey.LAYER0);
 
 
     public ArsenalModelGen(FabricDataOutput output) {
@@ -33,21 +33,21 @@ public class ArsenalModelGen extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator generator) {
         registerBuiltinModel(ArsenalItems.SCYTHE, generator);
         for (ScytheItem.Skin value : ScytheItem.Skin.values()) {
-            registerBigWeapon(value == ScytheItem.Skin.DEFAULT ? null : value.getName(), ArsenalItems.SCYTHE, generator);
+            registerTemplateWeapon(BIG_WEAPON_IN_HAND, value == ScytheItem.Skin.DEFAULT ? null : value.getName(), ArsenalItems.SCYTHE, generator);
         }
 
         registerBuiltinModel(ArsenalItems.ANCHORBLADE, generator);
         for (AnchorbladeItem.Skin value : AnchorbladeItem.Skin.values()) {
             if (value == AnchorbladeItem.Skin.AMBESSA) {
-                registerBigWeaponInventory(value.getName(), ArsenalItems.ANCHORBLADE, generator);
+                registerTemplateWeaponInventory(BIG_WEAPON_IN_HAND, value.getName(), ArsenalItems.ANCHORBLADE, generator);
             } else {
-                registerBigWeapon(value == AnchorbladeItem.Skin.DEFAULT ? null : value.getName(), ArsenalItems.ANCHORBLADE, generator);
+                registerTemplateWeapon(BIG_WEAPON_IN_HAND, value == AnchorbladeItem.Skin.DEFAULT ? null : value.getName(), ArsenalItems.ANCHORBLADE, generator);
             }
         }
 
         registerBuiltinModel(Items.TRIDENT, generator);
-        registerBigWeaponHandheld(null, Arsenal.id("trident"), generator);
-        registerBigWeaponInventory(null, Arsenal.id("trident"), ModelIds.getItemModelId(Items.TRIDENT), generator);
+        registerTemplateWeaponHandheld(TRIDENT_IN_HAND, null, Arsenal.id("trident"), generator);
+        registerTemplateWeaponInventory(TRIDENT_IN_HAND, null, Arsenal.id("trident"), ModelIds.getItemModelId(Items.TRIDENT), generator);
 
         generator.register(ArsenalItems.WEAPON_RACK, Models.GENERATED);
     }
@@ -60,37 +60,37 @@ public class ArsenalModelGen extends FabricModelProvider {
         return model(parent, null, keys);
     }
 
-    private void registerBigWeapon(@Nullable String name, Item item, ItemModelGenerator generator) {
-        this.registerBigWeaponHandheld(name, item, generator);
-        this.registerBigWeaponInventory(name, item, generator);
+    private void registerTemplateWeapon(Model templateModel, @Nullable String name, Item item, ItemModelGenerator generator) {
+        this.registerTemplateWeaponHandheld(templateModel, name, item, generator);
+        this.registerTemplateWeaponInventory(templateModel, name, item, generator);
     }
 
-    private void registerBigWeapon(@Nullable String name, Identifier itemId, ItemModelGenerator generator) {
-        this.registerBigWeaponHandheld(name, itemId, generator);
-        this.registerBigWeaponInventory(name, itemId, generator);
+    private void registerTemplateWeapon(Model templateModel, @Nullable String name, Identifier itemId, ItemModelGenerator generator) {
+        this.registerTemplateWeaponHandheld(templateModel, name, itemId, generator);
+        this.registerTemplateWeaponInventory(templateModel, name, itemId, generator);
     }
 
-    private void registerBigWeaponHandheld(@Nullable String name, Item item, ItemModelGenerator generator) {
-        registerBigWeaponHandheld(name, Registries.ITEM.getId(item), generator);
+    private void registerTemplateWeaponHandheld(Model templateModel, @Nullable String name, Item item, ItemModelGenerator generator) {
+        registerTemplateWeaponHandheld(templateModel, name, Registries.ITEM.getId(item), generator);
     }
 
-    private void registerBigWeaponHandheld(@Nullable String name, Identifier itemId, ItemModelGenerator generator) {
+    private void registerTemplateWeaponHandheld(Model templateModel, @Nullable String name, Identifier itemId, ItemModelGenerator generator) {
         Identifier handheldModelName = (name == null ? getItemSubId(itemId, "_in_hand") : getItemSubId(itemId, "_" + name + "_in_hand"));
         Identifier handheldTexture = (name == null ? getItemId(itemId) : getItemSubId(itemId, "_" + name));
 
-        BIG_WEAPON_IN_HAND.upload(handheldModelName, TextureMap.layer0(handheldTexture), generator.writer); // this is the actual handheld model
+        templateModel.upload(handheldModelName, TextureMap.layer0(handheldTexture), generator.writer); // this is the actual handheld model
     }
 
-    private void registerBigWeaponInventory(@Nullable String name, Item item, ItemModelGenerator generator) {
-        registerBigWeaponInventory(name, Registries.ITEM.getId(item), generator);
+    private void registerTemplateWeaponInventory(Model templateModel, @Nullable String name, Item item, ItemModelGenerator generator) {
+        registerTemplateWeaponInventory(templateModel, name, Registries.ITEM.getId(item), generator);
     }
 
-    private void registerBigWeaponInventory(@Nullable String name, Identifier itemId, ItemModelGenerator generator) {
+    private void registerTemplateWeaponInventory(Model templateModel, @Nullable String name, Identifier itemId, ItemModelGenerator generator) {
         Identifier inventoryTexture = (name == null ? getItemSubId(itemId, "_inventory") : getItemSubId(itemId, "_" + name + "_inventory"));
-        registerBigWeaponInventory(name, itemId, inventoryTexture, generator);
+        registerTemplateWeaponInventory(templateModel, name, itemId, inventoryTexture, generator);
     }
 
-    private void registerBigWeaponInventory(@Nullable String name, Identifier itemModelId, Identifier inventoryTexture, ItemModelGenerator generator) {
+    private void registerTemplateWeaponInventory(Model templateModel, @Nullable String name, Identifier itemModelId, Identifier inventoryTexture, ItemModelGenerator generator) {
         Identifier inventoryModelName = (name == null ? getItemSubId(itemModelId, "_inventory") : getItemSubId(itemModelId, "_" + name + "_inventory"));
 
         Models.HANDHELD.upload(inventoryModelName, TextureMap.layer0(inventoryTexture), generator.writer); // this is actually the inventory model

@@ -1,5 +1,5 @@
 {
-  "parent": "arsenal:item/template_big_weapon_in_hand",
+  "parent": "arsenal:item/template_trident_in_hand",
   "textures": {
     "layer0": "arsenal:item/trident"
   }
