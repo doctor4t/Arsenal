@@ -52,11 +52,14 @@ public abstract class InGameHudMixin {
                 RenderSystem.disableBlend();
             } else {
                 Arm arm = player.getMainArm().getOpposite();
+                RenderSystem.enableBlend();
                 if (arm == Arm.RIGHT) {
                     context.drawTexture(ClickableWidget.WIDGETS_TEXTURE, i - 91 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
                 } else {
                     context.drawTexture(ClickableWidget.WIDGETS_TEXTURE, i + 91, this.scaledHeight - 23, 53, 22, 29, 24);
                 }
+                RenderSystem.defaultBlendFunc();
+
                 int n = this.scaledHeight - 16 - 3;
                 if (arm == Arm.RIGHT) {
                     this.renderHotbarItem(context, i - 91 - 26, n, tickDelta, player, stack, 0);
