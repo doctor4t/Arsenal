@@ -2,16 +2,12 @@ package dev.doctor4t.arsenal;
 
 import dev.doctor4t.arsenal.cca.BackWeaponComponent;
 import dev.doctor4t.arsenal.index.*;
-import dev.upcraft.datasync.api.util.Entitlements;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public class Arsenal implements ModInitializer {
     public static final String MOD_ID = "arsenal";

@@ -1,8 +1,6 @@
 package dev.doctor4t.arsenal.client.render.item;
 
 import dev.doctor4t.arsenal.Arsenal;
-import dev.doctor4t.arsenal.cca.ArsenalComponents;
-import dev.doctor4t.arsenal.cca.WeaponOwnerComponent;
 import dev.doctor4t.arsenal.index.ArsenalCosmetics;
 import dev.doctor4t.arsenal.item.ScytheItem;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;

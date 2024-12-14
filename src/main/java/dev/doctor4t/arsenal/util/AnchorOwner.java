@@ -6,7 +6,7 @@ import net.minecraft.util.Hand;
 public interface AnchorOwner {
     void arsenal$setAnchor(Hand hand, AnchorbladeEntity anchor);
 
-    AnchorbladeEntity arsenal$getAnchor(Hand hand,boolean reeling);
+    AnchorbladeEntity arsenal$getAnchor(Hand hand, boolean reeling);
 
-    boolean arsenal$isAnchorActive(Hand hand,boolean reeling);
+    boolean arsenal$isAnchorActive(Hand hand, boolean reeling);
 }

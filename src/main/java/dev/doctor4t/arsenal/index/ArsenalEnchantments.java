@@ -1,7 +1,6 @@
 package dev.doctor4t.arsenal.index;
 
 import dev.doctor4t.arsenal.Arsenal;
-import dev.doctor4t.arsenal.enchantment.HeftEnchantment;
 import dev.doctor4t.arsenal.enchantment.ReelingEnchantment;
 import dev.doctor4t.arsenal.enchantment.SpewingEnchantment;
 import net.minecraft.enchantment.Enchantment;

@@ -1,7 +1,5 @@
 package dev.doctor4t.arsenal.client.render.entity;
 
-import dev.doctor4t.arsenal.cca.ArsenalComponents;
-import dev.doctor4t.arsenal.cca.WeaponOwnerComponent;
 import dev.doctor4t.arsenal.entity.AnchorbladeEntity;
 import dev.doctor4t.arsenal.index.ArsenalCosmetics;
 import dev.doctor4t.arsenal.item.AnchorbladeItem;

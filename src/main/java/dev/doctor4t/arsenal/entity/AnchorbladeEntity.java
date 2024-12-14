@@ -101,7 +101,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
                 // impact
                 this.getWorld().addParticle(ArsenalParticles.SHOCKWAVE, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
                 for (LivingEntity hitEntity : this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(radius), LivingEntity::isAlive)) {
-                    float strength = (float) (2f * (1.0 - hitEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
+                    float strength = (float) (1f * (1.0 - hitEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
                     if (!(strength <= 0.0)) {
                         this.velocityDirty = true;
                         Vec3d distance = hitEntity.getPos().add(0, hitEntity.getHeight() / 2f, 0).subtract(this.getPos());
@@ -111,7 +111,7 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
                         }
                         float proximity = (float) MathHelper.lerp(MathHelper.clamp(distance.length() / radius, 0, 1), 1, 0);
                         Vec3d direction = distance.normalize().multiply(proximity * strength);
-                        hitEntity.setVelocity(direction.x, direction.y, direction.z);
+                        hitEntity.addVelocity(direction.x, direction.y, direction.z);
                         hitEntity.fallDistance = 0;
                     }
                 }
@@ -157,14 +157,14 @@ public class AnchorbladeEntity extends PersistentProjectileEntity {
                     EnchantmentHelper.onUserDamaged(hitLivingEntity, owner);
                     EnchantmentHelper.onTargetDamaged((LivingEntity) owner, hitLivingEntity);
                     // knockback or reel in
-                    float strength = (float) (3f * (1.0 - hitLivingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
+                    float strength = (float) (1f * (1.0 - hitLivingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE)));
                     if (!(strength <= 0.0)) {
                         this.velocityDirty = true;
                         Vec3d dir = hitLivingEntity.getPos().subtract(owner.getPos()).normalize().multiply(strength);
                         if (this.hasReeling()) {
                             dir = owner.getPos().subtract(hitLivingEntity.getPos()).multiply(strength / 10f);
                         }
-                        hitLivingEntity.setVelocity(dir.x, dir.y, dir.z);
+                        hitLivingEntity.addVelocity(dir.x, dir.y, dir.z);
                     }
                 }
                 this.onHit(hitLivingEntity);

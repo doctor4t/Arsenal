@@ -27,7 +27,6 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -60,12 +59,14 @@ public class ArsenalClient implements ClientModInitializer {
         // Built-in Item Renderers
         BuiltinItemRendererRegistry.INSTANCE.register(ArsenalItems.SCYTHE, new ScytheDynamicItemRenderer());
         BuiltinItemRendererRegistry.INSTANCE.register(ArsenalItems.ANCHORBLADE, new AnchorbladeDynamicItemRenderer());
-        if (ArsenalConfig.CUSTOM_TRIDENT_RENDERING) BuiltinItemRendererRegistry.INSTANCE.register(Items.TRIDENT, new TridentDynamicItemRenderer());
+        if (ArsenalConfig.CUSTOM_TRIDENT_RENDERING)
+            BuiltinItemRendererRegistry.INSTANCE.register(Items.TRIDENT, new TridentDynamicItemRenderer());
 
         // Force load the weapon models (otherwise since they're never called they wouldn't be loaded by default)
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(ScytheDynamicItemRenderer.MODELS_TO_REGISTER));
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(AnchorbladeDynamicItemRenderer.MODELS_TO_REGISTER));
-        if (ArsenalConfig.CUSTOM_TRIDENT_RENDERING) ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(TridentDynamicItemRenderer.MODELS_TO_REGISTER));
+        if (ArsenalConfig.CUSTOM_TRIDENT_RENDERING)
+            ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(TridentDynamicItemRenderer.MODELS_TO_REGISTER));
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(WeaponRackEntityRenderer.MODEL));
 
         // model layers initialization
@@ -74,7 +75,8 @@ public class ArsenalClient implements ClientModInitializer {
         // entity renderers registration
         EntityRendererRegistry.register(ArsenalEntities.BLOOD_SCYTHE, BloodScytheEntityRenderer::new);
         EntityRendererRegistry.register(ArsenalEntities.ANCHORBLADE, AnchorbladeEntityRenderer::new);
-        if (ArsenalConfig.CUSTOM_TRIDENT_RENDERING) EntityRendererRegistry.register(EntityType.TRIDENT, ArsenalTridentEntityRenderer::new);
+        if (ArsenalConfig.CUSTOM_TRIDENT_RENDERING)
+            EntityRendererRegistry.register(EntityType.TRIDENT, ArsenalTridentEntityRenderer::new);
         EntityRendererRegistry.register(ArsenalEntities.WEAPON_RACK, WeaponRackEntityRenderer::new);
 
         // particle renderers registration

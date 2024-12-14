@@ -1,9 +1,9 @@
 package dev.doctor4t.arsenal.client.render.entity;
 
 import dev.doctor4t.arsenal.client.render.item.TridentDynamicItemRenderer;
-import dev.doctor4t.arsenal.index.ArsenalCosmetics;
-import dev.doctor4t.arsenal.item.AnchorbladeItem;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -24,7 +24,7 @@ import org.joml.Matrix4f;
 public class ArsenalTridentEntityRenderer extends EntityRenderer<TridentEntity> {
     private final ItemRenderer itemRenderer;
     private final BakedModelManager bakedModelManager;
-    private ItemStack tridentStack = new ItemStack(Items.TRIDENT); // TODO: Replace with a synced stack so skins work
+    private final ItemStack tridentStack = new ItemStack(Items.TRIDENT); // TODO: Replace with a synced stack so skins work
 
     public ArsenalTridentEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);

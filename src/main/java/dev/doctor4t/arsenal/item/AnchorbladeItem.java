@@ -6,7 +6,6 @@ import dev.doctor4t.arsenal.cca.WeaponOwnerComponent;
 import dev.doctor4t.arsenal.entity.AnchorbladeEntity;
 import dev.doctor4t.arsenal.index.ArsenalCosmetics;
 import dev.doctor4t.arsenal.index.ArsenalEnchantments;
-import dev.doctor4t.arsenal.index.ArsenalItems;
 import dev.doctor4t.arsenal.index.ArsenalSounds;
 import dev.doctor4t.arsenal.util.AnchorOwner;
 import dev.doctor4t.arsenal.util.SweepParticleUtil;
@@ -148,7 +147,7 @@ public class AnchorbladeItem extends PickaxeItem implements CustomHitParticleIte
     public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
         return !miner.isCreative();
     }
-    
+
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);

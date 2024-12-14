@@ -6,6 +6,7 @@ Arsenal 0.1.3 - 1.20.1
   - Using one Anchorblade in each hand no longer instantly recalls both of them, instead throwing the main hand one on the first click and the off hand one on the second click (if the first one is still thrown)
 - Added a "Classic Look" integrated resource pack
   - Replaces the default Scythe texture with the original Clown Scythe by Jomk, and the Anchorblade with the original Luxintrus Anchorblade model by Diansu
+- Added iron ingots as a repair material for the Scythe and Anchorblade
 - Added a Scissors Scythe skin
 - Tweaked the Crescent Blade Anchorblade skin's texture
 

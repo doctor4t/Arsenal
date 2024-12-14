@@ -1,7 +1,6 @@
 package dev.doctor4t.arsenal.client.render.item;
 
 import dev.doctor4t.arsenal.Arsenal;
-import dev.doctor4t.arsenal.cca.ArsenalComponents;
 import dev.doctor4t.arsenal.util.ArsenalConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -12,16 +11,12 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.RotationAxis;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class TridentDynamicItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
     public static final List<ModelIdentifier> MODELS_TO_REGISTER = new ArrayList<>();

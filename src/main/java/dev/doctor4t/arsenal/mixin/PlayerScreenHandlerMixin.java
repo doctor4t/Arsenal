@@ -1,7 +1,7 @@
 package dev.doctor4t.arsenal.mixin;
 
 import dev.doctor4t.arsenal.cca.BackWeaponComponent;
-import dev.doctor4t.arsenal.util.WeaponSlot;
+import dev.doctor4t.arsenal.util.BackSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
@@ -21,6 +21,6 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void arsenal$init(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo ci) {
-        this.addSlot(new WeaponSlot(BackWeaponComponent.getBackWeaponInventory(inventory.player), 0, 77, 44));
+        this.addSlot(new BackSlot(BackWeaponComponent.getBackWeaponInventory(inventory.player), 0, 77, 44));
     }
 }

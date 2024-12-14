@@ -3,7 +3,7 @@ package dev.doctor4t.arsenal.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.doctor4t.arsenal.mixin.accessors.CreativeSlotAccessor;
-import dev.doctor4t.arsenal.util.WeaponSlot;
+import dev.doctor4t.arsenal.util.BackSlot;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
@@ -34,7 +34,7 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
     private boolean arsenal$moveWeaponSlot(DefaultedList<Slot> slots, Object object, Operation<Boolean> operation) {
         if (object instanceof CreativeInventoryScreen.CreativeSlot newSlot) {
             Slot slot = ((CreativeSlotAccessor) newSlot).getSlot();
-            if (slot instanceof WeaponSlot) {
+            if (slot instanceof BackSlot) {
                 return operation.call(slots, new CreativeInventoryScreen.CreativeSlot(slot, slot.id, 127, 20));
             }
         }

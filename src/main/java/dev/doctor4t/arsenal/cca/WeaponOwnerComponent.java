@@ -2,7 +2,6 @@ package dev.doctor4t.arsenal.cca;
 
 import dev.onyxstudios.cca.api.v3.item.ItemComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtElement;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;

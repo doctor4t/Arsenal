@@ -203,7 +203,7 @@ public class ScytheItem extends MiningToolItem implements CustomHitParticleItem,
         GILDED(0xFFF1BC5A, 0xFFE28634, null, null),
         ROZE(0xFFB70066, 0xFF710949, null, null),
         FOLLY(0xFFFF005A, 0xFFBC0045, "Folly Tree Branch", null),
-        SCISSORS(0xFFB9B1AF, 0xFF6F686F, null , null);
+        SCISSORS(0xFFB9B1AF, 0xFF6F686F, null, null);
 
         public final int color;
         public final int shadowColor;
