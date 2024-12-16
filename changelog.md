@@ -2,6 +2,7 @@
 Arsenal 0.1.5 - 1.20.1
 ------------------------------------------------------
 - Fixed Vindicators from raids never spawning with a Scythe
+- Fixed inability to reel back in the anchor when anything is in your off-hand
 
 ------------------------------------------------------
 Arsenal 0.1.4 - 1.20.1
