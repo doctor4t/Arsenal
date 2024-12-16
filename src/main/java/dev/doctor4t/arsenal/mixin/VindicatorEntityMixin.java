@@ -10,6 +10,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,8 +21,9 @@ public abstract class VindicatorEntityMixin extends IllagerEntity {
         super(entityType, world);
     }
 
-    @Inject(method = "initEquipment", at = @At(value = "TAIL"))
-    protected void arsenal$equipScytheOnVindicators(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
+
+    @Unique
+    private void randomlyGiveScythe(Random random) {
         if ((double) random.nextFloat() > 0.9) {
             int i = random.nextInt(16);
             if (i < 10) {
@@ -30,4 +32,15 @@ public abstract class VindicatorEntityMixin extends IllagerEntity {
             }
         }
     }
+
+    @Inject(method = "initEquipment", at = @At(value = "TAIL"))
+    protected void arsenal$equipScytheOnVindicators(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
+        this.randomlyGiveScythe(random);
+    }
+
+    @Inject(method = "addBonusForWave", at = @At(value = "TAIL"))
+    public void arsenal$equipScytheOnRaidVindicators(int wave, boolean unused, CallbackInfo ci) {
+        this.randomlyGiveScythe(random);
+    }
+
 }
