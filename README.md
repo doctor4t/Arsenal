@@ -1,5 +1,10 @@
-# Arsenal
-### A weapons mod focused on adding few but qualitative weapons
+<div align="center">
+  <h1>Arsenal</h1>
+  <a href="https://modrinth.com/user/ContentSMP"><img src="https://raw.githubusercontent.com/ContentSMP/Badges/f9f0d9bb0608034f9806b118db70f9d61f04160e/csmp-badges/cozy_vector.svg"></a>
+  <a href="https://modrinth.com/mod/fabric-api"><img src="https://raw.githubusercontent.com/intergrav/devins-badges/c7fd18efdadd1c3f12ae56b49afd834640d2d797/assets/cozy/requires/fabric-api_vector.svg"></a>
+  <a href="https://discord.gg/rattiestgang"><img src="https://raw.githubusercontent.com/intergrav/devins-badges/c7fd18efdadd1c3f12ae56b49afd834640d2d797/assets/cozy/social/discord-plural_vector.svg"></a>
+  <h3>A weapons mod focused on adding few but qualitative weapons</h3>
+</div>
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/7ZNKNmoNTsQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/RUHAG4fT9CA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
