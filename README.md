@@ -9,9 +9,12 @@
   <h3>A weapons mod focused on adding few but qualitative weapons</h3>
 </div>
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/7ZNKNmoNTsQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/RUHAG4fT9CA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/s4POfzRYx3s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![Video 1](https://img.youtube.com/vi/7ZNKNmoNTsQ/0.jpg)](https://www.youtube-nocookie.com/embed/7ZNKNmoNTsQ)
+
+[![Video 2](https://img.youtube.com/vi/RUHAG4fT9CA/0.jpg)](https://www.youtube-nocookie.com/embed/RUHAG4fT9CA)
+
+[![Video 3](https://img.youtube.com/vi/s4POfzRYx3s/0.jpg)](https://www.youtube-nocookie.com/embed/s4POfzRYx3s)
+
 
 ## Features
 ### Weapons
