@@ -1,22 +1,14 @@
 package doctor4t.arsenal.client.render.entity;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
-import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.*;
 
 public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity> {
 	private static final Identifier ANCHOR_TEXTURE = Arsenal.id("textures/item/lux_anchorblade.png");
@@ -49,11 +41,11 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 			matrices.push();
 			Vec3d pos = entity.getLerpedPos(tickDelta);
 			Vec3d ringPos = new Vec3d(1.5, 0, 0).rotateZ(pitchAngle * MathHelper.RADIANS_PER_DEGREE).rotateY((yawAngle + 90) * MathHelper.RADIANS_PER_DEGREE);
-			Vec3d ownerPos = owner.getLeashHoldPosition(tickDelta).subtract(pos);
+			Vec3d ownerPos = owner.getLeashPos(tickDelta).subtract(pos);
 			float length = (float) ringPos.distanceTo(ownerPos);
 			MatrixStack.Entry matrixEntry = matrices.peek();
-			Matrix4f modelMatrix = matrixEntry.getModel();
-			Matrix3f normal = matrixEntry.getNormal();
+			Matrix4f modelMatrix = matrixEntry.getPositionMatrix();
+			Matrix3f normal = matrixEntry.getNormalMatrix();
 			float minU = 0;
 			float maxU = 1;
 			float minV = 0;
@@ -75,6 +67,6 @@ public class AnchorbladeEntityRenderer extends EntityRenderer<AnchorbladeEntity>
 	}
 
 	private void vertex(Vec3d vec, VertexConsumer vertexConsumer, float u, float v, Matrix4f modelMatrix, Matrix3f normal, int light) {
-		vertexConsumer.vertex(modelMatrix, (float) vec.x, (float) vec.y, (float) vec.z).color(255, 255, 255, 255).uv(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0, 1, 0).next();
+		vertexConsumer.vertex(modelMatrix, (float) vec.x, (float) vec.y, (float) vec.z).color(255, 255, 255, 255).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, 0, 1, 0).next();
 	}
 }

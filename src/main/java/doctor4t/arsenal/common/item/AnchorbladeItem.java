@@ -5,15 +5,12 @@ import doctor4t.arsenal.common.init.ModEnchantments;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
 import doctor4t.arsenal.common.util.AnchorOwner;
+import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
@@ -28,7 +25,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.quiltmc.quiltmappings.constants.MiningLevels;
 import xyz.amymialee.mialeemisc.util.MialeeText;
 
 import java.util.List;
@@ -55,7 +51,7 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
 					stack.damage(1, user, p -> p.sendToolBreakStatus(user.getActiveHand()));
 					if (riptide == 0) {
 						AnchorbladeEntity anchorbladeEntity = new AnchorbladeEntity(world, user, stack);
-						anchorbladeEntity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F + (float) riptide * 0.5F, 1.0F);
+						anchorbladeEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F + (float) riptide * 0.5F, 1.0F);
 						owner.arsenal$setAnchor(anchorbladeEntity);
 						world.spawnEntity(anchorbladeEntity);
 						world.playSoundFromEntity(null, anchorbladeEntity, ModSoundEvents.ITEM_ANCHORBLADE_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);

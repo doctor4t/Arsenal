@@ -1,18 +1,13 @@
 package doctor4t.arsenal.common;
 
 import doctor4t.arsenal.common.components.BackWeaponComponent;
-import doctor4t.arsenal.common.init.ModEnchantments;
-import doctor4t.arsenal.common.init.ModEntities;
-import doctor4t.arsenal.common.init.ModItems;
-import doctor4t.arsenal.common.init.ModParticles;
-import doctor4t.arsenal.common.init.ModSoundEvents;
+import doctor4t.arsenal.common.init.*;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class Arsenal implements ModInitializer {
 	public static final String MOD_ID = "arsenal";
@@ -22,7 +17,7 @@ public class Arsenal implements ModInitializer {
 	public static final Identifier swapInventoryPacketId = id("swap_inventory_packet");
 
 	@Override
-	public void onInitialize(ModContainer mod) {
+	public void onInitialize() {
 		ModEntities.initialize();
 		ModItems.initialize();
 		ModEnchantments.initialize();
@@ -48,7 +43,7 @@ public class Arsenal implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(swapInventoryPacketId, (server, player, handler, buf, responseSender) -> {
 			int slotId = buf.readInt();
 			if (!player.isSpectator()) {
-				if (!player.currentScreenHandler.isValidSlotIndex(slotId)) {
+				if (!player.currentScreenHandler.isValid(slotId)) {
 					return;
 				}
 				Slot slot = player.currentScreenHandler.getSlot(slotId);

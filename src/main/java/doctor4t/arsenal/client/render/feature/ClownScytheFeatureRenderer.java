@@ -24,7 +24,7 @@ public class ClownScytheFeatureRenderer<T extends PlayerEntity, M extends Entity
 		if (BackWeaponComponent.isHoldingBackWeapon(entity)) return;
 		ItemStack stack = BackWeaponComponent.getBackWeapon(entity);
 		if (stack.isEmpty()) return;
-		if (stack.getItem() != ModItems.CLOWN_SCYTHE) {
+		if (stack.getItem() != ModItems.CLOWN_SCYTHE && stack.getItem() != ModItems.GUILLOTINE) {
 			return;
 		}
 		matrices.push();

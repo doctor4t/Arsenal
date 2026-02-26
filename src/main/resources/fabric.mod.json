@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "arsenal",
+	"version": "${version}",
+	"name": "Arsenal",
+	"description": "A weapons mod focused on adding few but qualitative weapons",
+	"authors": [
+		"doctor4t",
+		"AmyMialee",
+		"Azverial"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/arsenal",
+		"sources": "https://github.com/doctor4t/Arsenal"
+	},
+	"license": "ARR",
+	"icon": "assets/arsenal/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"doctor4t.arsenal.common.Arsenal"
+		],
+		"client": [
+			"doctor4t.arsenal.client.ArsenalClient"
+		],
+		"cardinal-components": [
+			"doctor4t.arsenal.common.ArsenalComponents"
+		]
+	},
+	"mixins": [
+		"arsenal.mixins.json"
+	],
+	"accessWidener" : "arsenal.accesswidener",
+	"custom": {
+		"cardinal-components": [
+			"arsenal:backweapon"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.19.2",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

@@ -2,11 +2,7 @@ package doctor4t.arsenal.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
@@ -37,7 +33,7 @@ public class BloodBubbleParticle extends SpriteBillboardParticle {
 		}
 		this.velocityY = 0;
 		this.move(this.velocityX, this.velocityY, this.velocityZ);
-		if (this.yMotionBlockedSpeedUp && this.y == this.prevPosY) {
+		if (this.field_28787 && this.y == this.prevPosY) {
 			this.velocityX *= 1.1;
 			this.velocityZ *= 1.1;
 		}

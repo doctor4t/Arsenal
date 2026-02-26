@@ -2,11 +2,7 @@ package doctor4t.arsenal.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteBillboardParticle;
-import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 
@@ -19,9 +15,9 @@ public class ScytheAttackParticle extends SpriteBillboardParticle {
 		this.spriteWithAge = spriteWithAge;
 		this.maxAge = 4;
 		float f = this.random.nextFloat() * 0.6F + 0.4F;
-		this.colorRed = f;
-		this.colorGreen = f;
-		this.colorBlue = f;
+		this.red = f;
+		this.green = f;
+		this.blue = f;
 		this.scale = 1.0F - (float) scale * 0.5F;
 		this.setSpriteForAge(spriteWithAge);
 	}

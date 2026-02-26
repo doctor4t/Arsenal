@@ -3,14 +3,14 @@ package doctor4t.arsenal.common.components;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.ArsenalComponents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.NotNull;
-import org.quiltmc.qsl.networking.api.PacketByteBufs;
-import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 public class BackWeaponComponent implements AutoSyncedComponent {
 	private final PlayerEntity player;

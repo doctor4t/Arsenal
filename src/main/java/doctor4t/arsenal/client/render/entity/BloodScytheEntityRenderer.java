@@ -1,10 +1,10 @@
 package doctor4t.arsenal.client.render.entity;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.entity.BloodScytheEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -32,8 +32,8 @@ public class BloodScytheEntityRenderer<T extends BloodScytheEntity> extends Enti
 		matrixStack.translate(-4.0, 0.0, 0.0);
 		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(this.getTexture(bloodScythe)));
 		MatrixStack.Entry entry = matrixStack.peek();
-		Matrix4f matrix4f = entry.getModel();
-		Matrix3f matrix3f = entry.getNormal();
+		Matrix4f matrix4f = entry.getPositionMatrix();
+		Matrix3f matrix3f = entry.getNormalMatrix();
 		for (int u = 0; u < 4; ++u) {
 			matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90f));
 		}
@@ -47,7 +47,7 @@ public class BloodScytheEntityRenderer<T extends BloodScytheEntity> extends Enti
 	}
 
 	public void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexConsumer, int x, int y, int z, float u, float v, int normalX, int normalZ, int normalY, int light) {
-		vertexConsumer.vertex(positionMatrix, x, y, z).color(255, 255, 255, 255).uv(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, normalX, normalY, normalZ).next();
+		vertexConsumer.vertex(positionMatrix, x, y, z).color(255, 255, 255, 255).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, normalX, normalY, normalZ).next();
 	}
 }
 

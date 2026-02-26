@@ -57,7 +57,7 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 			if (!world.isClient) {
 				BloodScytheEntity bloodScythe = new BloodScytheEntity(world, user);
 				bloodScythe.setOwner(user);
-				bloodScythe.setProperties(user, user.getPitch(), user.getYaw(), 0.0f, f * 3.0f, 1.0f);
+				bloodScythe.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, f * 3.0f, 1.0f);
 				bloodScythe.setDamage(bloodScythe.getDamage());
 				user.getStackInHand(hand).damage(1, user, p -> p.sendToolBreakStatus(hand));
 				bloodScythe.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;

@@ -1,12 +1,8 @@
 package doctor4t.arsenal.client.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.particle.ExplosionLargeParticle;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.ParticleTextureSheet;
-import net.minecraft.client.particle.SpriteProvider;
+import net.minecraft.client.particle.*;
 import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.math.MathHelper;
@@ -23,10 +19,10 @@ public class ShockwaveParticle extends ExplosionLargeParticle {
 		this.velocityX = 0;
 		this.velocityY = 0;
 		this.velocityZ = 0;
-		this.colorRed = 1;
-		this.colorGreen = 1;
-		this.colorBlue = 1;
-		this.colorAlpha = 0.5f;
+		this.red = 1;
+		this.green = 1;
+		this.blue = 1;
+		this.alpha = 0.5f;
 		this.setSpriteForAge(spriteProvider);
 	}
 
@@ -57,7 +53,7 @@ public class ShockwaveParticle extends ExplosionLargeParticle {
 			vec3f.add(f, g, h);
 		}
 		int brightness = this.getBrightness(tickDelta);
-		this.colorAlpha = (float) MathHelper.lerp((float) this.age / this.getMaxAge(), 0.5, 0);
+		this.alpha = (float) MathHelper.lerp((float) this.age / this.getMaxAge(), 0.5, 0);
 		this.vertex(vertexConsumer, vec3fs[0], this.getMaxU(), this.getMaxV(), brightness);
 		this.vertex(vertexConsumer, vec3fs[1], this.getMaxU(), this.getMinV(), brightness);
 		this.vertex(vertexConsumer, vec3fs[2], this.getMinU(), this.getMinV(), brightness);
@@ -65,7 +61,7 @@ public class ShockwaveParticle extends ExplosionLargeParticle {
 	}
 
 	private void vertex(VertexConsumer vertexConsumer, Vec3f pos, float u, float v, int light) {
-		vertexConsumer.vertex(pos.getX(), pos.getY(), pos.getZ()).uv(u, v).color(this.colorRed, this.colorGreen, this.colorBlue, this.colorAlpha).light(light).next();
+		vertexConsumer.vertex(pos.getX(), pos.getY(), pos.getZ()).texture(u, v).color(this.red, this.green, this.blue, this.alpha).light(light).next();
 	}
 
 	@Override
