@@ -1,10 +1,16 @@
 plugins {
-	id 'fabric-loom' version '1.13-SNAPSHOT'
+	id 'fabric-loom' version '1.14.+'
 	id 'maven-publish'
 }
 
 version = project.mod_version
 group = project.maven_group
+
+configurations.all {
+	resolutionStrategy {
+		force("net.fabricmc:fabric-loader:$loader_version")
+	}
+}
 
 base {
 	archivesName = project.archives_base_name
@@ -22,6 +28,8 @@ fabricApi {
 }
 
 repositories {
+	mavenLocal()
+
 	// publishing
 	maven {
 		name = "CurseForge"

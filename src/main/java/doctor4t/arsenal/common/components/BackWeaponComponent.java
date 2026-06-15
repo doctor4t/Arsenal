@@ -42,7 +42,7 @@ public class BackWeaponComponent implements AutoSyncedComponent {
 	}
 
 	public boolean setBackWeapon(ItemStack backWeapon) {
-		this.backWeapon.setStack(0, backWeapon);
+		this.backWeapon.setStack(0, backWeapon.copy());
 		ArsenalComponents.BACK_WEAPON_COMPONENT.sync(this.player);
 		return true;
 	}
