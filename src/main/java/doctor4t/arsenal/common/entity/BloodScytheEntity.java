@@ -5,6 +5,7 @@ import doctor4t.arsenal.common.init.ModDamageSources;
 import doctor4t.arsenal.common.init.ModEntities;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -14,11 +15,14 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class BloodScytheEntity extends PersistentProjectileEntity {
 	private final Set<StatusEffectInstance> effects = Sets.newHashSet();
 	public int ticksUntilRemove = 5;
+	public List<Entity> entitiesHit = new ArrayList<>();
 
 	public BloodScytheEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
 		super(entityType, world);
@@ -58,9 +62,12 @@ public class BloodScytheEntity extends PersistentProjectileEntity {
 
 		if (!this.world.isClient) {
 			for (LivingEntity livingEntity : this.world.getEntitiesByClass(LivingEntity.class, this.getBoundingBox(), livingEntity -> this.getOwner() != livingEntity)) {
-				livingEntity.damage(ModDamageSources.bloodScythe(this, this.getOwner()), 12.0f);
-				for (StatusEffectInstance effect : this.effects) {
-					livingEntity.addStatusEffect(effect);
+				if (!entitiesHit.contains(livingEntity)) {
+					livingEntity.damage(ModDamageSources.bloodScythe(this, this.getOwner()), 6.0f);
+					for (StatusEffectInstance effect : this.effects) {
+						livingEntity.addStatusEffect(effect);
+					}
+					entitiesHit.add(livingEntity);
 				}
 			}
 		}

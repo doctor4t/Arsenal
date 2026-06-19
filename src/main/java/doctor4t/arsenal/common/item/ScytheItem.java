@@ -75,7 +75,7 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 				}
 				user.setAbsorptionAmount(absorption);
 
-				user.damage(ModDamageSources.spewing(), 3f);
+				user.damage(ModDamageSources.spewing(), 4f);
 				user.getItemCooldownManager().set(this, 20);
 
 				world.spawnEntity(bloodScythe);
