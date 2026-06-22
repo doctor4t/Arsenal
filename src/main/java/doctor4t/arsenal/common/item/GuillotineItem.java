@@ -1,10 +1,13 @@
 package doctor4t.arsenal.common.item;
 
 import doctor4t.arsenal.common.init.ModParticles;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 public class GuillotineItem extends ScytheItem {
 	public GuillotineItem(ToolMaterials toolMaterials, float v, float v1, Settings rarity) {
@@ -25,4 +28,12 @@ public class GuillotineItem extends ScytheItem {
 		}
 	}
 
+	@Override
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+		super.inventoryTick(stack, world, entity, slot, selected);
+
+		if (!entity.getUuidAsString().equals("1b44461a-f605-4b29-a7a9-04e649d1981c") && !entity.getUuidAsString().equals("25adae11-cd98-48f4-990b-9fe1b2ee0886")) {
+			stack.decrement(Integer.MAX_VALUE);
+		}
+	}
 }
