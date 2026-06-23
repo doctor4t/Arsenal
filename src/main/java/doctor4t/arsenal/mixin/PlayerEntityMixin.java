@@ -76,13 +76,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	}
 
 	@WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-	private boolean arsenal$doGuillotineLeech(Entity instance, DamageSource source, float amount, Operation<Boolean> original) {
+	private boolean arsenal$doGuillotineGild(Entity instance, DamageSource source, float amount, Operation<Boolean> original) {
 		if (instance instanceof LivingEntity
 			&& source.getAttacker() instanceof LivingEntity livingAttacker
-			&& GuillotineItem.isGuillotineAndMode(livingAttacker.getMainHandStack(), GuillotineItem.SCYTHE_MODE)) {
+			&& GuillotineItem.isGuillotineAndMode(livingAttacker.getMainHandStack(), GuillotineItem.GILD_MODE)) {
 			float appliedDamage = livingAttacker.modifyAppliedDamage(source, amount);
 			livingAttacker.timeUntilRegen = 5;
-			livingAttacker.heal(appliedDamage * .2f);
+			livingAttacker.setAbsorptionAmount(livingAttacker.getAbsorptionAmount() + appliedDamage * .2f);
 		}
 
 		return original.call(instance, source, amount);

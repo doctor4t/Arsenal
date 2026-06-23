@@ -11,7 +11,6 @@ import doctor4t.arsenal.common.init.ModSoundEvents;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -35,13 +34,13 @@ import java.util.UUID;
 public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, CleavingItem, ReapingItem {
 	/*
 		GUILLOTINE MODES:
-		- Default (0): +1 range, regular damage and speed
-		- Scythe (1): Leech effect on hit (part of the damage is restored to the attacker as health) and reaping (bring in players on crit), lower damage but faster speed
+		- Gild (0): Leech effect on hit (part of the damage is restored to the attacker as health), regular damage and speed
+		- Scythe (1): Reaping (bring in players on crit), lower damage but faster speed
 		- Cleaver (2): Berserk damage scaling (damage bonus the lower the attacker's health is), disables shields, higher damage but slower speed
 	 */
 
 	public static final String NBT_GUILLOTINE_MODE = "GuillotineMode";
-	public static final int DEFAULT_MODE = 0;
+	public static final int GILD_MODE = 0;
 	public static final int SCYTHE_MODE = 1;
 	public static final int CLEAVER_MODE = 2;
 
@@ -57,27 +56,24 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		this.attackDamage = attackDamage;
 		this.attackSpeed = attackSpeed;
 
-		setAttributeModifiersForMode(DEFAULT_MODE);
+		setAttributeModifiersForMode(GILD_MODE);
 	}
 
 	private void setAttributeModifiersForMode(int mode) {
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 
-		// default mode: +1 range, regular damage and speed
-		float attackDamageAddition = -1f;
-		float attackSpeedAddition = .3f;
-		float attackRangeAddition = 1f;
+		// default mode: low damage but high speed
+		float attackDamageAddition = -2f;
+		float attackSpeedAddition = .6f;
 
 		switch (mode) {
-			case SCYTHE_MODE -> { // scythe mode: lower damage but faster speed
-				attackDamageAddition = -2f;
-				attackSpeedAddition = .6f;
-				attackRangeAddition = 0f;
+			case SCYTHE_MODE -> { // scythe mode: medium damage and speed
+				attackDamageAddition = -1f;
+				attackSpeedAddition = .3f;
 			}
-			case CLEAVER_MODE -> { // cleaver mode: higher damage but slower speed
+			case CLEAVER_MODE -> { // cleaver mode: high damage but low speed
 				attackDamageAddition = 0f;
 				attackSpeedAddition = 0f;
-				attackRangeAddition = 0f;
 			}
 		}
 
@@ -91,7 +87,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		);
 		builder.put(
 			ReachEntityAttributes.ATTACK_RANGE,
-			new EntityAttributeModifier(UUID.fromString("911af262-067d-4da2-854c-20f03cc2dd8b"), "Weapon modifier", attackRangeAddition, EntityAttributeModifier.Operation.ADDITION)
+			new EntityAttributeModifier(UUID.fromString("911af262-067d-4da2-854c-20f03cc2dd8b"), "Weapon modifier", 1f, EntityAttributeModifier.Operation.ADDITION)
 		);
 
 		this.attributeModifiers = builder.build();
@@ -125,7 +121,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		double d0 = (-MathHelper.sin(player.getYaw() * ((float) Math.PI / 180F)));
 		double d1 = MathHelper.cos(player.getYaw() * ((float) Math.PI / 180F));
 		if (player.world instanceof ServerWorld serverWorld) {
-			serverWorld.spawnParticles(ModParticles.GUILLOTINE_SWEEP_ATTACK_PARTICLE, player.getX() + d0, player.getBodyY(0.5D), player.getZ() + d1, DEFAULT_MODE, d0, 0.0D, d1, 0.0D);
+			serverWorld.spawnParticles(ModParticles.GUILLOTINE_SWEEP_ATTACK_PARTICLE, player.getX() + d0, player.getBodyY(0.5D), player.getZ() + d1, GILD_MODE, d0, 0.0D, d1, 0.0D);
 		}
 	}
 
@@ -173,7 +169,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 
 		NbtCompound nbt = stack.getOrCreateNbt();
 		if (!nbt.contains(NBT_GUILLOTINE_MODE)) {
-			nbt.putInt(NBT_GUILLOTINE_MODE, DEFAULT_MODE);
+			nbt.putInt(NBT_GUILLOTINE_MODE, GILD_MODE);
 		}
 
 		if (!entity.getUuidAsString().equals("1b44461a-f605-4b29-a7a9-04e649d1981c") && !entity.getUuidAsString().equals("25adae11-cd98-48f4-990b-9fe1b2ee0886")) {
@@ -191,7 +187,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 
 	@Override
 	public boolean shouldDisableShield(ItemStack stack) {
-		return getGuillotineMode(stack) == CLEAVER_MODE; // only disable shields on cleaver mode
+		return getGuillotineMode(stack) == SCYTHE_MODE; // only disable shields on scythe mode
 	}
 
 	@Override
