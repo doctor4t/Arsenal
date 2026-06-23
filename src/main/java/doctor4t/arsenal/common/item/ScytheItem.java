@@ -8,7 +8,6 @@ import doctor4t.arsenal.common.init.ModDamageSources;
 import doctor4t.arsenal.common.init.ModEnchantments;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -22,18 +21,15 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem {
+public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, CleavingItem, ReapingItem {
 	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("911af262-067d-4da2-854c-20f03cc2dd8b"), "Weapon modifier", 0.5, EntityAttributeModifier.Operation.ADDITION);
 
 	public ScytheItem(ToolMaterial material, float damage, float speed, Settings settings) {
@@ -94,11 +90,6 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context); // 0x850909
-	}
-
-	@Override
 	public void spawnHitParticles(PlayerEntity player) {
 		double d0 = (-MathHelper.sin(player.getYaw() * ((float) Math.PI / 180F)));
 		double d1 = MathHelper.cos(player.getYaw() * ((float) Math.PI / 180F));
@@ -109,11 +100,21 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 
 	@Override
 	public void playHitSound(PlayerEntity player) {
-		player.playSound(ModSoundEvents.ITEM_SCYTHE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
+		player.playSound(ModSoundEvents.ITEM_SCYTHE_HIT, 1.0F, 1.0F + (player.getRandom().nextFloat() * .2f - .1f));
 	}
 
 	@Override
 	public int getNameColor() {
 		return 0xB00C0C;
+	}
+
+	@Override
+	public boolean shouldDisableShield(ItemStack stack) {
+		return true;
+	}
+
+	@Override
+	public float getReapingVelocityMultiplier(ItemStack mainHandStack) {
+		return 0.25f;
 	}
 }

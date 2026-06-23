@@ -39,5 +39,23 @@
       "arsenal:entity/anchorblade_land_3"
     ],
     "subtitle": "arsenal.subtitles.entity.anchorblade.land"
+  },
+  "item.guillotine.hit": {
+    "sounds": [
+      "arsenal:item/guillotine_hit"
+    ],
+    "subtitle": "arsenal.subtitles.item.guillotine.hit"
+  },
+  "item.guillotine.hit.scythe": {
+    "sounds": [
+      "arsenal:item/guillotine_hit_scythe"
+    ],
+    "subtitle": "arsenal.subtitles.item.scythe.hit.scythe"
+  },
+  "item.guillotine.hit.cleaver": {
+    "sounds": [
+      "arsenal:item/guillotine_hit_cleaver"
+    ],
+    "subtitle": "arsenal.subtitles.item.scythe.hit.cleaver"
   }
 }

@@ -91,7 +91,7 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
 
 	@Override
 	public void playHitSound(PlayerEntity player) {
-		player.playSound(ModSoundEvents.ITEM_ANCHORBLADE_HIT, 1.0F, (float) (1.0F + player.getRandom().nextGaussian() / 10f));
+		player.playSound(ModSoundEvents.ITEM_ANCHORBLADE_HIT, 1.0F,1.0F +  (player.getRandom().nextFloat() * .2f - .1f));
 	}
 
 	@Override

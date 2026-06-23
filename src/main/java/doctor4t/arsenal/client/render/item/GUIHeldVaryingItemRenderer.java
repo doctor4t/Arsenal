@@ -19,12 +19,12 @@ import java.util.Collections;
 import java.util.Set;
 
 public class GUIHeldVaryingItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer, SimpleSynchronousResourceReloadListener {
-	private static final Set<ModelTransformation.Mode> inventoryModes = Set.of(ModelTransformation.Mode.GUI, ModelTransformation.Mode.GROUND);
-	private final Identifier id;
-	private final Identifier weaponId;
-	private ItemRenderer itemRenderer;
-	private BakedModel inventoryWeaponModel;
-	private BakedModel worldWeaponModel;
+	protected static final Set<ModelTransformation.Mode> inventoryModes = Set.of(ModelTransformation.Mode.GUI, ModelTransformation.Mode.GROUND);
+	protected final Identifier id;
+	protected final Identifier weaponId;
+	protected ItemRenderer itemRenderer;
+	protected BakedModel inventoryWeaponModel;
+	protected BakedModel worldWeaponModel;
 
 	public GUIHeldVaryingItemRenderer(Identifier weaponId) {
 		this.id = new Identifier(weaponId.getNamespace(), weaponId.getPath() + "_renderer");

@@ -1,0 +1,6 @@
+{
+  "parent": "arsenal:item/guillotine_gui",
+  "textures": {
+    "layer0": "arsenal:item/guillotine_gui"
+  }
+}

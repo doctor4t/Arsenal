@@ -1,5 +1,6 @@
 package doctor4t.arsenal.common;
 
+import com.google.common.collect.ImmutableList;
 import doctor4t.arsenal.common.components.BackWeaponComponent;
 import doctor4t.arsenal.common.init.*;
 import net.fabricmc.api.ModInitializer;
@@ -15,8 +16,9 @@ public class Arsenal implements ModInitializer {
 	public static final Identifier holdWeaponPacketId = id("hold_packet");
 	public static final Identifier swapWeaponPacketId = id("swap_packet");
 	public static final Identifier swapInventoryPacketId = id("swap_inventory_packet");
+    public static final ImmutableList<String> GUILLOTINE_VARIATIONS = ImmutableList.of("default", "scythe", "cleaver");
 
-	@Override
+    @Override
 	public void onInitialize() {
 		ModEntities.initialize();
 		ModItems.initialize();

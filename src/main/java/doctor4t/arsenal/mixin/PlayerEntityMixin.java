@@ -1,19 +1,20 @@
 package doctor4t.arsenal.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
-import doctor4t.arsenal.common.item.AnchorbladeItem;
-import doctor4t.arsenal.common.item.CustomHitParticleItem;
-import doctor4t.arsenal.common.item.CustomHitSoundItem;
-import doctor4t.arsenal.common.item.ScytheItem;
+import doctor4t.arsenal.common.item.*;
 import doctor4t.arsenal.common.util.AnchorOwner;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -36,7 +37,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	}
 
 	@Shadow public abstract float getAttackCooldownProgress(float baseTime);
-	@Shadow public abstract void disableShield(boolean sprinting);
 
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
 	private void arsenal$initDataTracker(CallbackInfo ci) {
@@ -64,18 +64,28 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	}
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;addCritParticles(Lnet/minecraft/entity/Entity;)V"))
-	private void arsenal$scytheReelTargetOnCrit(Entity target, CallbackInfo ci) {
-		if (this.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ScytheItem) {
-			target.setVelocity(this.getPos().subtract(target.getPos()).multiply(0.25f));
-			target.velocityModified = true;
+	private void arsenal$scytheReapTargetOnCrit(Entity target, CallbackInfo ci) {
+		ItemStack mainHandStack = this.getStackInHand(Hand.MAIN_HAND);
+		if (mainHandStack.getItem() instanceof ReapingItem reapingItem) {
+			float reapingVelocityMultiplier = reapingItem.getReapingVelocityMultiplier(mainHandStack);
+			if (reapingVelocityMultiplier != 0f) {
+				target.setVelocity(this.getPos().subtract(target.getPos()).multiply(reapingVelocityMultiplier));
+				target.velocityModified = true;
+			}
 		}
 	}
 
-	@Inject(method = "takeShieldHit", at = @At("HEAD"))
-	protected void arsenal$scytheDisableShield(LivingEntity attacker, CallbackInfo ci) {
-		if (attacker.getMainHandStack().getItem() instanceof ScytheItem) {
-			this.disableShield(true);
+	@WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
+	private boolean arsenal$doGuillotineLeech(Entity instance, DamageSource source, float amount, Operation<Boolean> original) {
+		if (instance instanceof LivingEntity
+			&& source.getAttacker() instanceof LivingEntity livingAttacker
+			&& GuillotineItem.isGuillotineAndMode(livingAttacker.getMainHandStack(), GuillotineItem.SCYTHE_MODE)) {
+			float appliedDamage = livingAttacker.modifyAppliedDamage(source, amount);
+			livingAttacker.timeUntilRegen = 5;
+			livingAttacker.heal(appliedDamage * .2f);
 		}
+
+		return original.call(instance, source, amount);
 	}
 
 	@Override
