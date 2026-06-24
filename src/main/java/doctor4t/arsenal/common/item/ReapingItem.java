@@ -4,4 +4,6 @@ import net.minecraft.item.ItemStack;
 
 public interface ReapingItem {
 	float getReapingVelocityMultiplier(ItemStack mainHandStack);
+
+	int getReapingBlindnessLength(ItemStack mainHandStack);
 }

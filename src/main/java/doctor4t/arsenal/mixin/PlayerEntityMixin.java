@@ -14,6 +14,9 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.FluidTags;
@@ -72,6 +75,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 			if (reapingVelocityMultiplier != 0f) {
 				target.setVelocity(this.getPos().subtract(target.getPos()).multiply(reapingVelocityMultiplier));
 				target.velocityModified = true;
+			}
+
+			if (target instanceof LivingEntity livingTarget) {
+				int reapingBlindnessLength = reapingItem.getReapingBlindnessLength(mainHandStack);
+				if (reapingBlindnessLength > 0) {
+					if (livingTarget.hasStatusEffect(StatusEffects.BLINDNESS)) {
+						StatusEffectInstance blindness = livingTarget.getStatusEffect(StatusEffects.BLINDNESS);
+						reapingBlindnessLength = Math.max(blindness.getDuration(), reapingBlindnessLength);
+						livingTarget.removeStatusEffect(StatusEffects.BLINDNESS);
+					}
+
+					livingTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, reapingBlindnessLength, 0, false, false, true));
+				}
 			}
 		}
 	}

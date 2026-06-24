@@ -194,4 +194,9 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 	public float getReapingVelocityMultiplier(ItemStack stack) {
 		return getGuillotineMode(stack) == SCYTHE_MODE ? 0.25f : 0f;
 	}
+
+	@Override
+	public int getReapingBlindnessLength(ItemStack stack) {
+		return getGuillotineMode(stack) == SCYTHE_MODE ? 20 : 0;
+	}
 }
