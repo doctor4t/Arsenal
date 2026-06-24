@@ -2,6 +2,7 @@ package doctor4t.arsenal.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import doctor4t.arsenal.common.item.*;
 import doctor4t.arsenal.common.util.AnchorOwner;
@@ -63,10 +64,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 		}
 	}
 
-	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;addCritParticles(Lnet/minecraft/entity/Entity;)V"))
-	private void arsenal$scytheReapTargetOnCrit(Entity target, CallbackInfo ci) {
+	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;onAttacking(Lnet/minecraft/entity/Entity;)V"))
+	private void arsenal$scytheReapTargetOnCrit(Entity target, CallbackInfo ci, @Local(name = "bl3") boolean crit, @Local(name = "h") float attackCooldown) {
 		ItemStack mainHandStack = this.getStackInHand(Hand.MAIN_HAND);
-		if (mainHandStack.getItem() instanceof ReapingItem reapingItem) {
+		if (mainHandStack.getItem() instanceof ReapingItem reapingItem && attackCooldown >= 1f) {
 			float reapingVelocityMultiplier = reapingItem.getReapingVelocityMultiplier(mainHandStack);
 			if (reapingVelocityMultiplier != 0f) {
 				target.setVelocity(this.getPos().subtract(target.getPos()).multiply(reapingVelocityMultiplier));

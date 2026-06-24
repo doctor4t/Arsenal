@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, CleavingItem, ReapingItem {
+public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, ShieldDisablingItem, ReapingItem {
 	/*
 		GUILLOTINE MODES:
 		- Gild (0): Leech effect on hit (part of the damage is restored to the attacker as health), regular damage and speed

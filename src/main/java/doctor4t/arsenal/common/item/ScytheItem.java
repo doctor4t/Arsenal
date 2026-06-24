@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, CleavingItem, ReapingItem {
+public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, ShieldDisablingItem, ReapingItem {
 	private static final EntityAttributeModifier REACH_MODIFIER = new EntityAttributeModifier(UUID.fromString("911af262-067d-4da2-854c-20f03cc2dd8b"), "Weapon modifier", 0.5, EntityAttributeModifier.Operation.ADDITION);
 
 	public ScytheItem(ToolMaterial material, float damage, float speed, Settings settings) {

@@ -2,6 +2,6 @@ package doctor4t.arsenal.common.item;
 
 import net.minecraft.item.ItemStack;
 
-public interface CleavingItem {
+public interface ShieldDisablingItem {
 	boolean shouldDisableShield(ItemStack stack);
 }
