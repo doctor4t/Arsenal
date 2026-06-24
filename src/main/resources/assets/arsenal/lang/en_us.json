@@ -20,6 +20,8 @@
   "enchantment.arsenal.spewing.desc": "Using the Scythe will spew out a blood blade damaging you and transferring half the duration of your potion effects to any entity hit.",
   "enchantment.arsenal.reeling": "Reeling",
   "enchantment.arsenal.reeling.desc": "Using the Anchorblade will reel you in like a grapple or reel in the hit entity.",
+  "enchantment.arsenal.reaping": "Reaping",
+  "enchantment.arsenal.reaping.desc": "Pulls in and applies blindness to target on full swing.",
   "entity.arsenal.blood_scythe": "Blood Scythe",
   "entity.arsenal.anchorblade": "Anchorblade",
   "itemGroup.arsenal.arsenal": "Arsenal",
