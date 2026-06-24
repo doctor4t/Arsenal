@@ -15,7 +15,10 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -34,14 +37,14 @@ import java.util.UUID;
 public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, ShieldDisablingItem, ReapingItem {
 	/*
 		GUILLOTINE MODES:
-		- Gild (0): Leech effect on hit (part of the damage is restored to the attacker as health), regular damage and speed
-		- Scythe (1): Reaping (bring in players on crit), lower damage but faster speed
+		- Gild (0): Leech effect on hit (part of the damage is restored to the attacker as health), lowered damage
+		- Scythe (1): Reaping (bring in players on crit)
 		- Cleaver (2): Berserk damage scaling (damage bonus the lower the attacker's health is), disables shields, higher damage but slower speed
 	 */
 
 	public static final String NBT_GUILLOTINE_MODE = "GuillotineMode";
-	public static final int GILD_MODE = 0;
-	public static final int SCYTHE_MODE = 1;
+	public static final int SCYTHE_MODE = 0;
+	public static final int GILD_MODE = 1;
 	public static final int CLEAVER_MODE = 2;
 
 	private final ToolMaterial toolMaterial;
@@ -56,25 +59,21 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		this.attackDamage = attackDamage;
 		this.attackSpeed = attackSpeed;
 
-		setAttributeModifiersForMode(GILD_MODE);
+		setAttributeModifiersForMode(0);
 	}
 
 	private void setAttributeModifiersForMode(int mode) {
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 
-		// default mode: low damage but high speed
-		float attackDamageAddition = -2f;
-		float attackSpeedAddition = .6f;
+		// default damage and speed
+		float attackDamageAddition = 0;
+		float attackSpeedAddition = 0;
 
-		switch (mode) {
-			case SCYTHE_MODE -> { // scythe mode: medium damage and speed
-				attackDamageAddition = -1f;
-				attackSpeedAddition = .3f;
-			}
-			case CLEAVER_MODE -> { // cleaver mode: high damage but low speed
-				attackDamageAddition = 0f;
-				attackSpeedAddition = 0f;
-			}
+		if (mode == GILD_MODE) { // gild mode: lower damage
+			attackDamageAddition = -2f;
+		} else if (mode == CLEAVER_MODE) { // cleaver mode: slower but higher damage
+			attackDamageAddition = 2f;
+			attackSpeedAddition = -.6f;
 		}
 
 		builder.put(

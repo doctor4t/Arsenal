@@ -16,7 +16,7 @@ public class Arsenal implements ModInitializer {
 	public static final Identifier holdWeaponPacketId = id("hold_packet");
 	public static final Identifier swapWeaponPacketId = id("swap_packet");
 	public static final Identifier swapInventoryPacketId = id("swap_inventory_packet");
-    public static final ImmutableList<String> GUILLOTINE_VARIATIONS = ImmutableList.of("gild", "scythe", "cleaver");
+    public static final ImmutableList<String> GUILLOTINE_VARIATIONS = ImmutableList.of("scythe", "gild", "cleaver");
 
     @Override
 	public void onInitialize() {

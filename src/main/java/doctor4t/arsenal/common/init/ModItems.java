@@ -20,7 +20,7 @@ public interface ModItems {
 
 	Item CLOWN_SCYTHE = createItem("clown_scythe", new ScytheItem(ToolMaterials.NETHERITE, 5.0f, -3.0f, new Item.Settings().rarity(Rarity.COMMON)));
 	Item ANCHORBLADE = createItem("anchorblade", new AnchorbladeItem(AnchorbladeItem.AnchorBladeToolMaterial.INSTANCE, 5, -3.0f, new FabricItemSettings().rarity(Rarity.COMMON)));
-	Item GUILLOTINE = createItem("guillotine", new GuillotineItem(ToolMaterials.NETHERITE, 5.0f, -3.0f, new Item.Settings().rarity(Rarity.COMMON)));
+	Item GUILLOTINE = createItem("guillotine", new GuillotineItem(ToolMaterials.NETHERITE, 3.0f, -2.4f, new Item.Settings().rarity(Rarity.COMMON)));
 
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(item, Arsenal.id(name));

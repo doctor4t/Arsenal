@@ -81,9 +81,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 		if (instance instanceof LivingEntity
 			&& source.getAttacker() instanceof LivingEntity livingAttacker
 			&& GuillotineItem.isGuillotineAndMode(livingAttacker.getMainHandStack(), GuillotineItem.GILD_MODE)) {
-			float appliedDamage = livingAttacker.modifyAppliedDamage(source, amount);
-			livingAttacker.timeUntilRegen = 5;
-			livingAttacker.setAbsorptionAmount(livingAttacker.getAbsorptionAmount() + appliedDamage * .2f);
+			livingAttacker.setAbsorptionAmount(livingAttacker.getAbsorptionAmount() + amount * .4f);
 		}
 
 		return original.call(instance, source, amount);
