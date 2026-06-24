@@ -115,11 +115,11 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 
 	@Override
 	public float getReapingVelocityMultiplier(ItemStack stack) {
-		return EnchantmentHelper.getLevel(ModEnchantments.REELING, stack) * 0.25f;
+		return EnchantmentHelper.getLevel(ModEnchantments.REAPING, stack) * 0.25f;
 	}
 
 	@Override
 	public int getReapingBlindnessLength(ItemStack stack) {
-		return EnchantmentHelper.getLevel(ModEnchantments.REELING, stack) * 20;
+		return EnchantmentHelper.getLevel(ModEnchantments.REAPING, stack) * 20;
 	}
 }
