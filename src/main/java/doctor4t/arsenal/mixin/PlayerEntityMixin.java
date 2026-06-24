@@ -65,9 +65,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	}
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;onAttacking(Lnet/minecraft/entity/Entity;)V"))
-	private void arsenal$scytheReapTargetOnCrit(Entity target, CallbackInfo ci, @Local(name = "bl3") boolean crit, @Local(name = "h") float attackCooldown) {
+	private void arsenal$scytheReapTargetOnCrit(Entity target, CallbackInfo ci, @Local(ordinal = 0) boolean isFullSwing) {
 		ItemStack mainHandStack = this.getStackInHand(Hand.MAIN_HAND);
-		if (mainHandStack.getItem() instanceof ReapingItem reapingItem && attackCooldown >= 1f) {
+		if (mainHandStack.getItem() instanceof ReapingItem reapingItem && isFullSwing) {
 			float reapingVelocityMultiplier = reapingItem.getReapingVelocityMultiplier(mainHandStack);
 			if (reapingVelocityMultiplier != 0f) {
 				target.setVelocity(this.getPos().subtract(target.getPos()).multiply(reapingVelocityMultiplier));
