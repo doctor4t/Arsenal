@@ -66,9 +66,9 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 					statusEffectsHalved.add(statusHalved);
 				}
 				user.clearStatusEffects();
-				for (StatusEffectInstance statusEffectInstance : statusEffectsHalved) {
-					user.addStatusEffect(statusEffectInstance);
-				}
+//				for (StatusEffectInstance statusEffectInstance : statusEffectsHalved) {
+//					user.addStatusEffect(statusEffectInstance);
+//				}
 				user.setAbsorptionAmount(absorption);
 
 				user.damage(ModDamageSources.spewing(), 4f);
