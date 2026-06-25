@@ -51,6 +51,9 @@ public class GUIHeldVaryingItemRenderer implements BuiltinItemRendererRegistry.D
 
 	@Override
 	public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+		matrices.pop();
+		matrices.push();
+
 		if (inventoryModes.contains(mode)) {
 			this.itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryWeaponModel);
 		} else {

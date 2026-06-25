@@ -106,7 +106,15 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		return switch (getGuillotineMode(stack)) {
 			case SCYTHE_MODE -> ModSoundEvents.ITEM_GUILLOTINE_HIT_SCYTHE;
 			case CLEAVER_MODE -> ModSoundEvents.ITEM_GUILLOTINE_HIT_CLEAVER;
-			default -> ModSoundEvents.ITEM_GUILLOTINE_HIT;
+			default -> ModSoundEvents.ITEM_GUILLOTINE_HIT_GILD;
+		};
+	}
+
+	public static SoundEvent getTwirlSound(ItemStack stack) {
+		return switch (getGuillotineMode(stack)) {
+			case SCYTHE_MODE -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_SCYTHE;
+			case CLEAVER_MODE -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_CLEAVER;
+			default -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_GILD;
 		};
 	}
 
@@ -134,7 +142,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		nbt.putInt(NBT_GUILLOTINE_MODE, newGuillotineMode);
 		setAttributeModifiersForMode(newGuillotineMode);
 
-		return TypedActionResult.success(stack);
+		return TypedActionResult.pass(stack);
 	}
 
 	public static int getGuillotineMode(ItemStack stack) {
