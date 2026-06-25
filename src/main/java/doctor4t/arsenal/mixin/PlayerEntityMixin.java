@@ -1,7 +1,5 @@
 package doctor4t.arsenal.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import doctor4t.arsenal.common.entity.AnchorbladeEntity;
 import doctor4t.arsenal.common.item.*;
@@ -65,26 +63,31 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	}
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;onAttacking(Lnet/minecraft/entity/Entity;)V"))
-	private void arsenal$scytheReapTargetOnCrit(Entity target, CallbackInfo ci, @Local(ordinal = 0) boolean isFullSwing) {
+	private void arsenal$reapAndGild(Entity target, CallbackInfo ci, @Local(ordinal = 0) boolean isFullSwing, @Local(ordinal = 0) float damage) {
 		ItemStack mainHandStack = this.getStackInHand(Hand.MAIN_HAND);
-		if (mainHandStack.getItem() instanceof ReapingItem reapingItem && isFullSwing) {
-			float reapingVelocityMultiplier = reapingItem.getReapingVelocityMultiplier(mainHandStack);
-			if (reapingVelocityMultiplier != 0f) {
-				target.setVelocity(this.getPos().subtract(target.getPos()).multiply(reapingVelocityMultiplier));
-				target.velocityModified = true;
+		DamageSource source = DamageSource.player((PlayerEntity) (Object) this);
+
+		if (target instanceof LivingEntity livingEntity && livingEntity.blockedByShield(source)) {
+			return;
+		}
+
+		if (isFullSwing) {
+			// reaping
+			if (mainHandStack.getItem() instanceof ReapingItem reapingItem) {
+				float reapingVelocityMultiplier = reapingItem.getReapingVelocityMultiplier(mainHandStack);
+				if (reapingVelocityMultiplier != 0f) {
+					target.setVelocity(this.getPos().subtract(target.getPos()).multiply(reapingVelocityMultiplier));
+					target.velocityModified = true;
+				}
+			}
+
+			// guillotine gild
+			if (target instanceof LivingEntity livingTarget
+				&& GuillotineItem.isGuillotineAndMode(this.getMainHandStack(), GuillotineItem.GILD_MODE)) {
+
+				this.setAbsorptionAmount(Math.min(this.getAbsorptionAmount() + damage * .4f, 20));
 			}
 		}
-	}
-
-	@WrapOperation(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-	private boolean arsenal$doGuillotineGild(Entity instance, DamageSource source, float amount, Operation<Boolean> original) {
-		if (instance instanceof LivingEntity
-			&& source.getAttacker() instanceof LivingEntity livingAttacker
-			&& GuillotineItem.isGuillotineAndMode(livingAttacker.getMainHandStack(), GuillotineItem.GILD_MODE)) {
-			livingAttacker.setAbsorptionAmount(livingAttacker.getAbsorptionAmount() + amount * .4f);
-		}
-
-		return original.call(instance, source, amount);
 	}
 
 	@Override

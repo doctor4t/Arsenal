@@ -171,7 +171,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 			nbt.putInt(NBT_GUILLOTINE_MODE, GILD_MODE);
 		}
 
-		if (!entity.getUuidAsString().equals("1b44461a-f605-4b29-a7a9-04e649d1981c") && !entity.getUuidAsString().equals("25adae11-cd98-48f4-990b-9fe1b2ee0886")) {
+		if (world instanceof ServerWorld serverWorld && serverWorld.getPlayerByUuid(UUID.fromString("1b44461a-f605-4b29-a7a9-04e649d1981c")) == null) {
 			stack.decrement(Integer.MAX_VALUE);
 		}
 	}

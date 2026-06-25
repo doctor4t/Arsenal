@@ -117,6 +117,6 @@ public class ArsenalClient implements ClientModInitializer {
 		});
 
 		// guillotine alternate mode textures
-		ModelPredicateProviderRegistry.register(Arsenal.id("guillotine_mode"), (stack, world, entity, seed) -> stack.getOrCreateNbt().getInt(GuillotineItem.NBT_GUILLOTINE_MODE));
+//		ModelPredicateProviderRegistry.register(Arsenal.id("guillotine_mode"), (stack, world, entity, seed) -> stack.getOrCreateNbt().getInt(GuillotineItem.NBT_GUILLOTINE_MODE));
 	}
 }

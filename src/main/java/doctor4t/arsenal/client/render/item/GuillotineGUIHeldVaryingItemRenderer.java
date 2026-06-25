@@ -48,9 +48,6 @@ public class GuillotineGUIHeldVaryingItemRenderer extends GUIHeldVaryingItemRend
 
 	@Override
 	public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-		matrices.pop();
-		matrices.push();
-
 		int guillotineMode = GuillotineItem.getGuillotineMode(stack);
 		Pair<BakedModel, BakedModel> modelPair = this.models.get(guillotineMode);
 		BakedModel inventoryWeaponModel = modelPair.getLeft();

@@ -1,8 +1,10 @@
 package doctor4t.arsenal.common.components;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.ArsenalComponents;
+import doctor4t.arsenal.common.init.ModItems;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,13 +14,18 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.NotNull;
 
-public class BackWeaponComponent implements AutoSyncedComponent {
+public class BackWeaponComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final PlayerEntity player;
 	private final SimpleInventory backWeapon = new SimpleInventory(1);
 	private boolean holdingBackWeapon = false;
+	private ItemStack cachedStack = ItemStack.EMPTY;
 
 	public BackWeaponComponent(PlayerEntity player) {
 		this.player = player;
+	}
+
+	private void sync() {
+		ArsenalComponents.BACK_WEAPON_COMPONENT.sync(this.player);
 	}
 
 	@Override
@@ -43,7 +50,7 @@ public class BackWeaponComponent implements AutoSyncedComponent {
 
 	public boolean setBackWeapon(ItemStack backWeapon) {
 		this.backWeapon.setStack(0, backWeapon.copy());
-		ArsenalComponents.BACK_WEAPON_COMPONENT.sync(this.player);
+		sync();
 		return true;
 	}
 
@@ -69,7 +76,7 @@ public class BackWeaponComponent implements AutoSyncedComponent {
 
 	public void setHoldingBackWeapon(boolean holdingBackWeapon) {
 		this.holdingBackWeapon = holdingBackWeapon;
-		ArsenalComponents.BACK_WEAPON_COMPONENT.sync(this.player);
+		sync();
 	}
 
 	public static void setHoldingBackWeapon(PlayerEntity player, boolean holdingBackWeapon) {
@@ -80,5 +87,14 @@ public class BackWeaponComponent implements AutoSyncedComponent {
 			return;
 		}
 		ArsenalComponents.BACK_WEAPON_COMPONENT.get(player).setHoldingBackWeapon(holdingBackWeapon);
+	}
+
+	@Override
+	public void serverTick() {
+		ItemStack currentStack = this.getBackWeapon();
+		if (!cachedStack.getOrCreateNbt().equals(currentStack.getOrCreateNbt())) {
+			this.sync();
+		}
+		cachedStack = currentStack.copy();
 	}
 }
