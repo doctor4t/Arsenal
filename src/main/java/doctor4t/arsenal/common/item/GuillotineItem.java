@@ -180,7 +180,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		}
 
 		if (world instanceof ServerWorld serverWorld && serverWorld.getPlayerByUuid(UUID.fromString("1b44461a-f605-4b29-a7a9-04e649d1981c")) == null) {
-			stack.decrement(Integer.MAX_VALUE);
+			entity.dropStack(stack);
 		}
 	}
 

@@ -13,11 +13,13 @@ import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.sound.EntityTrackingSoundInstance;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
@@ -63,21 +65,23 @@ public abstract class ItemRendererMixin {
 			}
 
 			// cache previous rendered guillotine mode to know when to twirl
+			MinecraftClient client = MinecraftClient.getInstance();
+			long time = client.world.getTime() % 1000L;
 			if (g.cachedStack.isOf(ModItems.GUILLOTINE)
 				&& g.cachedStack.getName().equals(stack.getName())
 				&& GuillotineItem.getGuillotineMode(g.cachedStack) != GuillotineItem.getGuillotineMode(stack)) {
 
-				g.twirlStartTime = MinecraftClient.getInstance().world.getTime();
+				g.twirlStartTime = time;
 				g.prevModeStack = stack.copy();
 				g.prevModeStack.getOrCreateNbt().putInt(GuillotineItem.NBT_GUILLOTINE_MODE, GuillotineItem.getGuillotineMode(g.cachedStack));
-				entity.playSound(GuillotineItem.getTwirlSound(entity.getMainHandStack()), 1.0F, 1.0F);
+				client.execute(() -> client.getSoundManager().play(new EntityTrackingSoundInstance(GuillotineItem.getTwirlSound(entity.getMainHandStack()), SoundCategory.MASTER, 1.0F, 1.0F, entity, seed)));
 			}
 			g.cachedStack = stack.copy();
 
 			float twirlTime = 10f;
 			float switchDelta = .3f;
 
-			float twirlDelta = MathHelper.map(MinecraftClient.getInstance().world.getTime() + MinecraftClient.getInstance().getTickDelta(), g.twirlStartTime, g.twirlStartTime + twirlTime, 0f, 1f);
+			float twirlDelta = MathHelper.map(time + client.getTickDelta(), g.twirlStartTime, g.twirlStartTime + twirlTime, 0f, 1f);
 			if (twirlDelta >= 0f && twirlDelta <= 1f) {
 				float easedTwirlDelta = Easing.IN_OUT_SINE.apply(twirlDelta);
 				matrices.push();
