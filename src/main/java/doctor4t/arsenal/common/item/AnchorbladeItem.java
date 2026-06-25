@@ -9,9 +9,12 @@ import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -81,16 +84,12 @@ public class AnchorbladeItem extends PickaxeItem implements GUIHeldVaryingRender
 	}
 
 	@Override
-	public void spawnHitParticles(PlayerEntity player) {
-		double deltaX = -MathHelper.sin((float) (player.getYaw() * (Math.PI / 180F)));
-		double deltaZ = MathHelper.cos((float) (player.getYaw() * (Math.PI / 180F)));
-		if (player.world instanceof ServerWorld serverWorld) {
-			serverWorld.spawnParticles(LUX_ANCHORBLADE_SWEEP_PARTICLES[player.getRandom().nextInt(AnchorbladeItem.LUX_ANCHORBLADE_SWEEP_PARTICLES.length)], player.getX() + deltaX, player.getBodyY(0.5D), player.getZ() + deltaZ, 0, deltaX, 0.0D, deltaZ, 0.0D);
-		}
+	public ParticleEffect getHitParticle(LivingEntity attacker, Entity target, ItemStack stack) {
+		return LUX_ANCHORBLADE_SWEEP_PARTICLES[attacker.getRandom().nextInt(AnchorbladeItem.LUX_ANCHORBLADE_SWEEP_PARTICLES.length)];
 	}
 
 	@Override
-	public void playHitSound(PlayerEntity player) {
+	public void playHitSound(LivingEntity player) {
 		player.playSound(ModSoundEvents.ITEM_ANCHORBLADE_HIT, 1.0F,1.0F +  (player.getRandom().nextFloat() * .2f - .1f));
 	}
 

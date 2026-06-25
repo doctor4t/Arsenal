@@ -54,8 +54,7 @@ public abstract class ItemRendererMixin {
 
 	@WrapMethod(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/world/World;III)V")
 	public void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, int seed, Operation<Void> original) {
-		if (stack.isOf(ModItems.GUILLOTINE)
-			&& (renderMode.equals(ModelTransformation.Mode.FIRST_PERSON_RIGHT_HAND) || renderMode.equals(ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND) || renderMode.equals(ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND) || renderMode.equals(ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND))) {
+		if (renderMode.equals(ModelTransformation.Mode.FIRST_PERSON_RIGHT_HAND) || renderMode.equals(ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND) || renderMode.equals(ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND) || renderMode.equals(ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND)) {
 			HashMap<UUID, GuillotineTwirlItemRendererEntry> guillotineMap = leftHanded ? guillotineTwirlEntries.getLeft() : guillotineTwirlEntries.getRight();
 			UUID uuid = entity.getUuid();
 			GuillotineTwirlItemRendererEntry g = guillotineMap.get(uuid);
@@ -64,33 +63,48 @@ public abstract class ItemRendererMixin {
 				g = guillotineMap.get(uuid);
 			}
 
-			// cache previous rendered guillotine mode to know when to twirl
 			MinecraftClient client = MinecraftClient.getInstance();
-			long time = client.world.getTime() % 1000L;
-			if (g.cachedStack.isOf(ModItems.GUILLOTINE)
-				&& g.cachedStack.getName().equals(stack.getName())
-				&& GuillotineItem.getGuillotineMode(g.cachedStack) != GuillotineItem.getGuillotineMode(stack)) {
+			long time = client.world.getTime() % 3600L;
+
+			// reset cache if not guillotine
+			if (g.getLastCachedTime() >= 0 && g.getLastCachedTime() < time - 1 || !stack.isOf(ModItems.GUILLOTINE)) {
+				g.setCachedStack(ItemStack.EMPTY);
+				g.prevModeStack = ItemStack.EMPTY;
+				g.twirlStartTime = -1;
+				original.call(entity, stack, renderMode, leftHanded, matrices, vertexConsumers, world, light, overlay, seed);
+				return;
+			}
+
+			// cache previous rendered guillotine mode to know when to twirl
+			if (g.getCachedStack().isOf(ModItems.GUILLOTINE)
+				&& g.getCachedStack().getName().equals(stack.getName())
+				&& GuillotineItem.getGuillotineMode(g.getCachedStack()) != GuillotineItem.getGuillotineMode(stack)) {
 
 				g.twirlStartTime = time;
 				g.prevModeStack = stack.copy();
-				g.prevModeStack.getOrCreateNbt().putInt(GuillotineItem.NBT_GUILLOTINE_MODE, GuillotineItem.getGuillotineMode(g.cachedStack));
+				g.prevModeStack.getOrCreateNbt().putInt(GuillotineItem.NBT_GUILLOTINE_MODE, GuillotineItem.getGuillotineMode(g.getCachedStack()));
 				client.execute(() -> client.getSoundManager().play(new EntityTrackingSoundInstance(GuillotineItem.getTwirlSound(entity.getMainHandStack()), SoundCategory.MASTER, 1.0F, 1.0F, entity, seed)));
 			}
-			g.cachedStack = stack.copy();
+			g.setCachedStack(stack.copy());
 
-			float twirlTime = 10f;
-			float switchDelta = .3f;
+			if (g.twirlStartTime >= 0) {
+				float twirlTime = 10f;
+				float switchDelta = .5f;
 
-			float twirlDelta = MathHelper.map(time + client.getTickDelta(), g.twirlStartTime, g.twirlStartTime + twirlTime, 0f, 1f);
-			if (twirlDelta >= 0f && twirlDelta <= 1f) {
-				float easedTwirlDelta = Easing.IN_OUT_SINE.apply(twirlDelta);
-				matrices.push();
-				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(easedTwirlDelta * 360f));
-				float rotOffset = .5f;
-				matrices.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion((float) Math.sin(easedTwirlDelta * Math.PI) * (leftHanded ? rotOffset : -rotOffset)));
-				original.call(entity, easedTwirlDelta < switchDelta ? g.prevModeStack : stack, renderMode, leftHanded, matrices, vertexConsumers, world, light, overlay, seed);
-				matrices.pop();
-				return;
+				float tickDelta = client.isPaused() ? 0f : client.getTickDelta();
+				float twirlDelta = MathHelper.map(time + tickDelta, g.twirlStartTime, g.twirlStartTime + twirlTime, 0f, 1f);
+				if (twirlDelta >= 0f && twirlDelta <= 1f) {
+					float easedTwirlDelta = Easing.IN_OUT_SINE.apply(twirlDelta);
+					matrices.push();
+					matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(easedTwirlDelta * 360f));
+					float rotOffset = .3f;
+					matrices.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion((float) Math.sin(easedTwirlDelta * Math.PI) * (leftHanded ? rotOffset : -rotOffset)));
+					original.call(entity, easedTwirlDelta < switchDelta ? g.prevModeStack : stack, renderMode, leftHanded, matrices, vertexConsumers, world, light, overlay, seed);
+					matrices.pop();
+					return;
+				} else {
+					g.twirlStartTime = -1;
+				}
 			}
 		}
 

@@ -9,7 +9,9 @@ import doctor4t.arsenal.common.init.ModEnchantments;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,6 +20,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.tag.BlockTags;
@@ -90,16 +93,12 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 	}
 
 	@Override
-	public void spawnHitParticles(PlayerEntity player) {
-		double d0 = (-MathHelper.sin(player.getYaw() * ((float) Math.PI / 180F)));
-		double d1 = MathHelper.cos(player.getYaw() * ((float) Math.PI / 180F));
-		if (player.world instanceof ServerWorld serverWorld) {
-			serverWorld.spawnParticles(ModParticles.CLOWN_SCYTHE_SWEEP_ATTACK_PARTICLE, player.getX() + d0, player.getBodyY(0.5D), player.getZ() + d1, 0, d0, 0.0D, d1, 0.0D);
-		}
+	public ParticleEffect getHitParticle(LivingEntity attacker, Entity target, ItemStack stack) {
+		return ModParticles.CLOWN_SCYTHE_SWEEP_ATTACK_PARTICLE;
 	}
 
 	@Override
-	public void playHitSound(PlayerEntity player) {
+	public void playHitSound(LivingEntity player) {
 		player.playSound(ModSoundEvents.ITEM_SCYTHE_HIT, 1.0F, 1.0F + (player.getRandom().nextFloat() * .2f - .1f));
 	}
 

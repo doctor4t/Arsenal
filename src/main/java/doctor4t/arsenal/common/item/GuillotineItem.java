@@ -8,9 +8,11 @@ import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.init.ModItems;
 import doctor4t.arsenal.common.init.ModParticles;
 import doctor4t.arsenal.common.init.ModSoundEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -20,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Style;
@@ -27,7 +30,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,6 +63,14 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		this.attackSpeed = attackSpeed;
 
 		setAttributeModifiersForMode(0);
+	}
+
+	public static void cycleGuillotineMode(ItemStack stack) {
+		NbtCompound nbt = stack.getOrCreateNbt();
+		int guillotineMode = getGuillotineMode(nbt);
+		int newGuillotineMode = (guillotineMode + 1) % Arsenal.GUILLOTINE_VARIATIONS.size();
+		nbt.putInt(NBT_GUILLOTINE_MODE, newGuillotineMode);
+		((GuillotineItem) stack.getItem()).setAttributeModifiersForMode(newGuillotineMode);
 	}
 
 	private void setAttributeModifiersForMode(int mode) {
@@ -98,7 +109,16 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 	}
 
 	@Override
-	public void playHitSound(PlayerEntity player) {
+	public ParticleEffect getHitParticle(LivingEntity attacker, Entity target, ItemStack stack) {
+		return switch (getGuillotineMode(stack)) {
+			case SCYTHE_MODE -> ModParticles.GUILLOTINE_SCYTHE_ATTACK_PARTICLE;
+			case CLEAVER_MODE -> ModParticles.GUILLOTINE_CLEAVER_ATTACK_PARTICLE;
+			default -> ModParticles.GUILLOTINE_GILD_ATTACK_PARTICLE;
+		};
+	}
+
+	@Override
+	public void playHitSound(LivingEntity player) {
 		player.playSound(getHitSound(player.getMainHandStack()), 1.0F, 1.0F + (player.getRandom().nextFloat() * .2f - .1f));
 	}
 
@@ -124,25 +144,10 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 	}
 
 	@Override
-	public void spawnHitParticles(PlayerEntity player) {
-		double d0 = (-MathHelper.sin(player.getYaw() * ((float) Math.PI / 180F)));
-		double d1 = MathHelper.cos(player.getYaw() * ((float) Math.PI / 180F));
-		if (player.world instanceof ServerWorld serverWorld) {
-			serverWorld.spawnParticles(ModParticles.GUILLOTINE_SWEEP_ATTACK_PARTICLE, player.getX() + d0, player.getBodyY(0.5D), player.getZ() + d1, GILD_MODE, d0, 0.0D, d1, 0.0D);
-		}
-	}
-
-	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
-
-		NbtCompound nbt = stack.getOrCreateNbt();
-		int guillotineMode = getGuillotineMode(nbt);
-		int newGuillotineMode = (guillotineMode + 1) % 3;
-		nbt.putInt(NBT_GUILLOTINE_MODE, newGuillotineMode);
-		setAttributeModifiersForMode(newGuillotineMode);
-
-		return TypedActionResult.pass(stack);
+		cycleGuillotineMode(stack);
+		return TypedActionResult.consume(stack);
 	}
 
 	public static int getGuillotineMode(ItemStack stack) {
@@ -158,11 +163,11 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		return Arsenal.GUILLOTINE_VARIATIONS.get(getGuillotineMode(stack));
 	}
 
-	public static Formatting getGuillotineModeFormatting(ItemStack stack) {
+	public static int getGuillotineModeColor(ItemStack stack) {
 		return switch (getGuillotineMode(stack)) {
-			case SCYTHE_MODE -> Formatting.RED;
-			case CLEAVER_MODE -> Formatting.DARK_RED;
-			default -> Formatting.GOLD;
+			case SCYTHE_MODE -> 0xC60000;
+			case CLEAVER_MODE -> 0xFF5000;
+			default -> 0xFFB200;
 		};
 	}
 
@@ -172,24 +177,29 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-		super.inventoryTick(stack, world, entity, slot, selected);
-
+		// default nbt
 		NbtCompound nbt = stack.getOrCreateNbt();
 		if (!nbt.contains(NBT_GUILLOTINE_MODE)) {
 			nbt.putInt(NBT_GUILLOTINE_MODE, GILD_MODE);
 		}
 
-		if (world instanceof ServerWorld serverWorld && serverWorld.getPlayerByUuid(UUID.fromString("1b44461a-f605-4b29-a7a9-04e649d1981c")) == null) {
-			entity.dropStack(stack);
+		// drop stack if not allowed to have it
+		if (world instanceof ServerWorld serverWorld) {
+			String serverMotd = serverWorld.getServer().getServerMotd();
+//			if (serverMotd != null && !serverMotd.equals("balls")) {
+//				stack.decrement(Integer.MAX_VALUE);
+//			}
 		}
+		super.inventoryTick(stack, world, entity, slot, selected);
 	}
 
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(Text.translatable("item.arsenal.guillotine.tooltip").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
 		String guillotineModeName = getGuillotineModeName(stack);
-		tooltip.add(Text.translatable("item.arsenal.guillotine." + guillotineModeName).setStyle(Style.EMPTY.withColor(getGuillotineModeFormatting(stack))));
-		tooltip.add(Text.translatable("item.arsenal.guillotine." + guillotineModeName + ".tooltip").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+		tooltip.add(Text.translatable("item.arsenal.guillotine.tooltip").setStyle(Style.EMPTY.withColor(Formatting.GRAY)).append(
+			Text.translatable("item.arsenal.guillotine." + guillotineModeName).setStyle(Style.EMPTY.withColor(getGuillotineModeColor(stack)))
+		));
+		tooltip.add(Text.translatable("item.arsenal.guillotine." + guillotineModeName + ".tooltip").setStyle(Style.EMPTY.withColor(Formatting.DARK_GRAY)));
 	}
 
 	@Override
@@ -200,5 +210,10 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 	@Override
 	public float getReapingVelocityMultiplier(ItemStack stack) {
 		return getGuillotineMode(stack) == SCYTHE_MODE ? 0.25f : 0f;
+	}
+
+	@Override
+	public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
+		return !miner.isCreative();
 	}
 }

@@ -1,7 +1,7 @@
 package doctor4t.arsenal.common.item;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 
 public interface CustomHitSoundItem {
-	void playHitSound(PlayerEntity player);
+	void playHitSound(LivingEntity player);
 }

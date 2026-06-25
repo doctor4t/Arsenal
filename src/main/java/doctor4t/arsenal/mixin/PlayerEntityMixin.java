@@ -46,10 +46,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F"))
 	private void arsenal$spawnCustomHitParticlesAndPlayCustomHitSound(Entity target, CallbackInfo ci) {
 		if (this.getAttackCooldownProgress(0.5F) > 0.9F) {
-			if (this.getMainHandStack().getItem() instanceof CustomHitParticleItem customHitParticleItem) {
-				customHitParticleItem.spawnHitParticles((PlayerEntity) (Object) this);
+			ItemStack mainHandStack = this.getMainHandStack();
+			if (mainHandStack.getItem() instanceof CustomHitParticleItem customHitParticleItem) {
+				customHitParticleItem.spawnHitParticle(this, target, mainHandStack);
 			}
-			if (this.getMainHandStack().getItem() instanceof CustomHitSoundItem customHitSoundItem) {
+			if (mainHandStack.getItem() instanceof CustomHitSoundItem customHitSoundItem) {
 				customHitSoundItem.playHitSound((PlayerEntity) (Object) this);
 			}
 		}
