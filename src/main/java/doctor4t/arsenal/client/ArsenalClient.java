@@ -1,5 +1,6 @@
 package doctor4t.arsenal.client;
 
+import dev.emi.trinkets.TrinketsClient;
 import doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
 import doctor4t.arsenal.client.render.entity.BloodScytheEntityRenderer;
 import doctor4t.arsenal.client.render.entity.ModEntityModelLayers;

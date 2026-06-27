@@ -36,7 +36,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, HandledScreen.BACKGROUND_TEXTURE);
 		int i = this.x + 76;
-		int j = this.y + 43;
+		int j = this.y + 25;
 		this.drawTexture(matrices, i, j, 76, 61, 18, 18);
 //		if (this.inventory.arsenal$getWeapon().isEmpty()) {					fixme: I don't know why, I don't want to know why, the texture won't render in the slot
 //			RenderSystem.setShader(GameRenderer::getPositionTexShader);
