@@ -17,10 +17,10 @@ public interface ModSoundEvents {
 	SoundEvent ITEM_ANCHORBLADE_HIT = createSoundEvent("item.anchorblade.hit");
 	SoundEvent ITEM_ANCHORBLADE_THROW = createSoundEvent("item.anchorblade.throw");
 	SoundEvent ENTITY_ANCHORBLADE_LAND = createSoundEvent("entity.anchorblade.land");
-	SoundEvent ITEM_GUILLOTINE_HIT_GILD = createSoundEvent("item.guillotine.hit.gild");
+	SoundEvent ITEM_GUILLOTINE_HIT_GILT = createSoundEvent("item.guillotine.hit.gilt");
 	SoundEvent ITEM_GUILLOTINE_HIT_SCYTHE = createSoundEvent("item.guillotine.hit.scythe");
 	SoundEvent ITEM_GUILLOTINE_HIT_CLEAVER = createSoundEvent("item.guillotine.hit.cleaver");
-	SoundEvent ITEM_GUILLOTINE_TWIRL_GILD = createSoundEvent("item.guillotine.twirl.gild");
+	SoundEvent ITEM_GUILLOTINE_TWIRL_GILT = createSoundEvent("item.guillotine.twirl.gilt");
 	SoundEvent ITEM_GUILLOTINE_TWIRL_SCYTHE = createSoundEvent("item.guillotine.twirl.scythe");
 	SoundEvent ITEM_GUILLOTINE_TWIRL_CLEAVER = createSoundEvent("item.guillotine.twirl.cleaver");
 

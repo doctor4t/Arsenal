@@ -22,7 +22,7 @@ public interface ModParticles {
 	DefaultParticleType LUX_ANCHORBLADE_SWEEP_2 = FabricParticleTypes.simple(true);
 	DefaultParticleType LUX_ANCHORBLADE_SWEEP_3 = FabricParticleTypes.simple(true);
 	DefaultParticleType SHOCKWAVE = FabricParticleTypes.simple(true);
-	DefaultParticleType GUILLOTINE_GILD_ATTACK_PARTICLE = FabricParticleTypes.simple(true);
+	DefaultParticleType GUILLOTINE_GILT_ATTACK_PARTICLE = FabricParticleTypes.simple(true);
 	DefaultParticleType GUILLOTINE_SCYTHE_ATTACK_PARTICLE = FabricParticleTypes.simple(true);
 	DefaultParticleType GUILLOTINE_CLEAVER_ATTACK_PARTICLE = FabricParticleTypes.simple(true);
 
@@ -38,7 +38,7 @@ public interface ModParticles {
 		ParticleFactoryRegistry.getInstance().register(LUX_ANCHORBLADE_SWEEP_2, SweepAttackParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(LUX_ANCHORBLADE_SWEEP_3, SweepAttackParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(SHOCKWAVE, ShockwaveParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(GUILLOTINE_GILD_ATTACK_PARTICLE, SweepAttackParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(GUILLOTINE_GILT_ATTACK_PARTICLE, SweepAttackParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(GUILLOTINE_SCYTHE_ATTACK_PARTICLE, SweepAttackParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(GUILLOTINE_CLEAVER_ATTACK_PARTICLE, SweepAttackParticle.Factory::new);
 	}
@@ -51,7 +51,7 @@ public interface ModParticles {
 		registry.accept(LUX_ANCHORBLADE_SWEEP_2, Arsenal.id("lux_anchorblade_sweep_attack_2"));
 		registry.accept(LUX_ANCHORBLADE_SWEEP_3, Arsenal.id("lux_anchorblade_sweep_attack_3"));
 		registry.accept(SHOCKWAVE, Arsenal.id("shockwave"));
-		registry.accept(GUILLOTINE_GILD_ATTACK_PARTICLE, Arsenal.id("guillotine_gild_attack"));
+		registry.accept(GUILLOTINE_GILT_ATTACK_PARTICLE, Arsenal.id("guillotine_gilt_attack"));
 		registry.accept(GUILLOTINE_SCYTHE_ATTACK_PARTICLE, Arsenal.id("guillotine_scythe_attack"));
 		registry.accept(GUILLOTINE_CLEAVER_ATTACK_PARTICLE, Arsenal.id("guillotine_cleaver_attack"));
 	}

@@ -16,7 +16,7 @@ public class Arsenal implements ModInitializer {
 	public static final Identifier holdWeaponPacketId = id("hold_packet");
 	public static final Identifier swapWeaponPacketId = id("swap_packet");
 	public static final Identifier swapInventoryPacketId = id("swap_inventory_packet");
-    public static final ImmutableList<String> GUILLOTINE_VARIATIONS = ImmutableList.of("scythe", "gild", "cleaver");
+    public static final ImmutableList<String> GUILLOTINE_VARIATIONS = ImmutableList.of("scythe", "gilt", "cleaver");
 
     @Override
 	public void onInitialize() {
@@ -50,9 +50,9 @@ public class Arsenal implements ModInitializer {
 				}
 				Slot slot = player.currentScreenHandler.getSlot(slotId);
 				ItemStack itemStack = BackWeaponComponent.getBackWeapon(player);
-				boolean success = BackWeaponComponent.setBackWeapon(player, slot.getStack());
+				boolean success = BackWeaponComponent.setBackWeapon(player, slot.getStack().copy());
 				if (success) {
-					slot.setStack(itemStack);
+					slot.setStack(itemStack.copy());
 				}
 			}
 		});

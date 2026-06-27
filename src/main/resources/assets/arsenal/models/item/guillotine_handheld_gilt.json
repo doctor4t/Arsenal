@@ -1,6 +1,6 @@
 {
   "parent": "arsenal:item/guillotine_handheld",
   "textures": {
-    "layer0": "arsenal:item/guillotine_gild"
+    "layer0": "arsenal:item/guillotine_gilt"
   }
 }

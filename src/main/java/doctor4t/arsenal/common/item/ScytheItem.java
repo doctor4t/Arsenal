@@ -62,7 +62,6 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 				bloodScythe.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
 
 				ArrayList<StatusEffectInstance> statusEffectsHalved = new ArrayList<>();
-				float absorption = user.getAbsorptionAmount();
 				for (StatusEffectInstance statusEffect : user.getStatusEffects()) {
 					StatusEffectInstance statusHalved = new StatusEffectInstance(statusEffect.getEffectType(), statusEffect.getDuration() / 2, statusEffect.getAmplifier(), statusEffect.isAmbient(), statusEffect.shouldShowParticles(), statusEffect.shouldShowIcon());
 					bloodScythe.addEffect(statusHalved);
@@ -72,7 +71,6 @@ public class ScytheItem extends MiningToolItem implements GUIHeldVaryingRenderIt
 //				for (StatusEffectInstance statusEffectInstance : statusEffectsHalved) {
 //					user.addStatusEffect(statusEffectInstance);
 //				}
-				user.setAbsorptionAmount(absorption);
 
 				user.damage(ModDamageSources.spewing(), 4f);
 				user.getItemCooldownManager().set(this, 20);

@@ -41,7 +41,7 @@ public class MinecraftClientMixin {
 	}
 
 	@WrapOperation(method = "doItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;resetEquipProgress(Lnet/minecraft/util/Hand;)V"))
-	private void arsenal$guillotineTwirlOnQuickPress(HeldItemRenderer instance, Hand hand, Operation<Void> original) {
+	private void arsenal$disableGuillotineResetEquip(HeldItemRenderer instance, Hand hand, Operation<Void> original) {
 		if (player.getStackInHand(hand).isOf(ModItems.GUILLOTINE)) {
 			return;
 		}
