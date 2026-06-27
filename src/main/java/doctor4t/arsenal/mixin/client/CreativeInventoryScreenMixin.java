@@ -46,7 +46,7 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
 		for (Slot screenHandlerSlot : screenHandlerSlots) {
 			if (screenHandlerSlot instanceof WeaponSlot weaponSlot) {
 				Slot slot = new CreativeInventoryScreen.CreativeSlot(weaponSlot, screenHandlerSlots.indexOf(screenHandlerSlot), 127, 20);
-				((this.handler).slots.add(slot);
+				this.handler.slots.add(slot);
 			}
 		}
 
