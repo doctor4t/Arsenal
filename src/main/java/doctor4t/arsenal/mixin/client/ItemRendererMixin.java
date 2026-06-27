@@ -64,7 +64,7 @@ public abstract class ItemRendererMixin {
 			}
 
 			MinecraftClient client = MinecraftClient.getInstance();
-			long time = client.world.getTime() % 3600;
+			long time = client.world.getTime() % 36000;
 
 			// reset cache if not guillotine
 			if (g.getLastCachedTime() >= 0 && g.getLastCachedTime() < time - 1 || !stack.isOf(ModItems.GUILLOTINE)) {

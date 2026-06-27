@@ -18,7 +18,7 @@ public class GuillotineTwirlItemRendererEntry {
 	public void setCachedStack(ItemStack cachedStack) {
 		this.cachedStack = cachedStack;
 		if (!cachedStack.isEmpty()) {
-			this.lastCachedTime = MinecraftClient.getInstance().world.getTime() % 3600L;
+			this.lastCachedTime = MinecraftClient.getInstance().world.getTime() % 36000;
 		} else {
 			this.lastCachedTime = -1;
 		}

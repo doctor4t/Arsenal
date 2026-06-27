@@ -12,13 +12,13 @@
     "PersistentProjectileEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
-    "PlayerScreenHandlerMixin",
+    "client.PlayerScreenHandlerMixin",
     "ProjectileEntityMixin",
     "ServerPlayNetworkHandlerMixin",
     "TridentItemMixin"
   ],
   "client": [
-    "HandledScreenMixin",
+    "client.HandledScreenMixin",
     "accessors.CreativeSlotAccessor",
     "client.CreativeInventoryScreenMixin",
     "client.HeldItemFeatureRendererMixin",

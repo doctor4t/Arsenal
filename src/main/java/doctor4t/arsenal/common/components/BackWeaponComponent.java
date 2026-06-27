@@ -15,8 +15,9 @@ import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.NotNull;
 
 public class BackWeaponComponent implements AutoSyncedComponent, ServerTickingComponent {
+	public static final int SLOT = 7;
 	private final PlayerEntity player;
-	private final SimpleInventory backWeapon = new SimpleInventory(1);
+	private final SimpleInventory backWeapon = new SimpleInventory(SLOT+1);
 	private boolean holdingBackWeapon = false;
 	private ItemStack cachedStack = ItemStack.EMPTY;
 
@@ -30,18 +31,18 @@ public class BackWeaponComponent implements AutoSyncedComponent, ServerTickingCo
 
 	@Override
 	public void readFromNbt(@NotNull NbtCompound tag) {
-		this.backWeapon.setStack(0, ItemStack.fromNbt(tag.getCompound("backWeapon")));
+		this.backWeapon.setStack(SLOT, ItemStack.fromNbt(tag.getCompound("backWeapon")));
 		this.holdingBackWeapon = tag.getBoolean("holdingBackWeapon");
 	}
 
 	@Override
 	public void writeToNbt(@NotNull NbtCompound tag) {
-		tag.put("backWeapon", this.backWeapon.getStack(0).writeNbt(new NbtCompound()));
+		tag.put("backWeapon", this.backWeapon.getStack(SLOT).writeNbt(new NbtCompound()));
 		tag.putBoolean("holdingBackWeapon", this.holdingBackWeapon);
 	}
 
 	public ItemStack getBackWeapon() {
-		return this.backWeapon.getStack(0);
+		return this.backWeapon.getStack(SLOT);
 	}
 
 	public static ItemStack getBackWeapon(PlayerEntity player) {
@@ -49,7 +50,7 @@ public class BackWeaponComponent implements AutoSyncedComponent, ServerTickingCo
 	}
 
 	public boolean setBackWeapon(ItemStack backWeapon) {
-		this.backWeapon.setStack(0, backWeapon.copy());
+		this.backWeapon.setStack(SLOT, backWeapon.copy());
 		sync();
 		return true;
 	}

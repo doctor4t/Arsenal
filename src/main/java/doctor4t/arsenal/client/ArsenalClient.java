@@ -31,11 +31,14 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.lwjgl.glfw.GLFW;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class ArsenalClient implements ClientModInitializer {
+	public static final Identifier SLOT_TEXTURE = Arsenal.id("textures/gui/weapon_slot.png");
+
 	public static KeyBinding weaponKeybind;
 	public static KeyBinding swapKeybind;
 

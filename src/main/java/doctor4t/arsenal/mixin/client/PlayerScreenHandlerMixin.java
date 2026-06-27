@@ -1,4 +1,4 @@
-package doctor4t.arsenal.mixin;
+package doctor4t.arsenal.mixin.client;
 
 import doctor4t.arsenal.common.components.BackWeaponComponent;
 import doctor4t.arsenal.common.util.WeaponSlot;
@@ -21,6 +21,6 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void arsenal$init(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo ci) {
-		this.addSlot(new WeaponSlot(BackWeaponComponent.getBackWeaponInventory(inventory.player), 0, 77, 26));
+		this.addSlot(new WeaponSlot(BackWeaponComponent.getBackWeaponInventory(inventory.player), BackWeaponComponent.SLOT, 77, 26));
 	}
 }

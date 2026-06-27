@@ -1,4 +1,4 @@
-package doctor4t.arsenal.mixin;
+package doctor4t.arsenal.mixin.client;
 
 import doctor4t.arsenal.client.ArsenalClient;
 import doctor4t.arsenal.common.Arsenal;
