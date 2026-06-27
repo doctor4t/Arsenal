@@ -18,29 +18,39 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
+
 @Mixin(CreativeInventoryScreen.class)
 public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler> {
 	@Shadow private static int selectedTab;
+
+	@Shadow
+	private @Nullable List<Slot> slots;
 
 	public CreativeInventoryScreenMixin(CreativeInventoryScreen.CreativeScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
 		super(screenHandler, playerInventory, text);
 	}
 
-	@WrapOperation(method = "setSelectedTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;add(Ljava/lang/Object;)Z", ordinal = 2))
+	@WrapOperation(method = "setSelectedTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;add(Ljava/lang/Object;)Z", ordinal = 3))
 	private boolean arsenal$moveWeaponSlot(DefaultedList<Slot> slots, Object object, Operation<Boolean> operation) {
-		if (object instanceof CreativeInventoryScreen.CreativeSlot newSlot) {
-			Slot slot = ((CreativeSlotAccessor) newSlot).getSlot();
-			if (slot instanceof WeaponSlot) {
-				return operation.call(slots, new CreativeInventoryScreen.CreativeSlot(slot, slot.id, 127, 20));
+		boolean ret = operation.call(slots, object);
+
+		DefaultedList<Slot> screenHandlerSlots = this.client.player.playerScreenHandler.slots;
+		for (Slot screenHandlerSlot : screenHandlerSlots) {
+			if (screenHandlerSlot instanceof WeaponSlot weaponSlot) {
+				Slot slot = new CreativeInventoryScreen.CreativeSlot(weaponSlot, screenHandlerSlots.indexOf(screenHandlerSlot), 127, 20);
+				((this.handler).slots.add(slot);
 			}
 		}
-		return operation.call(slots, object);
+
+		return ret;
 	}
 
 	@Inject(method = "drawBackground", at = @At(value = "TAIL"))
