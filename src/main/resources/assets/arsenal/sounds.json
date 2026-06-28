@@ -40,11 +40,11 @@
     ],
     "subtitle": "arsenal.subtitles.entity.anchorblade.land"
   },
-  "item.guillotine.hit.gilt": {
+  "item.guillotine.hit.gild": {
     "sounds": [
-      "arsenal:item/guillotine_hit_gilt"
+      "arsenal:item/guillotine_hit_gild"
     ],
-    "subtitle": "arsenal.subtitles.item.guillotine.hit.gilt"
+    "subtitle": "arsenal.subtitles.item.guillotine.hit.gild"
   },
   "item.guillotine.hit.scythe": {
     "sounds": [
@@ -58,11 +58,11 @@
     ],
     "subtitle": "arsenal.subtitles.item.guillotine.hit.cleaver"
   },
-  "item.guillotine.twirl.gilt": {
+  "item.guillotine.twirl.gild": {
     "sounds": [
-      "arsenal:item/guillotine_twirl_gilt"
+      "arsenal:item/guillotine_twirl_gild"
     ],
-    "subtitle": "arsenal.subtitles.item.scythe.twirl.gilt"
+    "subtitle": "arsenal.subtitles.item.scythe.twirl.gild"
   },
   "item.guillotine.twirl.scythe": {
     "sounds": [

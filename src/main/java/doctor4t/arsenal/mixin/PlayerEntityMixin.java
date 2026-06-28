@@ -64,7 +64,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 	}
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;onAttacking(Lnet/minecraft/entity/Entity;)V"))
-	private void arsenal$reapAndGilt(Entity target, CallbackInfo ci, @Local(ordinal = 0) boolean isFullSwing, @Local(ordinal = 0) float damage) {
+	private void arsenal$reapAndGild(Entity target, CallbackInfo ci, @Local(ordinal = 0) boolean isFullSwing, @Local(ordinal = 0) float damage) {
 		ItemStack mainHandStack = this.getStackInHand(Hand.MAIN_HAND);
 		DamageSource source = DamageSource.player((PlayerEntity) (Object) this);
 
@@ -82,9 +82,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements AnchorOw
 				}
 			}
 
-			// guillotine gilt
+			// guillotine gild
 			if (target instanceof LivingEntity livingTarget
-				&& GuillotineItem.isGuillotineAndMode(this.getMainHandStack(), GuillotineItem.GILT_MODE)) {
+				&& GuillotineItem.isGuillotineAndMode(this.getMainHandStack(), GuillotineItem.GILD_MODE)) {
 
 				this.setAbsorptionAmount(Math.min(this.getAbsorptionAmount() + damage * .4f, 20));
 			}

@@ -31,9 +31,6 @@ import java.util.List;
 public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler> {
 	@Shadow private static int selectedTab;
 
-	@Shadow
-	private @Nullable List<Slot> slots;
-
 	public CreativeInventoryScreenMixin(CreativeInventoryScreen.CreativeScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
 		super(screenHandler, playerInventory, text);
 	}

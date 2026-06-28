@@ -40,14 +40,14 @@ import java.util.UUID;
 public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem, CustomHitParticleItem, CustomHitSoundItem, CustomColorItem, ShieldDisablingItem, ReapingItem {
 	/*
 		GUILLOTINE MODES:
-		- Gilt (0): Leech effect on hit (part of the damage is restored to the attacker as health), lowered damage
+		- Gild (0): Leech effect on hit (part of the damage is restored to the attacker as health), lowered damage
 		- Scythe (1): Reaping (bring in players on crit)
 		- Cleaver (2): Berserk damage scaling (damage bonus the lower the attacker's health is), disables shields, higher damage but slower speed
 	 */
 
 	public static final String NBT_GUILLOTINE_MODE = "GuillotineMode";
 	public static final int SCYTHE_MODE = 0;
-	public static final int GILT_MODE = 1;
+	public static final int GILD_MODE = 1;
 	public static final int CLEAVER_MODE = 2;
 
 	private final ToolMaterial toolMaterial;
@@ -80,7 +80,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		float attackDamageAddition = 0;
 		float attackSpeedAddition = 0;
 
-		if (mode == GILT_MODE) { // gilt mode: lower damage
+		if (mode == GILD_MODE) { // gild mode: lower damage
 			attackDamageAddition = -2f;
 		} else if (mode == CLEAVER_MODE) { // cleaver mode: slower but higher damage
 			attackDamageAddition = 2f;
@@ -113,7 +113,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		return switch (getGuillotineMode(stack)) {
 			case SCYTHE_MODE -> ModParticles.GUILLOTINE_SCYTHE_ATTACK_PARTICLE;
 			case CLEAVER_MODE -> ModParticles.GUILLOTINE_CLEAVER_ATTACK_PARTICLE;
-			default -> ModParticles.GUILLOTINE_GILT_ATTACK_PARTICLE;
+			default -> ModParticles.GUILLOTINE_GILD_ATTACK_PARTICLE;
 		};
 	}
 
@@ -126,7 +126,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		return switch (getGuillotineMode(stack)) {
 			case SCYTHE_MODE -> ModSoundEvents.ITEM_GUILLOTINE_HIT_SCYTHE;
 			case CLEAVER_MODE -> ModSoundEvents.ITEM_GUILLOTINE_HIT_CLEAVER;
-			default -> ModSoundEvents.ITEM_GUILLOTINE_HIT_GILT;
+			default -> ModSoundEvents.ITEM_GUILLOTINE_HIT_GILD;
 		};
 	}
 
@@ -134,7 +134,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		return switch (getGuillotineMode(stack)) {
 			case SCYTHE_MODE -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_SCYTHE;
 			case CLEAVER_MODE -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_CLEAVER;
-			default -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_GILT;
+			default -> ModSoundEvents.ITEM_GUILLOTINE_TWIRL_GILD;
 		};
 	}
 
@@ -156,7 +156,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 	}
 
 	public static int getGuillotineMode(NbtCompound nbt) {
-		return nbt.contains(GuillotineItem.NBT_GUILLOTINE_MODE) ? nbt.getInt(GuillotineItem.NBT_GUILLOTINE_MODE) : 0;
+		return nbt.contains(GuillotineItem.NBT_GUILLOTINE_MODE) ? nbt.getInt(GuillotineItem.NBT_GUILLOTINE_MODE) : GILD_MODE;
 	}
 
 	public static String getGuillotineModeName(ItemStack stack) {
@@ -180,7 +180,7 @@ public class GuillotineItem extends ToolItem implements GUIHeldVaryingRenderItem
 		// default nbt
 		NbtCompound nbt = stack.getOrCreateNbt();
 		if (!nbt.contains(NBT_GUILLOTINE_MODE)) {
-			nbt.putInt(NBT_GUILLOTINE_MODE, GILT_MODE);
+			nbt.putInt(NBT_GUILLOTINE_MODE, GILD_MODE);
 		}
 
 		// drop stack if not allowed to have it
