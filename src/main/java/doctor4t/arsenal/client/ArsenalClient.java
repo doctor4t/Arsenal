@@ -1,6 +1,5 @@
 package doctor4t.arsenal.client;
 
-import dev.emi.trinkets.TrinketsClient;
 import doctor4t.arsenal.client.render.entity.AnchorbladeEntityRenderer;
 import doctor4t.arsenal.client.render.entity.BloodScytheEntityRenderer;
 import doctor4t.arsenal.client.render.entity.ModEntityModelLayers;
@@ -11,7 +10,6 @@ import doctor4t.arsenal.common.components.BackWeaponComponent;
 import doctor4t.arsenal.common.init.ModEntities;
 import doctor4t.arsenal.common.init.ModItems;
 import doctor4t.arsenal.common.init.ModParticles;
-import doctor4t.arsenal.common.item.GuillotineItem;
 import doctor4t.arsenal.common.util.WeaponSlotCallback;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

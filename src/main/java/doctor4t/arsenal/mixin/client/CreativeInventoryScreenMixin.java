@@ -5,8 +5,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.systems.RenderSystem;
 import doctor4t.arsenal.client.ArsenalClient;
 import doctor4t.arsenal.common.components.BackWeaponComponent;
-import doctor4t.arsenal.common.util.WeaponSlot;
-import doctor4t.arsenal.mixin.accessors.CreativeSlotAccessor;
+import doctor4t.arsenal.common.inventory.ArsenalInventory;
+import doctor4t.arsenal.common.util.ArsenalSlots;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
@@ -18,14 +18,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
 
 @Mixin(CreativeInventoryScreen.class)
 public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler> {
@@ -35,19 +32,16 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
 		super(screenHandler, playerInventory, text);
 	}
 
-	@WrapOperation(method = "setSelectedTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;add(Ljava/lang/Object;)Z", ordinal = 3))
-	private boolean arsenal$moveWeaponSlot(DefaultedList<Slot> slots, Object object, Operation<Boolean> operation) {
-		boolean ret = operation.call(slots, object);
-
+	@WrapOperation(method = "setSelectedTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;add(Ljava/lang/Object;)Z"))
+	private boolean arsenal$moveWeaponSlot(DefaultedList instance, Object o, Operation<Boolean> original) {
 		DefaultedList<Slot> screenHandlerSlots = this.client.player.playerScreenHandler.slots;
-		for (Slot screenHandlerSlot : screenHandlerSlots) {
-			if (screenHandlerSlot instanceof WeaponSlot weaponSlot) {
-				Slot slot = new CreativeInventoryScreen.CreativeSlot(weaponSlot, -7, 127, 20);
-				this.handler.slots.add(slot);
-			}
+		if (o instanceof Slot slot && slot.inventory instanceof ArsenalInventory) {
+			Slot newSlot = new ArsenalSlots.CreativeWeaponSlot(slot, 48, 127, 20);
+			this.handler.slots.add(newSlot);
+			return true;
 		}
 
-		return ret;
+		return original.call(instance,o);
 	}
 
 	@Inject(method = "drawBackground", at = @At(value = "TAIL"))
