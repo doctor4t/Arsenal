@@ -35,20 +35,20 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
 		super(screenHandler, playerInventory, text);
 	}
 
-//	@WrapOperation(method = "setSelectedTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;add(Ljava/lang/Object;)Z", ordinal = 3))
-//	private boolean arsenal$moveWeaponSlot(DefaultedList<Slot> slots, Object object, Operation<Boolean> operation) {
-//		boolean ret = operation.call(slots, object);
-//
-//		DefaultedList<Slot> screenHandlerSlots = this.client.player.playerScreenHandler.slots;
-//		for (Slot screenHandlerSlot : screenHandlerSlots) {
-//			if (screenHandlerSlot instanceof WeaponSlot weaponSlot) {
-//				Slot slot = new CreativeInventoryScreen.CreativeSlot(weaponSlot, screenHandlerSlots.indexOf(screenHandlerSlot), 127, 20);
-//				this.handler.slots.add(slot);
-//			}
-//		}
-//
-//		return ret;
-//	}
+	@WrapOperation(method = "setSelectedTab", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/collection/DefaultedList;add(Ljava/lang/Object;)Z", ordinal = 3))
+	private boolean arsenal$moveWeaponSlot(DefaultedList<Slot> slots, Object object, Operation<Boolean> operation) {
+		boolean ret = operation.call(slots, object);
+
+		DefaultedList<Slot> screenHandlerSlots = this.client.player.playerScreenHandler.slots;
+		for (Slot screenHandlerSlot : screenHandlerSlots) {
+			if (screenHandlerSlot instanceof WeaponSlot weaponSlot) {
+				Slot slot = new CreativeInventoryScreen.CreativeSlot(weaponSlot, -7, 127, 20);
+				this.handler.slots.add(slot);
+			}
+		}
+
+		return ret;
+	}
 
 	@Inject(method = "drawBackground", at = @At(value = "TAIL"))
 	private void arsenal$drawSlots(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo ci) {

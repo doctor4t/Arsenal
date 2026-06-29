@@ -1,12 +1,14 @@
 package doctor4t.arsenal.common.components;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import doctor4t.arsenal.common.Arsenal;
 import doctor4t.arsenal.common.ArsenalComponents;
 import doctor4t.arsenal.common.init.ModItems;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -15,9 +17,9 @@ import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.NotNull;
 
 public class BackWeaponComponent implements AutoSyncedComponent, ServerTickingComponent {
-	public static final int SLOT = 7;
+	public static final int SLOT = 0;
 	private final PlayerEntity player;
-	private final SimpleInventory backWeapon = new SimpleInventory(SLOT+1);
+	private final SimpleInventory backWeapon = new SimpleInventory(1);
 	private boolean holdingBackWeapon = false;
 	private ItemStack cachedStack = ItemStack.EMPTY;
 
