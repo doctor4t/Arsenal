@@ -27,10 +27,12 @@ public class HandledScreenMixin<T extends ScreenHandler> {
 		if (this.focusedSlot != null && this.handler.getCursorStack().isEmpty()) {
 			if (ArsenalClient.swapKeybind.matchesMouse(button)) {
 				int slotId = this.focusedSlot.id;
-				PacketByteBuf buf = PacketByteBufs.create();
-				buf.writeInt(slotId);
-				ClientPlayNetworking.send(Arsenal.swapInventoryPacketId, buf);
-				ci.cancel();
+				if (this.handler.getSlot(slotId).canInsert(this.handler.getCursorStack())) {
+					PacketByteBuf buf = PacketByteBufs.create();
+					buf.writeInt(slotId);
+					ClientPlayNetworking.send(Arsenal.swapInventoryPacketId, buf);
+					ci.cancel();
+				}
 			}
 		}
 	}
@@ -40,10 +42,12 @@ public class HandledScreenMixin<T extends ScreenHandler> {
 		if (this.handler.getCursorStack().isEmpty() && this.focusedSlot != null) {
 			if (ArsenalClient.swapKeybind.matchesKey(keyCode, scanCode)) {
 				int slotId = this.focusedSlot.id;
-				PacketByteBuf buf = PacketByteBufs.create();
-				buf.writeInt(slotId);
-				ClientPlayNetworking.send(Arsenal.swapInventoryPacketId, buf);
-				cir.setReturnValue(true);
+				if (this.handler.getSlot(slotId).canInsert(this.handler.getCursorStack())) {
+					PacketByteBuf buf = PacketByteBufs.create();
+					buf.writeInt(slotId);
+					ClientPlayNetworking.send(Arsenal.swapInventoryPacketId, buf);
+					cir.setReturnValue(true);
+				}
 			}
 		}
 	}
