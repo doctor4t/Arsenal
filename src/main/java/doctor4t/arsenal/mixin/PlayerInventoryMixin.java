@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import org.spongepowered.asm.mixin.Final;
@@ -100,5 +101,10 @@ public class PlayerInventoryMixin {
 	@Inject(method = "scrollInHotbar", at = @At("HEAD"))
 	private void arsenal$nonScroll(double scrollAmount, CallbackInfo ci) {
 		BackWeaponComponent.setHoldingBackWeapon(this.player, false);
+	}
+	@Inject(method = "dropAll", at = @At("TAIL"))
+	private void arsenal$dropBackslot(CallbackInfo ci) {
+		this.player.dropItem(BackWeaponComponent.getBackWeapon(this.player).copy(), true, false);
+		BackWeaponComponent.setBackWeapon(this.player, ItemStack.EMPTY);
 	}
 }
